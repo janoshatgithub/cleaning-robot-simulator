@@ -1,7 +1,6 @@
 /*
  * AboutBox.java
  */
-
 package dk.jsh.cleaningrobotsimulator.ui.swing;
 
 import org.jdesktop.application.Action;
