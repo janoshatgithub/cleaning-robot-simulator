@@ -183,6 +183,46 @@ public class View extends FrameView {
         jLabelF8 = new javax.swing.JLabel();
         jLabelF9 = new javax.swing.JLabel();
         jLabelF10 = new javax.swing.JLabel();
+        jLabelG1 = new javax.swing.JLabel();
+        jLabelG2 = new javax.swing.JLabel();
+        jLabelG3 = new javax.swing.JLabel();
+        jLabelG4 = new javax.swing.JLabel();
+        jLabelG5 = new javax.swing.JLabel();
+        jLabelG6 = new javax.swing.JLabel();
+        jLabelG7 = new javax.swing.JLabel();
+        jLabelG8 = new javax.swing.JLabel();
+        jLabelG9 = new javax.swing.JLabel();
+        jLabelG10 = new javax.swing.JLabel();
+        jLabelH1 = new javax.swing.JLabel();
+        jLabelH2 = new javax.swing.JLabel();
+        jLabelH3 = new javax.swing.JLabel();
+        jLabelH4 = new javax.swing.JLabel();
+        jLabelH5 = new javax.swing.JLabel();
+        jLabelH6 = new javax.swing.JLabel();
+        jLabelH7 = new javax.swing.JLabel();
+        jLabelH8 = new javax.swing.JLabel();
+        jLabelH9 = new javax.swing.JLabel();
+        jLabelH10 = new javax.swing.JLabel();
+        jLabelI1 = new javax.swing.JLabel();
+        jLabelI2 = new javax.swing.JLabel();
+        jLabelI3 = new javax.swing.JLabel();
+        jLabelI4 = new javax.swing.JLabel();
+        jLabelI5 = new javax.swing.JLabel();
+        jLabelI6 = new javax.swing.JLabel();
+        jLabelI7 = new javax.swing.JLabel();
+        jLabelI8 = new javax.swing.JLabel();
+        jLabelI9 = new javax.swing.JLabel();
+        jLabelI10 = new javax.swing.JLabel();
+        jLabelJ1 = new javax.swing.JLabel();
+        jLabelJ2 = new javax.swing.JLabel();
+        jLabelJ3 = new javax.swing.JLabel();
+        jLabelJ4 = new javax.swing.JLabel();
+        jLabelJ5 = new javax.swing.JLabel();
+        jLabelJ6 = new javax.swing.JLabel();
+        jLabelJ7 = new javax.swing.JLabel();
+        jLabelJ8 = new javax.swing.JLabel();
+        jLabelJ9 = new javax.swing.JLabel();
+        jLabelJ10 = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
@@ -732,6 +772,286 @@ public class View extends FrameView {
         gridBagConstraints.gridy = 10;
         mainPanel.add(jLabelF10, gridBagConstraints);
 
+        jLabelG1.setText(resourceMap.getString("jLabelG1.text")); // NOI18N
+        jLabelG1.setName("jLabelG1"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 1;
+        mainPanel.add(jLabelG1, gridBagConstraints);
+
+        jLabelG2.setText(resourceMap.getString("jLabelG2.text")); // NOI18N
+        jLabelG2.setName("jLabelG2"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 2;
+        mainPanel.add(jLabelG2, gridBagConstraints);
+
+        jLabelG3.setText(resourceMap.getString("jLabelG3.text")); // NOI18N
+        jLabelG3.setName("jLabelG3"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 3;
+        mainPanel.add(jLabelG3, gridBagConstraints);
+
+        jLabelG4.setText(resourceMap.getString("jLabelG4.text")); // NOI18N
+        jLabelG4.setName("jLabelG4"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 4;
+        mainPanel.add(jLabelG4, gridBagConstraints);
+
+        jLabelG5.setText(resourceMap.getString("jLabelG5.text")); // NOI18N
+        jLabelG5.setName("jLabelG5"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 5;
+        mainPanel.add(jLabelG5, gridBagConstraints);
+
+        jLabelG6.setText(resourceMap.getString("jLabelG6.text")); // NOI18N
+        jLabelG6.setName("jLabelG6"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 6;
+        mainPanel.add(jLabelG6, gridBagConstraints);
+
+        jLabelG7.setText(resourceMap.getString("jLabelG7.text")); // NOI18N
+        jLabelG7.setName("jLabelG7"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 7;
+        mainPanel.add(jLabelG7, gridBagConstraints);
+
+        jLabelG8.setText(resourceMap.getString("jLabelG8.text")); // NOI18N
+        jLabelG8.setName("jLabelG8"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 8;
+        mainPanel.add(jLabelG8, gridBagConstraints);
+
+        jLabelG9.setText(resourceMap.getString("jLabelG9.text")); // NOI18N
+        jLabelG9.setName("jLabelG9"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 9;
+        mainPanel.add(jLabelG9, gridBagConstraints);
+
+        jLabelG10.setText(resourceMap.getString("jLabelG10.text")); // NOI18N
+        jLabelG10.setName("jLabelG10"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 10;
+        mainPanel.add(jLabelG10, gridBagConstraints);
+
+        jLabelH1.setText(resourceMap.getString("jLabelH1.text")); // NOI18N
+        jLabelH1.setName("jLabelH1"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 1;
+        mainPanel.add(jLabelH1, gridBagConstraints);
+
+        jLabelH2.setText(resourceMap.getString("jLabelH2.text")); // NOI18N
+        jLabelH2.setName("jLabelH2"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 2;
+        mainPanel.add(jLabelH2, gridBagConstraints);
+
+        jLabelH3.setText(resourceMap.getString("jLabelH3.text")); // NOI18N
+        jLabelH3.setName("jLabelH3"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 3;
+        mainPanel.add(jLabelH3, gridBagConstraints);
+
+        jLabelH4.setText(resourceMap.getString("jLabelH4.text")); // NOI18N
+        jLabelH4.setName("jLabelH4"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 4;
+        mainPanel.add(jLabelH4, gridBagConstraints);
+
+        jLabelH5.setText(resourceMap.getString("jLabelH5.text")); // NOI18N
+        jLabelH5.setName("jLabelH5"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 5;
+        mainPanel.add(jLabelH5, gridBagConstraints);
+
+        jLabelH6.setText(resourceMap.getString("jLabelH6.text")); // NOI18N
+        jLabelH6.setName("jLabelH6"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 6;
+        mainPanel.add(jLabelH6, gridBagConstraints);
+
+        jLabelH7.setText(resourceMap.getString("jLabelH7.text")); // NOI18N
+        jLabelH7.setName("jLabelH7"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 7;
+        mainPanel.add(jLabelH7, gridBagConstraints);
+
+        jLabelH8.setText(resourceMap.getString("jLabelH8.text")); // NOI18N
+        jLabelH8.setName("jLabelH8"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 8;
+        mainPanel.add(jLabelH8, gridBagConstraints);
+
+        jLabelH9.setText(resourceMap.getString("jLabelH9.text")); // NOI18N
+        jLabelH9.setName("jLabelH9"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 9;
+        mainPanel.add(jLabelH9, gridBagConstraints);
+
+        jLabelH10.setText(resourceMap.getString("jLabelH10.text")); // NOI18N
+        jLabelH10.setName("jLabelH10"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 10;
+        mainPanel.add(jLabelH10, gridBagConstraints);
+
+        jLabelI1.setText(resourceMap.getString("jLabelI1.text")); // NOI18N
+        jLabelI1.setName("jLabelI1"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 9;
+        gridBagConstraints.gridy = 1;
+        mainPanel.add(jLabelI1, gridBagConstraints);
+
+        jLabelI2.setText(resourceMap.getString("jLabelI2.text")); // NOI18N
+        jLabelI2.setName("jLabelI2"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 9;
+        gridBagConstraints.gridy = 2;
+        mainPanel.add(jLabelI2, gridBagConstraints);
+
+        jLabelI3.setText(resourceMap.getString("jLabelI3.text")); // NOI18N
+        jLabelI3.setName("jLabelI3"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 9;
+        gridBagConstraints.gridy = 3;
+        mainPanel.add(jLabelI3, gridBagConstraints);
+
+        jLabelI4.setText(resourceMap.getString("jLabelI4.text")); // NOI18N
+        jLabelI4.setName("jLabelI4"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 9;
+        gridBagConstraints.gridy = 4;
+        mainPanel.add(jLabelI4, gridBagConstraints);
+
+        jLabelI5.setText(resourceMap.getString("jLabelI5.text")); // NOI18N
+        jLabelI5.setName("jLabelI5"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 9;
+        gridBagConstraints.gridy = 5;
+        mainPanel.add(jLabelI5, gridBagConstraints);
+
+        jLabelI6.setText(resourceMap.getString("jLabelI6.text")); // NOI18N
+        jLabelI6.setName("jLabelI6"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 9;
+        gridBagConstraints.gridy = 6;
+        mainPanel.add(jLabelI6, gridBagConstraints);
+
+        jLabelI7.setText(resourceMap.getString("jLabelI7.text")); // NOI18N
+        jLabelI7.setName("jLabelI7"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 9;
+        gridBagConstraints.gridy = 7;
+        mainPanel.add(jLabelI7, gridBagConstraints);
+
+        jLabelI8.setText(resourceMap.getString("jLabelI8.text")); // NOI18N
+        jLabelI8.setName("jLabelI8"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 9;
+        gridBagConstraints.gridy = 8;
+        mainPanel.add(jLabelI8, gridBagConstraints);
+
+        jLabelI9.setText(resourceMap.getString("jLabelI9.text")); // NOI18N
+        jLabelI9.setName("jLabelI9"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 9;
+        gridBagConstraints.gridy = 9;
+        mainPanel.add(jLabelI9, gridBagConstraints);
+
+        jLabelI10.setText(resourceMap.getString("jLabelI10.text")); // NOI18N
+        jLabelI10.setName("jLabelI10"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 9;
+        gridBagConstraints.gridy = 10;
+        mainPanel.add(jLabelI10, gridBagConstraints);
+
+        jLabelJ1.setText(resourceMap.getString("jLabelJ1.text")); // NOI18N
+        jLabelJ1.setName("jLabelJ1"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridy = 1;
+        mainPanel.add(jLabelJ1, gridBagConstraints);
+
+        jLabelJ2.setText(resourceMap.getString("jLabelJ2.text")); // NOI18N
+        jLabelJ2.setName("jLabelJ2"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridy = 2;
+        mainPanel.add(jLabelJ2, gridBagConstraints);
+
+        jLabelJ3.setText(resourceMap.getString("jLabelJ3.text")); // NOI18N
+        jLabelJ3.setName("jLabelJ3"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridy = 3;
+        mainPanel.add(jLabelJ3, gridBagConstraints);
+
+        jLabelJ4.setText(resourceMap.getString("jLabelJ4.text")); // NOI18N
+        jLabelJ4.setName("jLabelJ4"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridy = 4;
+        mainPanel.add(jLabelJ4, gridBagConstraints);
+
+        jLabelJ5.setText(resourceMap.getString("jLabelJ5.text")); // NOI18N
+        jLabelJ5.setName("jLabelJ5"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridy = 5;
+        mainPanel.add(jLabelJ5, gridBagConstraints);
+
+        jLabelJ6.setText(resourceMap.getString("jLabelJ6.text")); // NOI18N
+        jLabelJ6.setName("jLabelJ6"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridy = 6;
+        mainPanel.add(jLabelJ6, gridBagConstraints);
+
+        jLabelJ7.setText(resourceMap.getString("jLabelJ7.text")); // NOI18N
+        jLabelJ7.setName("jLabelJ7"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridy = 7;
+        mainPanel.add(jLabelJ7, gridBagConstraints);
+
+        jLabelJ8.setText(resourceMap.getString("jLabelJ8.text")); // NOI18N
+        jLabelJ8.setName("jLabelJ8"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridy = 8;
+        mainPanel.add(jLabelJ8, gridBagConstraints);
+
+        jLabelJ9.setText(resourceMap.getString("jLabelJ9.text")); // NOI18N
+        jLabelJ9.setName("jLabelJ9"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridy = 9;
+        mainPanel.add(jLabelJ9, gridBagConstraints);
+
+        jLabelJ10.setText(resourceMap.getString("jLabelJ10.text")); // NOI18N
+        jLabelJ10.setName("jLabelJ10"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridy = 10;
+        mainPanel.add(jLabelJ10, gridBagConstraints);
+
         menuBar.setName("menuBar"); // NOI18N
 
         fileMenu.setText(resourceMap.getString("fileMenu.text")); // NOI18N
@@ -739,6 +1059,7 @@ public class View extends FrameView {
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(dk.jsh.cleaningrobotsimulator.ui.swing.CleaningRobotSimulator.class).getContext().getActionMap(View.class, this);
         exitMenuItem.setAction(actionMap.get("quit")); // NOI18N
+        exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
         exitMenuItem.setIcon(resourceMap.getIcon("exitMenuItem.icon")); // NOI18N
         exitMenuItem.setName("exitMenuItem"); // NOI18N
         fileMenu.add(exitMenuItem);
@@ -880,6 +1201,46 @@ public class View extends FrameView {
     private javax.swing.JLabel jLabelF7;
     private javax.swing.JLabel jLabelF8;
     private javax.swing.JLabel jLabelF9;
+    private javax.swing.JLabel jLabelG1;
+    private javax.swing.JLabel jLabelG10;
+    private javax.swing.JLabel jLabelG2;
+    private javax.swing.JLabel jLabelG3;
+    private javax.swing.JLabel jLabelG4;
+    private javax.swing.JLabel jLabelG5;
+    private javax.swing.JLabel jLabelG6;
+    private javax.swing.JLabel jLabelG7;
+    private javax.swing.JLabel jLabelG8;
+    private javax.swing.JLabel jLabelG9;
+    private javax.swing.JLabel jLabelH1;
+    private javax.swing.JLabel jLabelH10;
+    private javax.swing.JLabel jLabelH2;
+    private javax.swing.JLabel jLabelH3;
+    private javax.swing.JLabel jLabelH4;
+    private javax.swing.JLabel jLabelH5;
+    private javax.swing.JLabel jLabelH6;
+    private javax.swing.JLabel jLabelH7;
+    private javax.swing.JLabel jLabelH8;
+    private javax.swing.JLabel jLabelH9;
+    private javax.swing.JLabel jLabelI1;
+    private javax.swing.JLabel jLabelI10;
+    private javax.swing.JLabel jLabelI2;
+    private javax.swing.JLabel jLabelI3;
+    private javax.swing.JLabel jLabelI4;
+    private javax.swing.JLabel jLabelI5;
+    private javax.swing.JLabel jLabelI6;
+    private javax.swing.JLabel jLabelI7;
+    private javax.swing.JLabel jLabelI8;
+    private javax.swing.JLabel jLabelI9;
+    private javax.swing.JLabel jLabelJ1;
+    private javax.swing.JLabel jLabelJ10;
+    private javax.swing.JLabel jLabelJ2;
+    private javax.swing.JLabel jLabelJ3;
+    private javax.swing.JLabel jLabelJ4;
+    private javax.swing.JLabel jLabelJ5;
+    private javax.swing.JLabel jLabelJ6;
+    private javax.swing.JLabel jLabelJ7;
+    private javax.swing.JLabel jLabelJ8;
+    private javax.swing.JLabel jLabelJ9;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JProgressBar progressBar;
