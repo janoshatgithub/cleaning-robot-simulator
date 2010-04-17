@@ -243,8 +243,16 @@
         <Component class="javax.swing.JLabel" name="jLabelA1">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelA1.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelA1" noResource="true"/>
           </Properties>
+          <BindingProperties>
+            <BindingProperty name="icon" source="jLabelA1" sourcePath="${icon}" target="jLabelA1" targetPath="icon" updateStrategy="0" immediately="false"/>
+          </BindingProperties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
               <GridBagConstraints gridX="1" gridY="1" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="10" weightX="0.0" weightY="0.0"/>
@@ -254,6 +262,11 @@
         <Component class="javax.swing.JLabel" name="jLabelA2">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelA2.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelA2" noResource="true"/>
           </Properties>
           <Constraints>
@@ -265,6 +278,11 @@
         <Component class="javax.swing.JLabel" name="jLabelA3">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelA3.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelA3" noResource="true"/>
           </Properties>
           <Constraints>
@@ -276,6 +294,11 @@
         <Component class="javax.swing.JLabel" name="jLabelA4">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelA4.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelA4" noResource="true"/>
           </Properties>
           <Constraints>
@@ -287,6 +310,11 @@
         <Component class="javax.swing.JLabel" name="jLabelA5">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelA5.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelA5" noResource="true"/>
           </Properties>
           <Constraints>
@@ -298,6 +326,11 @@
         <Component class="javax.swing.JLabel" name="jLabelA6">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelA6.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelA6" noResource="true"/>
           </Properties>
           <Constraints>
@@ -309,6 +342,11 @@
         <Component class="javax.swing.JLabel" name="jLabelA7">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelA7.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelA7" noResource="true"/>
           </Properties>
           <Constraints>
@@ -320,6 +358,11 @@
         <Component class="javax.swing.JLabel" name="jLabelA8">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelA8.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelA8" noResource="true"/>
           </Properties>
           <Constraints>
@@ -331,6 +374,11 @@
         <Component class="javax.swing.JLabel" name="jLabelA9">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelA9.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelA9" noResource="true"/>
           </Properties>
           <Constraints>
@@ -342,6 +390,11 @@
         <Component class="javax.swing.JLabel" name="jLabelA10">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelA10.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelA10" noResource="true"/>
           </Properties>
           <Constraints>
@@ -353,6 +406,11 @@
         <Component class="javax.swing.JLabel" name="jLabelB1">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelB1.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelB1" noResource="true"/>
           </Properties>
           <Constraints>
@@ -364,6 +422,11 @@
         <Component class="javax.swing.JLabel" name="jLabelB2">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelB2.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelB2" noResource="true"/>
           </Properties>
           <Constraints>
@@ -375,6 +438,11 @@
         <Component class="javax.swing.JLabel" name="jLabelB3">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelB3.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelB3" noResource="true"/>
           </Properties>
           <Constraints>
@@ -386,6 +454,11 @@
         <Component class="javax.swing.JLabel" name="jLabelB4">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelB4.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelB4" noResource="true"/>
           </Properties>
           <Constraints>
@@ -397,6 +470,11 @@
         <Component class="javax.swing.JLabel" name="jLabelB5">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelB5.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelB5" noResource="true"/>
           </Properties>
           <Constraints>
@@ -408,6 +486,11 @@
         <Component class="javax.swing.JLabel" name="jLabelB6">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelB6.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelB6" noResource="true"/>
           </Properties>
           <Constraints>
@@ -419,6 +502,11 @@
         <Component class="javax.swing.JLabel" name="jLabelB7">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelB7.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelB7" noResource="true"/>
           </Properties>
           <Constraints>
@@ -430,6 +518,11 @@
         <Component class="javax.swing.JLabel" name="jLabelB8">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelB8.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelB8" noResource="true"/>
           </Properties>
           <Constraints>
@@ -441,6 +534,11 @@
         <Component class="javax.swing.JLabel" name="jLabelB9">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelB9.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelB9" noResource="true"/>
           </Properties>
           <Constraints>
@@ -452,6 +550,11 @@
         <Component class="javax.swing.JLabel" name="jLabelB10">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelB10.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelB10" noResource="true"/>
           </Properties>
           <Constraints>
@@ -463,6 +566,11 @@
         <Component class="javax.swing.JLabel" name="jLabelC1">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelC1.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelC1" noResource="true"/>
           </Properties>
           <Constraints>
@@ -474,6 +582,11 @@
         <Component class="javax.swing.JLabel" name="jLabelC2">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelC2.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelC2" noResource="true"/>
           </Properties>
           <Constraints>
@@ -485,6 +598,11 @@
         <Component class="javax.swing.JLabel" name="jLabelC3">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelC3.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelC3" noResource="true"/>
           </Properties>
           <Constraints>
@@ -496,6 +614,11 @@
         <Component class="javax.swing.JLabel" name="jLabelC4">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelC4.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelC4" noResource="true"/>
           </Properties>
           <Constraints>
@@ -507,6 +630,11 @@
         <Component class="javax.swing.JLabel" name="jLabelC5">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelC5.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelC5" noResource="true"/>
           </Properties>
           <Constraints>
@@ -518,6 +646,11 @@
         <Component class="javax.swing.JLabel" name="jLabelC6">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelC6.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelC6" noResource="true"/>
           </Properties>
           <Constraints>
@@ -529,6 +662,11 @@
         <Component class="javax.swing.JLabel" name="jLabelC7">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelC7.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelC7" noResource="true"/>
           </Properties>
           <Constraints>
@@ -540,6 +678,11 @@
         <Component class="javax.swing.JLabel" name="jLabelC8">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelC8.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelC8" noResource="true"/>
           </Properties>
           <Constraints>
@@ -551,6 +694,11 @@
         <Component class="javax.swing.JLabel" name="jLabelC9">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelC9.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelC9" noResource="true"/>
           </Properties>
           <Constraints>
@@ -562,6 +710,11 @@
         <Component class="javax.swing.JLabel" name="jLabelC10">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelC10.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelC10" noResource="true"/>
           </Properties>
           <Constraints>
@@ -573,6 +726,11 @@
         <Component class="javax.swing.JLabel" name="jLabelD1">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelD1.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelD1" noResource="true"/>
           </Properties>
           <Constraints>
@@ -584,6 +742,11 @@
         <Component class="javax.swing.JLabel" name="jLabelD2">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelD2.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelD2" noResource="true"/>
           </Properties>
           <Constraints>
@@ -595,6 +758,11 @@
         <Component class="javax.swing.JLabel" name="jLabelD3">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelD3.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelD3" noResource="true"/>
           </Properties>
           <Constraints>
@@ -606,6 +774,11 @@
         <Component class="javax.swing.JLabel" name="jLabelD4">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelD4.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelD4" noResource="true"/>
           </Properties>
           <Constraints>
@@ -617,6 +790,11 @@
         <Component class="javax.swing.JLabel" name="jLabelD5">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelD5.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelD5" noResource="true"/>
           </Properties>
           <Constraints>
@@ -628,6 +806,11 @@
         <Component class="javax.swing.JLabel" name="jLabelD6">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelD6.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelD6" noResource="true"/>
           </Properties>
           <Constraints>
@@ -639,6 +822,11 @@
         <Component class="javax.swing.JLabel" name="jLabelD7">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelD7.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelD7" noResource="true"/>
           </Properties>
           <Constraints>
@@ -650,6 +838,11 @@
         <Component class="javax.swing.JLabel" name="jLabelD8">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelD8.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelD8" noResource="true"/>
           </Properties>
           <Constraints>
@@ -661,6 +854,11 @@
         <Component class="javax.swing.JLabel" name="jLabelD9">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelD9.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelD9" noResource="true"/>
           </Properties>
           <Constraints>
@@ -672,6 +870,11 @@
         <Component class="javax.swing.JLabel" name="jLabelD10">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelD10.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelD10" noResource="true"/>
           </Properties>
           <Constraints>
@@ -683,6 +886,11 @@
         <Component class="javax.swing.JLabel" name="jLabelE1">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelE1.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelE1" noResource="true"/>
           </Properties>
           <Constraints>
@@ -694,6 +902,11 @@
         <Component class="javax.swing.JLabel" name="jLabelE2">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelE2.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelE2" noResource="true"/>
           </Properties>
           <Constraints>
@@ -705,6 +918,11 @@
         <Component class="javax.swing.JLabel" name="jLabelE3">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelE3.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelE3" noResource="true"/>
           </Properties>
           <Constraints>
@@ -716,6 +934,11 @@
         <Component class="javax.swing.JLabel" name="jLabelE4">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelE4.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelE4" noResource="true"/>
           </Properties>
           <Constraints>
@@ -727,6 +950,11 @@
         <Component class="javax.swing.JLabel" name="jLabelE5">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelE5.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelE5" noResource="true"/>
           </Properties>
           <Constraints>
@@ -738,6 +966,11 @@
         <Component class="javax.swing.JLabel" name="jLabelE6">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelE6.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelE6" noResource="true"/>
           </Properties>
           <Constraints>
@@ -749,6 +982,11 @@
         <Component class="javax.swing.JLabel" name="jLabelE7">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelE7.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelE7" noResource="true"/>
           </Properties>
           <Constraints>
@@ -760,6 +998,11 @@
         <Component class="javax.swing.JLabel" name="jLabelE8">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelE8.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelE8" noResource="true"/>
           </Properties>
           <Constraints>
@@ -771,6 +1014,11 @@
         <Component class="javax.swing.JLabel" name="jLabelE9">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelE9.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelE9" noResource="true"/>
           </Properties>
           <Constraints>
@@ -782,6 +1030,11 @@
         <Component class="javax.swing.JLabel" name="jLabelE10">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelE10.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelE10" noResource="true"/>
           </Properties>
           <Constraints>
@@ -793,6 +1046,11 @@
         <Component class="javax.swing.JLabel" name="jLabelF1">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelF1.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelF1" noResource="true"/>
           </Properties>
           <Constraints>
@@ -804,6 +1062,11 @@
         <Component class="javax.swing.JLabel" name="jLabelF2">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelF2.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelF2" noResource="true"/>
           </Properties>
           <Constraints>
@@ -815,6 +1078,11 @@
         <Component class="javax.swing.JLabel" name="jLabelF3">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelF3.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelF3" noResource="true"/>
           </Properties>
           <Constraints>
@@ -826,6 +1094,11 @@
         <Component class="javax.swing.JLabel" name="jLabelF4">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelF4.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelF4" noResource="true"/>
           </Properties>
           <Constraints>
@@ -837,6 +1110,11 @@
         <Component class="javax.swing.JLabel" name="jLabelF5">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelF5.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelF5" noResource="true"/>
           </Properties>
           <Constraints>
@@ -848,6 +1126,11 @@
         <Component class="javax.swing.JLabel" name="jLabelF6">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelF6.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelF6" noResource="true"/>
           </Properties>
           <Constraints>
@@ -859,6 +1142,11 @@
         <Component class="javax.swing.JLabel" name="jLabelF7">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelF7.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelF7" noResource="true"/>
           </Properties>
           <Constraints>
@@ -870,6 +1158,11 @@
         <Component class="javax.swing.JLabel" name="jLabelF8">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelF8.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelF8" noResource="true"/>
           </Properties>
           <Constraints>
@@ -881,6 +1174,11 @@
         <Component class="javax.swing.JLabel" name="jLabelF9">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelF9.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelF9" noResource="true"/>
           </Properties>
           <Constraints>
@@ -892,6 +1190,11 @@
         <Component class="javax.swing.JLabel" name="jLabelF10">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelF10.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelF10" noResource="true"/>
           </Properties>
           <Constraints>
@@ -903,6 +1206,11 @@
         <Component class="javax.swing.JLabel" name="jLabelG1">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelG1.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelG1" noResource="true"/>
           </Properties>
           <Constraints>
@@ -914,6 +1222,11 @@
         <Component class="javax.swing.JLabel" name="jLabelG2">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelG2.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelG2" noResource="true"/>
           </Properties>
           <Constraints>
@@ -925,6 +1238,11 @@
         <Component class="javax.swing.JLabel" name="jLabelG3">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelG3.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelG3" noResource="true"/>
           </Properties>
           <Constraints>
@@ -936,6 +1254,11 @@
         <Component class="javax.swing.JLabel" name="jLabelG4">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelG4.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelG4" noResource="true"/>
           </Properties>
           <Constraints>
@@ -947,6 +1270,11 @@
         <Component class="javax.swing.JLabel" name="jLabelG5">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelG5.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelG5" noResource="true"/>
           </Properties>
           <Constraints>
@@ -958,6 +1286,11 @@
         <Component class="javax.swing.JLabel" name="jLabelG6">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelG6.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelG6" noResource="true"/>
           </Properties>
           <Constraints>
@@ -969,6 +1302,11 @@
         <Component class="javax.swing.JLabel" name="jLabelG7">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelG7.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelG7" noResource="true"/>
           </Properties>
           <Constraints>
@@ -980,6 +1318,11 @@
         <Component class="javax.swing.JLabel" name="jLabelG8">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelG8.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelG8" noResource="true"/>
           </Properties>
           <Constraints>
@@ -991,6 +1334,11 @@
         <Component class="javax.swing.JLabel" name="jLabelG9">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelG9.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelG9" noResource="true"/>
           </Properties>
           <Constraints>
@@ -1002,6 +1350,11 @@
         <Component class="javax.swing.JLabel" name="jLabelG10">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelG10.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelG10" noResource="true"/>
           </Properties>
           <Constraints>
@@ -1013,6 +1366,11 @@
         <Component class="javax.swing.JLabel" name="jLabelH1">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelH1.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelH1" noResource="true"/>
           </Properties>
           <Constraints>
@@ -1024,6 +1382,11 @@
         <Component class="javax.swing.JLabel" name="jLabelH2">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelH2.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelH2" noResource="true"/>
           </Properties>
           <Constraints>
@@ -1035,6 +1398,11 @@
         <Component class="javax.swing.JLabel" name="jLabelH3">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelH3.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelH3" noResource="true"/>
           </Properties>
           <Constraints>
@@ -1046,6 +1414,11 @@
         <Component class="javax.swing.JLabel" name="jLabelH4">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelH4.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelH4" noResource="true"/>
           </Properties>
           <Constraints>
@@ -1057,6 +1430,11 @@
         <Component class="javax.swing.JLabel" name="jLabelH5">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelH5.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelH5" noResource="true"/>
           </Properties>
           <Constraints>
@@ -1068,6 +1446,11 @@
         <Component class="javax.swing.JLabel" name="jLabelH6">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelH6.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelH6" noResource="true"/>
           </Properties>
           <Constraints>
@@ -1079,6 +1462,11 @@
         <Component class="javax.swing.JLabel" name="jLabelH7">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelH7.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelH7" noResource="true"/>
           </Properties>
           <Constraints>
@@ -1090,6 +1478,11 @@
         <Component class="javax.swing.JLabel" name="jLabelH8">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelH8.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelH8" noResource="true"/>
           </Properties>
           <Constraints>
@@ -1101,6 +1494,11 @@
         <Component class="javax.swing.JLabel" name="jLabelH9">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelH9.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelH9" noResource="true"/>
           </Properties>
           <Constraints>
@@ -1112,6 +1510,11 @@
         <Component class="javax.swing.JLabel" name="jLabelH10">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelH10.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelH10" noResource="true"/>
           </Properties>
           <Constraints>
@@ -1123,6 +1526,11 @@
         <Component class="javax.swing.JLabel" name="jLabelI1">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelI1.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelI1" noResource="true"/>
           </Properties>
           <Constraints>
@@ -1134,6 +1542,11 @@
         <Component class="javax.swing.JLabel" name="jLabelI2">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelI2.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelI2" noResource="true"/>
           </Properties>
           <Constraints>
@@ -1145,6 +1558,11 @@
         <Component class="javax.swing.JLabel" name="jLabelI3">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelI3.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelI3" noResource="true"/>
           </Properties>
           <Constraints>
@@ -1156,6 +1574,11 @@
         <Component class="javax.swing.JLabel" name="jLabelI4">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelI4.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelI4" noResource="true"/>
           </Properties>
           <Constraints>
@@ -1167,6 +1590,11 @@
         <Component class="javax.swing.JLabel" name="jLabelI5">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelI5.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelI5" noResource="true"/>
           </Properties>
           <Constraints>
@@ -1178,6 +1606,11 @@
         <Component class="javax.swing.JLabel" name="jLabelI6">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelI6.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelI6" noResource="true"/>
           </Properties>
           <Constraints>
@@ -1189,6 +1622,11 @@
         <Component class="javax.swing.JLabel" name="jLabelI7">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelI7.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelI7" noResource="true"/>
           </Properties>
           <Constraints>
@@ -1200,6 +1638,11 @@
         <Component class="javax.swing.JLabel" name="jLabelI8">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelI8.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelI8" noResource="true"/>
           </Properties>
           <Constraints>
@@ -1211,6 +1654,11 @@
         <Component class="javax.swing.JLabel" name="jLabelI9">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelI9.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelI9" noResource="true"/>
           </Properties>
           <Constraints>
@@ -1222,6 +1670,11 @@
         <Component class="javax.swing.JLabel" name="jLabelI10">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelI10.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelI10" noResource="true"/>
           </Properties>
           <Constraints>
@@ -1233,6 +1686,11 @@
         <Component class="javax.swing.JLabel" name="jLabelJ1">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelJ1.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelJ1" noResource="true"/>
           </Properties>
           <Constraints>
@@ -1244,6 +1702,11 @@
         <Component class="javax.swing.JLabel" name="jLabelJ2">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelJ2.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelJ2" noResource="true"/>
           </Properties>
           <Constraints>
@@ -1255,6 +1718,11 @@
         <Component class="javax.swing.JLabel" name="jLabelJ3">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelJ3.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelJ3" noResource="true"/>
           </Properties>
           <Constraints>
@@ -1266,6 +1734,11 @@
         <Component class="javax.swing.JLabel" name="jLabelJ4">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelJ4.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelJ4" noResource="true"/>
           </Properties>
           <Constraints>
@@ -1277,6 +1750,11 @@
         <Component class="javax.swing.JLabel" name="jLabelJ5">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelJ5.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelJ5" noResource="true"/>
           </Properties>
           <Constraints>
@@ -1288,6 +1766,11 @@
         <Component class="javax.swing.JLabel" name="jLabelJ6">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelJ6.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelJ6" noResource="true"/>
           </Properties>
           <Constraints>
@@ -1299,6 +1782,11 @@
         <Component class="javax.swing.JLabel" name="jLabelJ7">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelJ7.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelJ7" noResource="true"/>
           </Properties>
           <Constraints>
@@ -1310,6 +1798,11 @@
         <Component class="javax.swing.JLabel" name="jLabelJ8">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelJ8.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelJ8" noResource="true"/>
           </Properties>
           <Constraints>
@@ -1321,6 +1814,11 @@
         <Component class="javax.swing.JLabel" name="jLabelJ9">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelJ9.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelJ9" noResource="true"/>
           </Properties>
           <Constraints>
@@ -1332,6 +1830,11 @@
         <Component class="javax.swing.JLabel" name="jLabelJ10">
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabelJ10.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
             <Property name="name" type="java.lang.String" value="jLabelJ10" noResource="true"/>
           </Properties>
           <Constraints>
@@ -1365,9 +1868,6 @@
               <Properties>
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
                   <action class="org.jdesktop.application.Application" id="quit" methodName="quit"/>
-                </Property>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Alt+F4"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="exitMenuItem.icon"/>
                 <Property name="name" type="java.lang.String" value="exitMenuItem" noResource="true"/>
