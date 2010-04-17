@@ -58,8 +58,85 @@ public class View extends FrameView {
         jLabelI2.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
         jLabelJ2.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
         
+        jLabelB3.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelC3.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelD3.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelE3.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelF3.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelG3.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelH3.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelI3.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelJ3.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
 
+        jLabelB4.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelC4.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelD4.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelE4.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelF4.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelG4.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelH4.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelI4.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelJ4.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
 
+        jLabelB5.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelC5.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelD5.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelE5.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelF5.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelG5.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelH5.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelI5.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelJ5.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+
+        jLabelB6.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelC6.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelD6.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelE6.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelF6.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelG6.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelH6.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelI6.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelJ6.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+
+        jLabelB7.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelC7.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelD7.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelE7.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelF7.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelG7.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelH7.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelI7.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelJ7.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+
+        jLabelB8.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelC8.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelD8.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelE8.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelF8.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelG8.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelH8.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelI8.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelJ8.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+
+        jLabelB9.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelC9.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelD9.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelE9.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelF9.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelG9.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelH9.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelI9.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelJ9.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+
+        jLabelB10.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelC10.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelD10.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelE10.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelF10.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelG10.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelH10.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelI10.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+        jLabelJ10.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
 
         // status bar initialization - message timeout, idle icon and busy animation, etc
         
@@ -259,6 +336,9 @@ public class View extends FrameView {
         jLabelJ8 = new javax.swing.JLabel();
         jLabelJ9 = new javax.swing.JLabel();
         jLabelJ10 = new javax.swing.JLabel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
@@ -269,6 +349,8 @@ public class View extends FrameView {
         statusMessageLabel = new javax.swing.JLabel();
         statusAnimationLabel = new javax.swing.JLabel();
         progressBar = new javax.swing.JProgressBar();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
 
         mainPanel.setName("mainPanel"); // NOI18N
         mainPanel.setLayout(new java.awt.GridBagLayout());
@@ -276,7 +358,9 @@ public class View extends FrameView {
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(dk.jsh.cleaningrobotsimulator.ui.swing.CleaningRobotSimulator.class).getContext().getResourceMap(View.class);
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
-        mainPanel.add(jLabel1, new java.awt.GridBagConstraints());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        mainPanel.add(jLabel1, gridBagConstraints);
 
         jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
@@ -1192,6 +1276,34 @@ public class View extends FrameView {
         gridBagConstraints.gridy = 10;
         mainPanel.add(jLabelJ10, gridBagConstraints);
 
+        jTabbedPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jTabbedPane1.setName("jTabbedPane1"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridwidth = 15;
+        gridBagConstraints.gridheight = 12;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        mainPanel.add(jTabbedPane1, gridBagConstraints);
+
+        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
+        jButton1.setName("jButton1"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 11;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        mainPanel.add(jButton1, gridBagConstraints);
+
+        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
+        jButton2.setName("jButton2"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 11;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        mainPanel.add(jButton2, gridBagConstraints);
+
         menuBar.setName("menuBar"); // NOI18N
 
         fileMenu.setText(resourceMap.getString("fileMenu.text")); // NOI18N
@@ -1253,6 +1365,13 @@ public class View extends FrameView {
                 .add(3, 3, 3))
         );
 
+        jScrollPane1.setName("jScrollPane1"); // NOI18N
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jTextArea1.setName("jTextArea1"); // NOI18N
+        jScrollPane1.setViewportView(jTextArea1);
+
         setComponent(mainPanel);
         setMenuBar(menuBar);
         setStatusBar(statusPanel);
@@ -1261,6 +1380,8 @@ public class View extends FrameView {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1382,6 +1503,9 @@ public class View extends FrameView {
     private javax.swing.JLabel jLabelJ7;
     private javax.swing.JLabel jLabelJ8;
     private javax.swing.JLabel jLabelJ9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JProgressBar progressBar;
