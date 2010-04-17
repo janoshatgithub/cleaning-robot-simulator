@@ -4,9 +4,6 @@
 
 package dk.jsh.cleaningrobotsimulator.ui.swing;
 
-import java.awt.Dimension;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
@@ -25,6 +22,13 @@ public class View extends FrameView {
         initComponents();
        
         ResourceMap resourceMap = getResourceMap();
+
+        jTabbedPane1.setIconAt(0, resourceMap.getIcon("RobotSimulator.bender"));
+        jTabbedPane1.setIconAt(1, resourceMap.getIcon("RobotSimulator.wall-e"));
+        jTabbedPane1.setIconAt(2, resourceMap.getIcon("RobotSimulator.android"));
+        jTabbedPane1.setIconAt(3, resourceMap.getIcon("RobotSimulator.dirt"));
+        jTabbedPane1.setIconAt(4, resourceMap.getIcon("RobotSimulator.dustbin"));
+
         jLabelA1.setIcon(resourceMap.getIcon("RobotSimulator.dustbin"));
         jLabelA2.setIcon(resourceMap.getIcon("RobotSimulator.dirt"));
         jLabelA3.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
@@ -160,6 +164,11 @@ public class View extends FrameView {
         java.awt.GridBagConstraints gridBagConstraints;
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
+        menuBar = new javax.swing.JMenuBar();
+        javax.swing.JMenu fileMenu = new javax.swing.JMenu();
+        javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
+        javax.swing.JMenu helpMenu = new javax.swing.JMenu();
+        javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         mainPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -283,21 +292,48 @@ public class View extends FrameView {
         jLabelJ9 = new javax.swing.JLabel();
         jLabelJ10 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        menuBar = new javax.swing.JMenuBar();
-        javax.swing.JMenu fileMenu = new javax.swing.JMenu();
-        javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
-        javax.swing.JMenu helpMenu = new javax.swing.JMenu();
-        javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea2 = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTextArea3 = new javax.swing.JTextArea();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTextArea4 = new javax.swing.JTextArea();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTextArea5 = new javax.swing.JTextArea();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+
+        menuBar.setName("menuBar"); // NOI18N
+
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(dk.jsh.cleaningrobotsimulator.ui.swing.CleaningRobotSimulator.class).getContext().getResourceMap(View.class);
+        fileMenu.setText(resourceMap.getString("fileMenu.text")); // NOI18N
+        fileMenu.setName("fileMenu"); // NOI18N
+
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(dk.jsh.cleaningrobotsimulator.ui.swing.CleaningRobotSimulator.class).getContext().getActionMap(View.class, this);
+        exitMenuItem.setAction(actionMap.get("quit")); // NOI18N
+        exitMenuItem.setIcon(resourceMap.getIcon("exitMenuItem.icon")); // NOI18N
+        exitMenuItem.setName("exitMenuItem"); // NOI18N
+        fileMenu.add(exitMenuItem);
+
+        menuBar.add(fileMenu);
+
+        helpMenu.setText(resourceMap.getString("helpMenu.text")); // NOI18N
+        helpMenu.setName("helpMenu"); // NOI18N
+
+        aboutMenuItem.setAction(actionMap.get("showAboutBox")); // NOI18N
+        aboutMenuItem.setIcon(resourceMap.getIcon("aboutMenuItem.icon")); // NOI18N
+        aboutMenuItem.setDisabledIcon(resourceMap.getIcon("aboutMenuItem.disabledIcon")); // NOI18N
+        aboutMenuItem.setName("aboutMenuItem"); // NOI18N
+        helpMenu.add(aboutMenuItem);
+
+        menuBar.add(helpMenu);
 
         mainPanel.setMinimumSize(new java.awt.Dimension(313, 240));
         mainPanel.setName("mainPanel"); // NOI18N
         mainPanel.setLayout(new java.awt.GridBagLayout());
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(dk.jsh.cleaningrobotsimulator.ui.swing.CleaningRobotSimulator.class).getContext().getResourceMap(View.class);
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1220,6 +1256,52 @@ public class View extends FrameView {
 
         jTabbedPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jTabbedPane1.setName("jTabbedPane1"); // NOI18N
+
+        jScrollPane1.setName("jScrollPane1"); // NOI18N
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jTextArea1.setName("jTextArea1"); // NOI18N
+        jScrollPane1.setViewportView(jTextArea1);
+
+        jTabbedPane1.addTab(resourceMap.getString("jScrollPane1.TabConstraints.tabTitle"), jScrollPane1); // NOI18N
+
+        jScrollPane2.setName("jScrollPane2"); // NOI18N
+
+        jTextArea2.setColumns(20);
+        jTextArea2.setRows(5);
+        jTextArea2.setName("jTextArea2"); // NOI18N
+        jScrollPane2.setViewportView(jTextArea2);
+
+        jTabbedPane1.addTab(resourceMap.getString("jScrollPane2.TabConstraints.tabTitle"), jScrollPane2); // NOI18N
+
+        jScrollPane3.setName("jScrollPane3"); // NOI18N
+
+        jTextArea3.setColumns(20);
+        jTextArea3.setRows(5);
+        jTextArea3.setName("jTextArea3"); // NOI18N
+        jScrollPane3.setViewportView(jTextArea3);
+
+        jTabbedPane1.addTab(resourceMap.getString("jScrollPane3.TabConstraints.tabTitle"), jScrollPane3); // NOI18N
+
+        jScrollPane4.setName("jScrollPane4"); // NOI18N
+
+        jTextArea4.setColumns(20);
+        jTextArea4.setRows(5);
+        jTextArea4.setName("jTextArea4"); // NOI18N
+        jScrollPane4.setViewportView(jTextArea4);
+
+        jTabbedPane1.addTab(resourceMap.getString("jScrollPane4.TabConstraints.tabTitle"), jScrollPane4); // NOI18N
+
+        jScrollPane5.setName("jScrollPane5"); // NOI18N
+
+        jTextArea5.setColumns(20);
+        jTextArea5.setRows(5);
+        jTextArea5.setName("jTextArea5"); // NOI18N
+        jScrollPane5.setViewportView(jTextArea5);
+
+        jTabbedPane1.addTab(resourceMap.getString("jScrollPane5.TabConstraints.tabTitle"), jScrollPane5); // NOI18N
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridwidth = 15;
         gridBagConstraints.gridheight = 12;
@@ -1249,37 +1331,6 @@ public class View extends FrameView {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
         gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
         mainPanel.add(jButton2, gridBagConstraints);
-
-        menuBar.setName("menuBar"); // NOI18N
-
-        fileMenu.setText(resourceMap.getString("fileMenu.text")); // NOI18N
-        fileMenu.setName("fileMenu"); // NOI18N
-
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(dk.jsh.cleaningrobotsimulator.ui.swing.CleaningRobotSimulator.class).getContext().getActionMap(View.class, this);
-        exitMenuItem.setAction(actionMap.get("quit")); // NOI18N
-        exitMenuItem.setIcon(resourceMap.getIcon("exitMenuItem.icon")); // NOI18N
-        exitMenuItem.setName("exitMenuItem"); // NOI18N
-        fileMenu.add(exitMenuItem);
-
-        menuBar.add(fileMenu);
-
-        helpMenu.setText(resourceMap.getString("helpMenu.text")); // NOI18N
-        helpMenu.setName("helpMenu"); // NOI18N
-
-        aboutMenuItem.setAction(actionMap.get("showAboutBox")); // NOI18N
-        aboutMenuItem.setIcon(resourceMap.getIcon("aboutMenuItem.icon")); // NOI18N
-        aboutMenuItem.setDisabledIcon(resourceMap.getIcon("aboutMenuItem.disabledIcon")); // NOI18N
-        aboutMenuItem.setName("aboutMenuItem"); // NOI18N
-        helpMenu.add(aboutMenuItem);
-
-        menuBar.add(helpMenu);
-
-        jScrollPane1.setName("jScrollPane1"); // NOI18N
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setName("jTextArea1"); // NOI18N
-        jScrollPane1.setViewportView(jTextArea1);
 
         setComponent(mainPanel);
         setMenuBar(menuBar);
@@ -1412,8 +1463,16 @@ public class View extends FrameView {
     private javax.swing.JLabel jLabelJ8;
     private javax.swing.JLabel jLabelJ9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea jTextArea2;
+    private javax.swing.JTextArea jTextArea3;
+    private javax.swing.JTextArea jTextArea4;
+    private javax.swing.JTextArea jTextArea5;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
