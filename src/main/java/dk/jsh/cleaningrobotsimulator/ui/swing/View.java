@@ -4,6 +4,9 @@
 
 package dk.jsh.cleaningrobotsimulator.ui.swing;
 
+import dk.jsh.cleaningrobotsimulator.concurrent.Board;
+import dk.jsh.cleaningrobotsimulator.concurrent.Constants;
+import dk.jsh.cleaningrobotsimulator.concurrent.Field;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import org.jdesktop.application.Action;
@@ -18,20 +21,20 @@ import javax.swing.JLabel;
  * The application's main frame.
  */
 public class View extends FrameView {
-    private final static int MAX_ROWS = 10;
-    private final static int MAX_COLUMNS = 10;
     public final String BENDER = "RobotSimulator.bender";
     public final String WALL_E = "RobotSimulator.wall-e";
     public final String ANDROID = "RobotSimulator.android";
     public final String DIRT = "RobotSimulator.dirt";
     public final String DUSTBIN = "RobotSimulator.dustbin";
     public final String CLEAN = "RobotSimulator.clean";
-    private JLabel board[][];
+    private JLabel uiBoard[][];
+    private Board board;
     private ResourceMap resourceMap;
 
 
     public View(SingleFrameApplication app) {
         super(app);
+        board = Board.getInstance();
         resourceMap = getResourceMap();
         initComponents();
 
@@ -42,27 +45,31 @@ public class View extends FrameView {
         jTabbedPane1.setIconAt(3, resourceMap.getIcon(DIRT));
         jTabbedPane1.setIconAt(4, resourceMap.getIcon(DUSTBIN));
 
-        createBoard();
+        createUIBoard();
         setFieldIcon('A', 1, DUSTBIN);
         setFieldIcon('J', 1, BENDER);
         setFieldIcon('J', 10, WALL_E);
         setFieldIcon('A', 10, ANDROID);
+
+        jButtonStop.setEnabled(false);
     }
 
-    private void createBoard() {
-        board = new JLabel[MAX_ROWS][MAX_COLUMNS];
+    private void createUIBoard() {
+        uiBoard = new JLabel[Constants.MAX_ROWS][Constants.MAX_COLUMNS];
         JLabel jLabel;
         GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
         Insets insets = new Insets(1, 1, 1, 1);
-        for (int row = 0; row < MAX_ROWS; row++) {
-            for (int column = 0; column < MAX_COLUMNS; column++) {
+        for (int row = 0; row < Constants.MAX_ROWS; row++) {
+            for (int column = 0; column < Constants.MAX_COLUMNS; column++) {
+                //Field field = board.getField((char)(column + 65), row);
+                //todo
                 jLabel = new JLabel();
                 jLabel.setIcon(resourceMap.getIcon(CLEAN));
                 gridBagConstraints.gridx = column + 1;
                 gridBagConstraints.gridy = row + 1;
                 gridBagConstraints.insets = insets;
                 mainPanel.add(jLabel, gridBagConstraints);
-                board[row][column] = jLabel;
+                uiBoard[row][column] = jLabel;
             }
         }
     }
@@ -77,11 +84,11 @@ public class View extends FrameView {
     public void setFieldIcon(char column, int row, String iconResource) {
         int boardColumn = ((int)column) - 65;
         int boardRow = row - 1;
-        if (boardColumn < 0 || boardColumn >= MAX_COLUMNS ||
-            boardRow < 0 || boardRow >= MAX_ROWS) {
+        if (boardColumn < 0 || boardColumn >= Constants.MAX_COLUMNS ||
+            boardRow < 0 || boardRow >= Constants.MAX_ROWS) {
             throw new IllegalArgumentException();
         }
-        JLabel jLabel = board[boardRow][boardColumn];
+        JLabel jLabel = uiBoard[boardRow][boardColumn];
         jLabel.setIcon(resourceMap.getIcon(iconResource));
     }
 
@@ -93,6 +100,20 @@ public class View extends FrameView {
             aboutBox.setLocationRelativeTo(mainFrame);
         }
         CleaningRobotSimulator.getApplication().show(aboutBox);
+    }
+
+    @Action
+    public void start() {
+        //TODO
+        jButtonStart.setEnabled(false);
+        jButtonStop.setEnabled(true);
+    }
+
+    @Action
+    public void stop() {
+        //TODO
+        jButtonStart.setEnabled(true);
+        jButtonStop.setEnabled(false);
     }
 
     /** This method is called from within the constructor to
@@ -143,8 +164,8 @@ public class View extends FrameView {
         jTextArea4 = new javax.swing.JTextArea();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTextArea5 = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jButtonStart = new javax.swing.JButton();
+        jButtonStop = new javax.swing.JButton();
 
         menuBar.setName("menuBar"); // NOI18N
 
@@ -347,8 +368,9 @@ public class View extends FrameView {
         gridBagConstraints.weighty = 1.0;
         mainPanel.add(jTabbedPane1, gridBagConstraints);
 
-        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
-        jButton1.setName("jButton1"); // NOI18N
+        jButtonStart.setAction(actionMap.get("start")); // NOI18N
+        jButtonStart.setText(resourceMap.getString("jButtonStart.text")); // NOI18N
+        jButtonStart.setName("jButtonStart"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 11;
@@ -356,10 +378,11 @@ public class View extends FrameView {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
         gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
-        mainPanel.add(jButton1, gridBagConstraints);
+        mainPanel.add(jButtonStart, gridBagConstraints);
 
-        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
-        jButton2.setName("jButton2"); // NOI18N
+        jButtonStop.setAction(actionMap.get("stop")); // NOI18N
+        jButtonStop.setText(resourceMap.getString("jButtonStop.text")); // NOI18N
+        jButtonStop.setName("jButtonStop"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 7;
         gridBagConstraints.gridy = 11;
@@ -367,15 +390,15 @@ public class View extends FrameView {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
         gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
-        mainPanel.add(jButton2, gridBagConstraints);
+        mainPanel.add(jButtonStop, gridBagConstraints);
 
         setComponent(mainPanel);
         setMenuBar(menuBar);
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButtonStart;
+    private javax.swing.JButton jButtonStop;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
