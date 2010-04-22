@@ -1,7 +1,6 @@
 /*
  * View.java
  */
-
 package dk.jsh.cleaningrobotsimulator.ui.swing;
 
 import dk.jsh.cleaningrobotsimulator.concurrent.Board;
@@ -21,12 +20,12 @@ import javax.swing.JLabel;
  * The application's main frame.
  */
 public class View extends FrameView {
-    public final String BENDER = "RobotSimulator.bender";
-    public final String WALL_E = "RobotSimulator.wall-e";
-    public final String ANDROID = "RobotSimulator.android";
-    public final String DIRT = "RobotSimulator.dirt";
-    public final String DUSTBIN = "RobotSimulator.dustbin";
-    public final String CLEAN = "RobotSimulator.clean";
+    public final String RES_BENDER = "RobotSimulator.bender";
+    public final String RES_WALL_E = "RobotSimulator.wall-e";
+    public final String RES_ANDROID = "RobotSimulator.android";
+    public final String RES_DIRT = "RobotSimulator.dirt";
+    public final String RES_DUSTBIN = "RobotSimulator.dustbin";
+    public final String RES_CLEAN = "RobotSimulator.clean";
     private JLabel uiBoard[][];
     private Board board;
     private ResourceMap resourceMap;
@@ -39,18 +38,13 @@ public class View extends FrameView {
         initComponents();
 
         //Set tab icons
-        jTabbedPane1.setIconAt(0, resourceMap.getIcon(BENDER));
-        jTabbedPane1.setIconAt(1, resourceMap.getIcon(WALL_E));
-        jTabbedPane1.setIconAt(2, resourceMap.getIcon(ANDROID));
-        jTabbedPane1.setIconAt(3, resourceMap.getIcon(DIRT));
-        jTabbedPane1.setIconAt(4, resourceMap.getIcon(DUSTBIN));
+        jTabbedPane1.setIconAt(0, resourceMap.getIcon(RES_BENDER));
+        jTabbedPane1.setIconAt(1, resourceMap.getIcon(RES_WALL_E));
+        jTabbedPane1.setIconAt(2, resourceMap.getIcon(RES_ANDROID));
+        jTabbedPane1.setIconAt(3, resourceMap.getIcon(RES_DIRT));
+        jTabbedPane1.setIconAt(4, resourceMap.getIcon(RES_DUSTBIN));
 
         createUIBoard();
-        setFieldIcon('A', 1, DUSTBIN);
-        setFieldIcon('J', 1, BENDER);
-        setFieldIcon('J', 10, WALL_E);
-        setFieldIcon('A', 10, ANDROID);
-
         jButtonStop.setEnabled(false);
     }
 
@@ -61,10 +55,46 @@ public class View extends FrameView {
         Insets insets = new Insets(1, 1, 1, 1);
         for (int row = 0; row < Constants.MAX_ROWS; row++) {
             for (int column = 0; column < Constants.MAX_COLUMNS; column++) {
-                //Field field = board.getField((char)(column + 65), row);
-                //todo
                 jLabel = new JLabel();
-                jLabel.setIcon(resourceMap.getIcon(CLEAN));
+                Field field = board.getField(column, row);
+                Field.UsedBy usedBy = field.getUsedBy();
+                String iconRes = RES_CLEAN;
+                if (!field.isEmpty()) {
+                    switch (usedBy) {
+                        case ANDROID :
+                            iconRes = RES_ANDROID;
+                            break;
+                        case WALL_E :
+                            iconRes = RES_WALL_E;
+                            break;
+                        case BENDER :
+                            iconRes = RES_BENDER;
+                            break;
+                        default :
+                            throw new RuntimeException("Field column " + 
+                                    column + " row " + row + 
+                                    " is not empty. But no robot is added.");
+                    }
+                }
+                else {
+                    Field.Status status = field.getStatus();
+                    switch (status) {
+                        case CLEAN :
+                            iconRes = RES_CLEAN;
+                            break;
+                        case DIRTY :
+                            iconRes = RES_DIRT;
+                            break;
+                        case DUSTBIN :
+                            iconRes = RES_DUSTBIN;
+                            break;
+                        default :
+                            throw new RuntimeException("Field column " +
+                                    column + " row " + row +
+                                    " has no known status.");
+                    }
+                }
+                jLabel.setIcon(resourceMap.getIcon(iconRes));
                 gridBagConstraints.gridx = column + 1;
                 gridBagConstraints.gridy = row + 1;
                 gridBagConstraints.insets = insets;
@@ -81,14 +111,12 @@ public class View extends FrameView {
      * @param row row 1 to 10
      * @param iconResource icon resource name
      */
-    public void setFieldIcon(char column, int row, String iconResource) {
-        int boardColumn = ((int)column) - 65;
-        int boardRow = row - 1;
-        if (boardColumn < 0 || boardColumn >= Constants.MAX_COLUMNS ||
-            boardRow < 0 || boardRow >= Constants.MAX_ROWS) {
+    public void setFieldIcon(int column, int row, String iconResource) {
+        if (column < 0 || column >= Constants.MAX_COLUMNS ||
+            row < 0 || row >= Constants.MAX_ROWS) {
             throw new IllegalArgumentException();
         }
-        JLabel jLabel = uiBoard[boardRow][boardColumn];
+        JLabel jLabel = uiBoard[row][column];
         jLabel.setIcon(resourceMap.getIcon(iconResource));
     }
 

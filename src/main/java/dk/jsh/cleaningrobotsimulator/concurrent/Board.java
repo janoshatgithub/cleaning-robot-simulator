@@ -20,10 +20,10 @@ public class Board {
          board[row][column] = new Field(Field.Status.CLEAN, Field.UsedBy.EMPTY);
        }
      }
-     setField('A', 1, Field.Status.DUSTBIN, Field.UsedBy.EMPTY);
-     setField('J', 1, Field.Status.CLEAN, Field.UsedBy.BENDER);
-     setField('J', 10, Field.Status.CLEAN, Field.UsedBy.WALL_E);
-     setField('A', 10, Field.Status.CLEAN, Field.UsedBy.ANDROID);
+     setField(0, 0, Field.Status.DUSTBIN, Field.UsedBy.EMPTY);
+     setField(9, 0, Field.Status.CLEAN, Field.UsedBy.BENDER);
+     setField(9, 9, Field.Status.CLEAN, Field.UsedBy.WALL_E);
+     setField(0, 9, Field.Status.CLEAN, Field.UsedBy.ANDROID);
    }
    
    /**
@@ -43,35 +43,23 @@ public class Board {
       }
    }
 
-   public void setField(char column, int row, Field.Status status,
+   public void setField(int column, int row, Field.Status status,
            Field.UsedBy usedBy) {
-        int boardColumn = getBoardColumn(column);
-        int boardRow = getBoardRow(row);
-        testFieldArguments(boardColumn, boardRow);
-        Field field = board[boardRow][boardColumn];
+        testFieldArguments(column, row);
+        Field field = board[row][column];
         field.setStatus(status);
         field.setUsedBy(usedBy);
    }
 
-   public Field getField(char column, int row) {
-        int boardColumn = getBoardColumn(column);
-        int boardRow = getBoardRow(row);
-        testFieldArguments(boardColumn, boardRow);
-        return board[boardRow][boardColumn];
+   public Field getField(int column, int row) {
+        testFieldArguments(column, row);
+        return board[row][column];
    }
 
-    private int getBoardColumn(char column) {
-        int boardColumn = ((int) column) - 65;
-        return boardColumn;
-    }
-
-    private int getBoardRow(int row) {
-        int boardRow = row - 1;
-        return boardRow;
-    }
-
-   private void testFieldArguments(int boardColumn, int boardRow) throws IllegalArgumentException {
-        if (boardColumn < 0 || boardColumn >= Constants.MAX_COLUMNS || boardRow < 0 || boardRow >= Constants.MAX_ROWS) {
+   private void testFieldArguments(int column, int row)
+           throws IllegalArgumentException {
+        if (column < 0 || column >= Constants.MAX_COLUMNS ||
+                row < 0 || row >= Constants.MAX_ROWS) {
             throw new IllegalArgumentException();
         }
     }
