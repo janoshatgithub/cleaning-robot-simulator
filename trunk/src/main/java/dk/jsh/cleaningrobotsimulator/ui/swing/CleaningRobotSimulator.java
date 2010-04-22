@@ -4,6 +4,12 @@
 
 package dk.jsh.cleaningrobotsimulator.ui.swing;
 
+import java.io.IOException;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.SingleFrameApplication;
 
@@ -16,6 +22,17 @@ public class CleaningRobotSimulator extends SingleFrameApplication {
      * At startup create and show the main frame of the application.
      */
     @Override protected void startup() {
+        try {
+            Handler fh = new FileHandler("cleaning-robot-simulator.log");
+            fh.setFormatter(new SimpleFormatter());
+            Logger logger = Logger.getLogger("");
+            logger.addHandler(fh);
+            logger.setLevel(Level.INFO);
+            logger.info("Application started.");
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
         show(new View(this));
     }
 
