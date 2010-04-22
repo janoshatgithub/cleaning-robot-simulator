@@ -31,7 +31,8 @@ public class Robot extends Thread {
     private int column;
     private int row;
     private ResourceMap resourceMap;
-
+    private Field[] prevFields = new Field[]{null, null};
+    private int nextPrevField = 0;
 
     Random randomGenerator = new Random();
     SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
@@ -62,6 +63,7 @@ public class Robot extends Thread {
     }
 
     private void cleaning() {
+        addToPrevFields(board.getField(column, row));
         Field moveToField = getRandomNextField();
         int toColumn = moveToField.getColumn();
         int toRow = moveToField.getRow();
@@ -116,50 +118,82 @@ public class Robot extends Thread {
 
     private Field getRandomNextField() {
         List<Field> moveToOptions = new ArrayList<Field>();
-        int testRow = row;
+        //Test fields above
         int testColumn = column - 1;
-        if (validRowColumn(testColumn, testRow)) {
-            Field field = board.getField(testColumn, testRow);
-            if (field.isEmpty()) {
-                moveToOptions.add(field);
-            }
-        }
-        testColumn = column + 1;
-        if (validRowColumn(testColumn, testRow)) {
-            Field field = board.getField(testColumn, testRow);
-            if (field.isEmpty()) {
-                moveToOptions.add(field);
-            }
-        }
-        testRow = row - 1;
+        int testRow = row - 1;
         for (testColumn = column - 1; testColumn <= column + 1; testColumn++) {
             if (validRowColumn(testColumn, testRow)) {
                 Field field = board.getField(testColumn, testRow);
-                if (field.isEmpty()) {
+                if (field.isEmpty() && !isFieldInPrevFields(field)) {
                     moveToOptions.add(field);
                 }
             }
         }
+        //Test field to the left
+        testRow = row;
+        testColumn = column - 1;
+        if (validRowColumn(testColumn, testRow)) {
+            Field field = board.getField(testColumn, testRow);
+            if (field.isEmpty() && !isFieldInPrevFields(field)) {
+                moveToOptions.add(field);
+            }
+        }
+        //Test field to the right
+        testColumn = column + 1;
+        if (validRowColumn(testColumn, testRow)) {
+            Field field = board.getField(testColumn, testRow);
+            if (field.isEmpty() && !isFieldInPrevFields(field)) {
+                moveToOptions.add(field);
+            }
+        }
+        //Test fields below
+        testColumn = column - 1;
         testRow = row + 1;
         for (testColumn = column - 1; testColumn <= column + 1; testColumn++) {
             if (validRowColumn(testColumn, testRow)) {
                 Field field = board.getField(testColumn, testRow);
-                if (field.isEmpty()) {
+                if (field.isEmpty() && !isFieldInPrevFields(field)) {
                     moveToOptions.add(field);
                 }
             }
         }
+        
+        logMoveToOptions(moveToOptions);
+
+        //Return random
         int index = randomGenerator.nextInt(moveToOptions.size());
         return moveToOptions.get(index);
     }
 
-    private boolean validRowColumn( int column, int row) {
+    private boolean validRowColumn(int column, int row) {
         boolean ok = true;
         if (row < 0 || row >= Constants.MAX_ROWS ||
             column < 0 || column >= Constants.MAX_COLUMNS) {
             ok = false;
         }
         return ok;
+    }
+
+    private void addToPrevFields(Field field) {
+        prevFields[nextPrevField] = field;
+        nextPrevField++;
+        if (nextPrevField > prevFields.length - 1) {
+            nextPrevField = 0;
+        }
+    }
+
+    private boolean isFieldInPrevFields(Field field) {
+        int i = 0;
+        boolean fieldFound = false;
+        while (!fieldFound && i < prevFields.length) {
+            if (field.equals(prevFields[i])) {
+                fieldFound = true;
+            }
+            else {
+                i++;
+            }
+        }
+        return fieldFound;
     }
 
     private void log(String message) {
@@ -179,6 +213,21 @@ public class Robot extends Thread {
         timeAndMessage.append(++fromRow).append(" to ");
         timeAndMessage.append((char)(toColumn + 65));
         timeAndMessage.append(++toRow).append(".\n");
+        jTextArea.append(timeAndMessage.toString());
+    }
+
+    private void logMoveToOptions(List<Field> fields) {
+                StringBuilder timeAndMessage =
+                new StringBuilder(timeFormat.format(new Date()));
+        timeAndMessage.append(" Move to options");
+        String before = ": ";
+        for (Field field : fields) {
+            timeAndMessage.append(before);
+            timeAndMessage.append((char)(field.getColumn() + 65));
+            timeAndMessage.append(field.getRow() + 1);
+            before = ", ";
+        }
+        timeAndMessage.append(".\n");
         jTextArea.append(timeAndMessage.toString());
     }
 }

@@ -48,4 +48,30 @@ public class Field {
     public boolean isEmpty() {
         return usedBy == UsedBy.EMPTY;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Field other = (Field) obj;
+        if (this.column != other.column) {
+            return false;
+        }
+        if (this.row != other.row) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 61 * hash + this.column;
+        hash = 61 * hash + this.row;
+        return hash;
+    }
 }
