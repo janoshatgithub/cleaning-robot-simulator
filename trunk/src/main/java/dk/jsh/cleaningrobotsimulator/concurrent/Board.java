@@ -17,7 +17,8 @@ public class Board {
      //Clean board
      for (int row = 0; row < Constants.MAX_ROWS; row++) {
        for (int column = 0; column < Constants.MAX_COLUMNS; column++) {
-         board[row][column] = new Field(Field.Status.CLEAN, Field.UsedBy.EMPTY);
+         board[row][column] = new Field(column, row,
+                 Field.Status.CLEAN, Field.UsedBy.EMPTY);
        }
      }
      setField(0, 0, Field.Status.DUSTBIN, Field.UsedBy.EMPTY);

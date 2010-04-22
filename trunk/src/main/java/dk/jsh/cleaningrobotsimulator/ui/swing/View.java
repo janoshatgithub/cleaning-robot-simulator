@@ -33,8 +33,9 @@ public class View extends FrameView {
     private JLabel[][] uiBoard;
     private Board board;
     private ResourceMap resourceMap;
-    Robot bender;
-
+    private Robot bender;
+    private Robot android;
+    private Robot wallE;
 
     public View(SingleFrameApplication app) {
         super(app);
@@ -64,8 +65,17 @@ public class View extends FrameView {
 
         jButtonContinue.setEnabled(false);
 
-        bender = new Robot(uiBoard, jTextAreaBender, resourceMap, RES_BENDER, "Bender", 0, 9);
+        bender = new Robot(uiBoard, jTextAreaBender, resourceMap,
+                RES_BENDER, 0, 9);
         bender.start();
+
+        android = new Robot(uiBoard, jTextAreaAndroid, resourceMap,
+                RES_ANDROID, 9, 0);
+        android.start();
+
+        wallE = new Robot(uiBoard, jTextAreaWallE, resourceMap,
+                RES_WALL_E, 9, 9);
+        wallE.start();
 
     }
 
@@ -153,8 +163,9 @@ public class View extends FrameView {
 
     @Action
     public void pause() {
-        //TODO
         bender.requestPause();
+        android.requestPause();
+        wallE.requestPause();
         jButtonPause.setEnabled(false);
         jButtonContinue.setEnabled(true);
     }
@@ -162,6 +173,8 @@ public class View extends FrameView {
     @Action
     public void cont() {
         bender.continueAfterPause();
+        android.continueAfterPause();
+        wallE.continueAfterPause();
         jButtonPause.setEnabled(true);
         jButtonContinue.setEnabled(false);
     }
@@ -169,7 +182,9 @@ public class View extends FrameView {
     @Action
     public void quit() {
         bender.requestStop();
-        while (bender.isAlive()) {
+        android.requestStop();
+        wallE.requestStop();
+        while (bender.isAlive() || android.isAlive() || wallE.isAlive()) {
             try {
                 Thread.sleep(50);
             } catch (InterruptedException ex) {
@@ -220,9 +235,9 @@ public class View extends FrameView {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaBender = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        jTextAreaWallE = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea3 = new javax.swing.JTextArea();
+        jTextAreaAndroid = new javax.swing.JTextArea();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTextArea4 = new javax.swing.JTextArea();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -389,19 +404,19 @@ public class View extends FrameView {
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jTextArea2.setName("jTextArea2"); // NOI18N
-        jScrollPane2.setViewportView(jTextArea2);
+        jTextAreaWallE.setColumns(20);
+        jTextAreaWallE.setRows(5);
+        jTextAreaWallE.setName("jTextAreaWallE"); // NOI18N
+        jScrollPane2.setViewportView(jTextAreaWallE);
 
         jTabbedPane1.addTab(resourceMap.getString("jScrollPane2.TabConstraints.tabTitle"), jScrollPane2); // NOI18N
 
         jScrollPane3.setName("jScrollPane3"); // NOI18N
 
-        jTextArea3.setColumns(20);
-        jTextArea3.setRows(5);
-        jTextArea3.setName("jTextArea3"); // NOI18N
-        jScrollPane3.setViewportView(jTextArea3);
+        jTextAreaAndroid.setColumns(20);
+        jTextAreaAndroid.setRows(5);
+        jTextAreaAndroid.setName("jTextAreaAndroid"); // NOI18N
+        jScrollPane3.setViewportView(jTextAreaAndroid);
 
         jTabbedPane1.addTab(resourceMap.getString("jScrollPane3.TabConstraints.tabTitle"), jScrollPane3); // NOI18N
 
@@ -489,11 +504,11 @@ public class View extends FrameView {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextArea jTextArea3;
     private javax.swing.JTextArea jTextArea4;
     private javax.swing.JTextArea jTextArea5;
+    private javax.swing.JTextArea jTextAreaAndroid;
     private javax.swing.JTextArea jTextAreaBender;
+    private javax.swing.JTextArea jTextAreaWallE;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
     // End of variables declaration//GEN-END:variables
