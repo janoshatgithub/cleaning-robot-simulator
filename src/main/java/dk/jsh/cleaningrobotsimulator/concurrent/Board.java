@@ -43,6 +43,21 @@ public class Board {
       }
    }
 
+   public synchronized boolean tryMove(int fromColumn, int fromRow, 
+           int toColumn, int toRow) {
+       testFieldArguments(fromColumn, fromRow);
+       testFieldArguments(toColumn, toRow);
+       Field fromField = getField(fromColumn, fromRow);
+       Field toField = getField(toColumn, toRow);
+       boolean moveOk = false;
+       if (toField.isEmpty() && !fromField.isEmpty()) {
+          toField.setUsedBy(fromField.getUsedBy());
+          fromField.setUsedBy(Field.UsedBy.EMPTY);
+          moveOk = true;
+       }
+       return moveOk;
+   }
+
    public void setField(int column, int row, Field.Status status,
            Field.UsedBy usedBy) {
         testFieldArguments(column, row);

@@ -6,8 +6,12 @@ package dk.jsh.cleaningrobotsimulator.ui.swing;
 import dk.jsh.cleaningrobotsimulator.concurrent.Board;
 import dk.jsh.cleaningrobotsimulator.concurrent.Constants;
 import dk.jsh.cleaningrobotsimulator.concurrent.Field;
+import dk.jsh.cleaningrobotsimulator.concurrent.Robot;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.WindowEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
@@ -26,14 +30,26 @@ public class View extends FrameView {
     public final String RES_DIRT = "RobotSimulator.dirt";
     public final String RES_DUSTBIN = "RobotSimulator.dustbin";
     public final String RES_CLEAN = "RobotSimulator.clean";
-    private JLabel uiBoard[][];
+    private JLabel[][] uiBoard;
     private Board board;
     private ResourceMap resourceMap;
+    Robot bender;
 
 
     public View(SingleFrameApplication app) {
         super(app);
+        //Cacth windowClosing event
+        JFrame jFrame = this.getFrame();
+        jFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent winEvt) {
+                quit();
+            }
+        });
+
         board = Board.getInstance();
+
+        //Initialize UI
         resourceMap = getResourceMap();
         initComponents();
 
@@ -45,7 +61,12 @@ public class View extends FrameView {
         jTabbedPane1.setIconAt(4, resourceMap.getIcon(RES_DUSTBIN));
 
         createUIBoard();
-        jButtonStop.setEnabled(false);
+
+        jButtonContinue.setEnabled(false);
+
+        bender = new Robot(uiBoard, jTextAreaBender, resourceMap, RES_BENDER, "Bender", 0, 9);
+        bender.start();
+
     }
 
     private void createUIBoard() {
@@ -131,17 +152,31 @@ public class View extends FrameView {
     }
 
     @Action
-    public void start() {
+    public void pause() {
         //TODO
-        jButtonStart.setEnabled(false);
-        jButtonStop.setEnabled(true);
+        bender.requestPause();
+        jButtonPause.setEnabled(false);
+        jButtonContinue.setEnabled(true);
     }
 
     @Action
-    public void stop() {
-        //TODO
-        jButtonStart.setEnabled(true);
-        jButtonStop.setEnabled(false);
+    public void cont() {
+        bender.continueAfterPause();
+        jButtonPause.setEnabled(true);
+        jButtonContinue.setEnabled(false);
+    }
+
+    @Action
+    public void quit() {
+        bender.requestStop();
+        while (bender.isAlive()) {
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        System.exit(0);
     }
 
     /** This method is called from within the constructor to
@@ -183,7 +218,7 @@ public class View extends FrameView {
         jLabel21 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jTextAreaBender = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -192,8 +227,8 @@ public class View extends FrameView {
         jTextArea4 = new javax.swing.JTextArea();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTextArea5 = new javax.swing.JTextArea();
-        jButtonStart = new javax.swing.JButton();
-        jButtonStop = new javax.swing.JButton();
+        jButtonPause = new javax.swing.JButton();
+        jButtonContinue = new javax.swing.JButton();
 
         menuBar.setName("menuBar"); // NOI18N
 
@@ -345,10 +380,10 @@ public class View extends FrameView {
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setName("jTextArea1"); // NOI18N
-        jScrollPane1.setViewportView(jTextArea1);
+        jTextAreaBender.setColumns(20);
+        jTextAreaBender.setRows(5);
+        jTextAreaBender.setName("jTextAreaBender"); // NOI18N
+        jScrollPane1.setViewportView(jTextAreaBender);
 
         jTabbedPane1.addTab(resourceMap.getString("jScrollPane1.TabConstraints.tabTitle"), jScrollPane1); // NOI18N
 
@@ -396,9 +431,9 @@ public class View extends FrameView {
         gridBagConstraints.weighty = 1.0;
         mainPanel.add(jTabbedPane1, gridBagConstraints);
 
-        jButtonStart.setAction(actionMap.get("start")); // NOI18N
-        jButtonStart.setText(resourceMap.getString("jButtonStart.text")); // NOI18N
-        jButtonStart.setName("jButtonStart"); // NOI18N
+        jButtonPause.setAction(actionMap.get("pause")); // NOI18N
+        jButtonPause.setText(resourceMap.getString("jButtonPause.text")); // NOI18N
+        jButtonPause.setName("jButtonPause"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 11;
@@ -406,11 +441,11 @@ public class View extends FrameView {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
         gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
-        mainPanel.add(jButtonStart, gridBagConstraints);
+        mainPanel.add(jButtonPause, gridBagConstraints);
 
-        jButtonStop.setAction(actionMap.get("stop")); // NOI18N
-        jButtonStop.setText(resourceMap.getString("jButtonStop.text")); // NOI18N
-        jButtonStop.setName("jButtonStop"); // NOI18N
+        jButtonContinue.setAction(actionMap.get("cont")); // NOI18N
+        jButtonContinue.setText(resourceMap.getString("jButtonContinue.text")); // NOI18N
+        jButtonContinue.setName("jButtonContinue"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 7;
         gridBagConstraints.gridy = 11;
@@ -418,15 +453,15 @@ public class View extends FrameView {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
         gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
-        mainPanel.add(jButtonStop, gridBagConstraints);
+        mainPanel.add(jButtonContinue, gridBagConstraints);
 
         setComponent(mainPanel);
         setMenuBar(menuBar);
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonStart;
-    private javax.swing.JButton jButtonStop;
+    private javax.swing.JButton jButtonContinue;
+    private javax.swing.JButton jButtonPause;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -454,11 +489,11 @@ public class View extends FrameView {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextArea jTextArea3;
     private javax.swing.JTextArea jTextArea4;
     private javax.swing.JTextArea jTextArea5;
+    private javax.swing.JTextArea jTextAreaBender;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
     // End of variables declaration//GEN-END:variables
