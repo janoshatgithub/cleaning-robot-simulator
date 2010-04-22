@@ -11,10 +11,22 @@ public class Field {
 
     private Status status;
     private UsedBy usedBy;
+    private int column;
+    private int row;
 
-    public Field(Status status, UsedBy usedBy) {
+    public Field(int column, int row, Status status, UsedBy usedBy) {
+        this.column = column;
+        this.row = row;
         this.status = status;
         this.usedBy = usedBy;
+    }
+
+    public int getColumn() {
+        return column;
+    }
+
+    public int getRow() {
+        return row;
     }
 
     public Status getStatus() {
