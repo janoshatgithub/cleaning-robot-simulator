@@ -20,6 +20,7 @@ public class Robot extends Thread {
     public final String RES_DIRT = "RobotSimulator.dirt";
     public final String RES_DUSTBIN = "RobotSimulator.dustbin";
     public final String RES_CLEAN = "RobotSimulator.clean";
+    public final String RES_RECYCLE = "RobotSimulator.recycle";
 
     private boolean stopRequested = false;
     private boolean pauseRequested = false;
@@ -69,8 +70,18 @@ public class Robot extends Thread {
         int toRow = moveToField.getRow();
         logMove("Try move", row, column, toRow, toColumn);
         if (board.tryMove(column, row, toColumn, toRow)) {
-            uiBoard[toRow][toColumn].setIcon(resourceMap.getIcon(resource));
-            uiBoard[row][column].setIcon(resourceMap.getIcon(RES_CLEAN));
+            if (toRow == 0 && toColumn == 0) { //To Dustbin
+                uiBoard[toRow][toColumn].setIcon(resourceMap.getIcon(RES_RECYCLE));
+            }
+            else {
+                uiBoard[toRow][toColumn].setIcon(resourceMap.getIcon(resource));
+            }
+            if (row == 0 && column == 0) { //From dustbin
+                uiBoard[row][column].setIcon(resourceMap.getIcon(RES_DUSTBIN));
+            }
+            else {
+                uiBoard[row][column].setIcon(resourceMap.getIcon(RES_CLEAN));
+            }
             logMove("Move", row, column, toRow, toColumn);
             row = toRow;
             column = toColumn;
