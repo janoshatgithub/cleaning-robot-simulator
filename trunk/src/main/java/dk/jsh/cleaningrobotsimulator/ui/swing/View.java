@@ -8,10 +8,13 @@ import dk.jsh.cleaningrobotsimulator.concurrent.Constants;
 import dk.jsh.cleaningrobotsimulator.concurrent.Field;
 import dk.jsh.cleaningrobotsimulator.concurrent.Robot;
 import java.awt.GridBagConstraints;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.WindowEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
@@ -30,6 +33,7 @@ public class View extends FrameView {
     public final String RES_DIRT = "RobotSimulator.dirt";
     public final String RES_DUSTBIN = "RobotSimulator.dustbin";
     public final String RES_CLEAN = "RobotSimulator.clean";
+    public final String RES_RECYCLE = "RobotSimulator.recycle";
     private JLabel[][] uiBoard;
     private Board board;
     private ResourceMap resourceMap;
@@ -39,6 +43,8 @@ public class View extends FrameView {
 
     public View(SingleFrameApplication app) {
         super(app);
+        resourceMap = getResourceMap();
+
         //Cacth windowClosing event
         JFrame jFrame = this.getFrame();
         jFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -47,12 +53,15 @@ public class View extends FrameView {
                 quit();
             }
         });
+        Image image = resourceMap.getImageIcon(RES_RECYCLE).getImage();
+        jFrame.setIconImage(image);
 
         board = Board.getInstance();
 
         //Initialize UI
-        resourceMap = getResourceMap();
         initComponents();
+
+        System.out.println(resourceMap.getIcon(RES_BENDER));
 
         //Set tab icons
         jTabbedPane1.setIconAt(0, resourceMap.getIcon(RES_BENDER));

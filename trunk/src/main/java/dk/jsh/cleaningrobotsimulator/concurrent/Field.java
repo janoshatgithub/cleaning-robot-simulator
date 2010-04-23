@@ -1,7 +1,9 @@
 package dk.jsh.cleaningrobotsimulator.concurrent;
 
+import javax.swing.JLabel;
+
 /**
- * Field status value object.
+ * Field UsedBy and status
  *
  * @author Jan S. Hansen
  */
