@@ -13,8 +13,6 @@ import java.awt.Insets;
 import java.awt.event.WindowEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
@@ -27,14 +25,6 @@ import javax.swing.JLabel;
  * The application's main frame.
  */
 public class View extends FrameView {
-    public final String RES_BENDER = "RobotSimulator.bender";
-    public final String RES_WALL_E = "RobotSimulator.wall-e";
-    public final String RES_ANDROID = "RobotSimulator.android";
-    public final String RES_DIRT = "RobotSimulator.dirt";
-    public final String RES_DUSTBIN = "RobotSimulator.dustbin";
-    public final String RES_CLEAN = "RobotSimulator.clean";
-    public final String RES_RECYCLE = "RobotSimulator.recycle";
-    private JLabel[][] uiBoard;
     private Board board;
     private ResourceMap resourceMap;
     private Robot bender;
@@ -53,111 +43,55 @@ public class View extends FrameView {
                 quit();
             }
         });
-        Image image = resourceMap.getImageIcon(RES_RECYCLE).getImage();
+        
+        //Set icon i left upper corner
+        Image image = resourceMap.getImageIcon("RobotSimulator.recycle").getImage();
         jFrame.setIconImage(image);
 
-        board = Board.getInstance();
+        //Create board
+        board = Board.createInstance(resourceMap);
 
         //Initialize UI
         initComponents();
 
-        System.out.println(resourceMap.getIcon(RES_BENDER));
-
         //Set tab icons
-        jTabbedPane1.setIconAt(0, resourceMap.getIcon(RES_BENDER));
-        jTabbedPane1.setIconAt(1, resourceMap.getIcon(RES_WALL_E));
-        jTabbedPane1.setIconAt(2, resourceMap.getIcon(RES_ANDROID));
-        jTabbedPane1.setIconAt(3, resourceMap.getIcon(RES_DIRT));
-        jTabbedPane1.setIconAt(4, resourceMap.getIcon(RES_DUSTBIN));
+        jTabbedPane1.setIconAt(0, resourceMap.getIcon("RobotSimulator.bender"));
+        jTabbedPane1.setIconAt(1, resourceMap.getIcon("RobotSimulator.wall-e"));
+        jTabbedPane1.setIconAt(2, resourceMap.getIcon("RobotSimulator.android"));
+        jTabbedPane1.setIconAt(3, resourceMap.getIcon("RobotSimulator.dirt"));
+        jTabbedPane1.setIconAt(4, resourceMap.getIcon("RobotSimulator.dustbin"));
 
         createUIBoard();
 
         jButtonContinue.setEnabled(false);
 
-        bender = new Robot(uiBoard, jTextAreaBender, resourceMap,
-                RES_BENDER, 0, 9);
+        //Start robot threads
+        bender = new Robot(jTextAreaBender, resourceMap,
+                "RobotSimulator.bender", 0, 9);
         bender.start();
 
-        android = new Robot(uiBoard, jTextAreaAndroid, resourceMap,
-                RES_ANDROID, 9, 0);
+        android = new Robot(jTextAreaAndroid, resourceMap,
+                "RobotSimulator.android", 9, 0);
         android.start();
 
-        wallE = new Robot(uiBoard, jTextAreaWallE, resourceMap,
-                RES_WALL_E, 9, 9);
+        wallE = new Robot(jTextAreaWallE, resourceMap,
+                "RobotSimulator.wall-e", 9, 9);
         wallE.start();
-
     }
 
     private void createUIBoard() {
-        uiBoard = new JLabel[Constants.MAX_ROWS][Constants.MAX_COLUMNS];
-        JLabel jLabel;
         GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
         Insets insets = new Insets(1, 1, 1, 1);
         for (int row = 0; row < Constants.MAX_ROWS; row++) {
             for (int column = 0; column < Constants.MAX_COLUMNS; column++) {
-                jLabel = new JLabel();
                 Field field = board.getField(column, row);
-                Field.UsedBy usedBy = field.getUsedBy();
-                String iconRes = RES_CLEAN;
-                if (!field.isEmpty()) {
-                    switch (usedBy) {
-                        case ANDROID :
-                            iconRes = RES_ANDROID;
-                            break;
-                        case WALL_E :
-                            iconRes = RES_WALL_E;
-                            break;
-                        case BENDER :
-                            iconRes = RES_BENDER;
-                            break;
-                        default :
-                            throw new RuntimeException("Field column " + 
-                                    column + " row " + row + 
-                                    " is not empty. But no robot is added.");
-                    }
-                }
-                else {
-                    Field.Status status = field.getStatus();
-                    switch (status) {
-                        case CLEAN :
-                            iconRes = RES_CLEAN;
-                            break;
-                        case DIRTY :
-                            iconRes = RES_DIRT;
-                            break;
-                        case DUSTBIN :
-                            iconRes = RES_DUSTBIN;
-                            break;
-                        default :
-                            throw new RuntimeException("Field column " +
-                                    column + " row " + row +
-                                    " has no known status.");
-                    }
-                }
-                jLabel.setIcon(resourceMap.getIcon(iconRes));
+                JLabel jLabel = field.jLabel;
                 gridBagConstraints.gridx = column + 1;
                 gridBagConstraints.gridy = row + 1;
                 gridBagConstraints.insets = insets;
                 mainPanel.add(jLabel, gridBagConstraints);
-                uiBoard[row][column] = jLabel;
             }
         }
-    }
-
-    /**
-     * Replaces a board filed with a new icon.
-     *
-     * @param column Column A to H
-     * @param row row 1 to 10
-     * @param iconResource icon resource name
-     */
-    public void setFieldIcon(int column, int row, String iconResource) {
-        if (column < 0 || column >= Constants.MAX_COLUMNS ||
-            row < 0 || row >= Constants.MAX_ROWS) {
-            throw new IllegalArgumentException();
-        }
-        JLabel jLabel = uiBoard[row][column];
-        jLabel.setIcon(resourceMap.getIcon(iconResource));
     }
 
     @Action

@@ -25,7 +25,6 @@ public class Robot extends Thread {
     private boolean stopRequested = false;
     private boolean pauseRequested = false;
 
-    private JLabel[][] uiBoard;
     private JTextArea jTextArea;
     private String resource;
     private Board board;
@@ -38,9 +37,8 @@ public class Robot extends Thread {
     Random randomGenerator = new Random();
     SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
-    public Robot(JLabel[][] uiBoard, JTextArea jTextArea, ResourceMap resourceMap,
+    public Robot(JTextArea jTextArea, ResourceMap resourceMap,
             String resource, int row, int column) {
-        this.uiBoard = uiBoard;
         this.jTextArea = jTextArea;
         this.resource = resource;
         this.column = column;
@@ -71,16 +69,17 @@ public class Robot extends Thread {
         logMove("Try move", row, column, toRow, toColumn);
         if (board.tryMove(column, row, toColumn, toRow)) {
             if (toRow == 0 && toColumn == 0) { //To Dustbin
-                uiBoard[toRow][toColumn].setIcon(resourceMap.getIcon(RES_RECYCLE));
+                moveToField.jLabel.setIcon(resourceMap.getIcon(RES_RECYCLE));
             }
             else {
-                uiBoard[toRow][toColumn].setIcon(resourceMap.getIcon(resource));
+                moveToField.jLabel.setIcon(resourceMap.getIcon(resource));
             }
+            Field fromField = board.getField(column, row);
             if (row == 0 && column == 0) { //From dustbin
-                uiBoard[row][column].setIcon(resourceMap.getIcon(RES_DUSTBIN));
+                fromField.jLabel.setIcon(resourceMap.getIcon(RES_DUSTBIN));
             }
             else {
-                uiBoard[row][column].setIcon(resourceMap.getIcon(RES_CLEAN));
+                fromField.jLabel.setIcon(resourceMap.getIcon(RES_CLEAN));
             }
             logMove("Move", row, column, toRow, toColumn);
             row = toRow;
