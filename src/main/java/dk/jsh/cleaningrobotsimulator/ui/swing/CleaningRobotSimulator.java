@@ -8,7 +8,6 @@ import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.SingleFrameApplication;
 
@@ -21,21 +20,31 @@ public class CleaningRobotSimulator extends SingleFrameApplication {
      * At startup create and show the main frame of the application.
      */
     @Override protected void startup() {
-        setupLog();
-        show(new View(this));
+        Logger logger = setupLog();
+        try {
+            show(new View(this));
+        }
+        catch (Throwable t) {
+            if (logger != null) {
+                logger.log(Level.SEVERE, "Unexception exception", t);
+            }
+        }
     }
 
-    private void setupLog() {
+    private Logger setupLog() {
+        Logger logger = null;
         try {
+            //%t - Means that the log is located in the Systems Temp directory
             Handler fh = new FileHandler("%t/cleaning-robot-simulator.log",
                     10000, 5);
-            Logger logger = Logger.getLogger("");
+            logger = Logger.getLogger("");
             logger.addHandler(fh);
             logger.setLevel(Level.INFO);
             logger.info("Application started.");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        return logger;
     }
 
     /**
