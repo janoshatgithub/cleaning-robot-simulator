@@ -30,10 +30,12 @@ public class View extends FrameView {
     private Robot bender;
     private Robot android;
     private Robot wallE;
+    private Logger logger;
 
     public View(SingleFrameApplication app) {
         super(app);
         resourceMap = getResourceMap();
+        logger = Logger.getLogger(View.class.getName());
 
         //Cacth windowClosing event
         JFrame jFrame = this.getFrame();
@@ -131,9 +133,10 @@ public class View extends FrameView {
             try {
                 Thread.sleep(50);
             } catch (InterruptedException ex) {
-                Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
+                logger.log(Level.SEVERE, null, ex);
             }
         }
+        logger.log(Level.INFO, "Application stopped.");
         System.exit(0);
     }
 
