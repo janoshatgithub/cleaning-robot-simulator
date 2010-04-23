@@ -29,7 +29,6 @@ public class CleaningRobotSimulator extends SingleFrameApplication {
         try {
             Handler fh = new FileHandler("%t/cleaning-robot-simulator.log",
                     10000, 5);
-            fh.setFormatter(new SimpleFormatter());
             Logger logger = Logger.getLogger("");
             logger.addHandler(fh);
             logger.setLevel(Level.INFO);
