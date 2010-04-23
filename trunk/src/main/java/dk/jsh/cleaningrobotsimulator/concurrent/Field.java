@@ -1,5 +1,6 @@
 package dk.jsh.cleaningrobotsimulator.concurrent;
 
+import javax.swing.Icon;
 import javax.swing.JLabel;
 
 /**
@@ -15,12 +16,14 @@ public class Field {
     private UsedBy usedBy;
     private int column;
     private int row;
+    public JLabel jLabel;
 
     public Field(int column, int row, Status status, UsedBy usedBy) {
         this.column = column;
         this.row = row;
         this.status = status;
         this.usedBy = usedBy;
+        this.jLabel = new JLabel();
     }
 
     public int getColumn() {
