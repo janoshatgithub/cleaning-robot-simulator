@@ -13,6 +13,7 @@ import java.awt.Insets;
 import java.awt.event.WindowEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
@@ -48,6 +49,10 @@ public class View extends FrameView {
         
         //Set icon i left upper corner
         Image image = resourceMap.getImageIcon("RobotSimulator.recycle").getImage();
+        //ImageIcon imageIcon = new ImageIcon(getClass().getResource("icons/recycle32x32.PNG"));
+        //ImageIcon imageIcon = new ImageIcon("/dk/jsh/cleaningrobotsimulator/ui/swing/resources/icons/recycle32x32.PNG");
+        //ImageIcon imageIcon = new ImageIcon("./icons/recycle32x32.PNG");
+        //jFrame.setIconImage(imageIcon.getImage());
         jFrame.setIconImage(image);
 
         //Create board
