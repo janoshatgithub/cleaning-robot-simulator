@@ -17,10 +17,7 @@ import org.jdesktop.application.ResourceMap;
  * @author Jan S. Hansen
  */
 public class Robot extends Thread {
-    public final String RES_DIRT = "RobotSimulator.dirt";
-    public final String RES_DUSTBIN = "RobotSimulator.dustbin";
-    public final String RES_CLEAN = "RobotSimulator.clean";
-    public final String RES_RECYCLE = "RobotSimulator.recycle";
+    public final String xRES_RECYCLE = "RobotSimulator.recycle";
 
     private boolean stopRequested = false;
     private boolean pauseRequested = false;
@@ -37,13 +34,13 @@ public class Robot extends Thread {
     Random randomGenerator = new Random();
     SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
-    public Robot(JTextArea jTextArea, ResourceMap resourceMap,
+    public Robot(Board board, JTextArea jTextArea, ResourceMap resourceMap,
             String resource, int row, int column) {
+        this.board = board;
         this.jTextArea = jTextArea;
         this.resource = resource;
         this.column = column;
         this.row = row;
-        board = Board.getInstance();
         this.resourceMap = resourceMap;
     }
 
@@ -69,17 +66,17 @@ public class Robot extends Thread {
         logMove("Try move", row, column, toRow, toColumn);
         if (board.tryMove(column, row, toColumn, toRow)) {
             if (toRow == 0 && toColumn == 0) { //To Dustbin
-                moveToField.jLabel.setIcon(resourceMap.getIcon(RES_RECYCLE));
+                moveToField.jLabel.setIcon(resourceMap.getIcon("RobotSimulator.recycle"));
             }
             else {
                 moveToField.jLabel.setIcon(resourceMap.getIcon(resource));
             }
             Field fromField = board.getField(column, row);
             if (row == 0 && column == 0) { //From dustbin
-                fromField.jLabel.setIcon(resourceMap.getIcon(RES_DUSTBIN));
+                fromField.jLabel.setIcon(resourceMap.getIcon("RobotSimulator.dustbin"));
             }
             else {
-                fromField.jLabel.setIcon(resourceMap.getIcon(RES_CLEAN));
+                fromField.jLabel.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
             }
             logMove("Move", row, column, toRow, toColumn);
             row = toRow;

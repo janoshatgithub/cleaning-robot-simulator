@@ -13,6 +13,7 @@ import java.awt.Insets;
 import java.awt.event.WindowEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
@@ -47,16 +48,13 @@ public class View extends FrameView {
             }
         });
         
-        //Set icon i left upper corner
-        Image image = resourceMap.getImageIcon("RobotSimulator.recycle").getImage();
-        //ImageIcon imageIcon = new ImageIcon(getClass().getResource("icons/recycle32x32.PNG"));
-        //ImageIcon imageIcon = new ImageIcon("/dk/jsh/cleaningrobotsimulator/ui/swing/resources/icons/recycle32x32.PNG");
-        //ImageIcon imageIcon = new ImageIcon("./icons/recycle32x32.PNG");
-        //jFrame.setIconImage(imageIcon.getImage());
-        jFrame.setIconImage(image);
+        //Set icon in upper left corner
+        ImageIcon image = resourceMap.getImageIcon("RobotSimulator.recycle");
+        jFrame.setIconImage(image.getImage());
 
         //Create board
-        board = Board.createInstance(resourceMap);
+        //board = Board.createInstance(resourceMap);
+        board = new Board(resourceMap);
 
         //Initialize UI
         initComponents();
@@ -73,15 +71,15 @@ public class View extends FrameView {
         jButtonContinue.setEnabled(false);
 
         //Start robot threads
-        bender = new Robot(jTextAreaBender, resourceMap,
+        bender = new Robot(board, jTextAreaBender, resourceMap,
                 "RobotSimulator.bender", 0, 9);
         bender.start();
 
-        android = new Robot(jTextAreaAndroid, resourceMap,
+        android = new Robot(board, jTextAreaAndroid, resourceMap,
                 "RobotSimulator.android", 9, 0);
         android.start();
 
-        wallE = new Robot(jTextAreaWallE, resourceMap,
+        wallE = new Robot(board, jTextAreaWallE, resourceMap,
                 "RobotSimulator.wall-e", 9, 9);
         wallE.start();
     }

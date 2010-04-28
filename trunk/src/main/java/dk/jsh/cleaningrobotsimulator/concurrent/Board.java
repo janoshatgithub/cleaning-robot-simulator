@@ -1,5 +1,7 @@
 package dk.jsh.cleaningrobotsimulator.concurrent;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import org.jdesktop.application.ResourceMap;
 
 /**
@@ -8,22 +10,13 @@ import org.jdesktop.application.ResourceMap;
  * @author Jan S. Hansen
  */
 public class Board {
-    public final String RES_BENDER = "RobotSimulator.bender";
-    public final String RES_WALL_E = "RobotSimulator.wall-e";
-    public final String RES_ANDROID = "RobotSimulator.android";
-    public final String RES_DIRT = "RobotSimulator.dirt";
-    public final String RES_DUSTBIN = "RobotSimulator.dustbin";
-    public final String RES_CLEAN = "RobotSimulator.clean";
-    public final String RES_RECYCLE = "RobotSimulator.recycle";
-
-   private static Board instance = null;
    private Field[][] board;
    private ResourceMap resourceMap;
 
    /**
     * Private constructor.
     */
-   private Board(ResourceMap resourceMap) {
+   public Board(ResourceMap resourceMap) {
      this.resourceMap = resourceMap;
      board = new Field[Constants.MAX_ROWS][Constants.MAX_COLUMNS];
      //Clean board
@@ -31,40 +24,21 @@ public class Board {
        for (int column = 0; column < Constants.MAX_COLUMNS; column++) {
            Field field = new Field(column, row,
                  Field.Status.CLEAN, Field.UsedBy.EMPTY);
-           field.jLabel.setIcon(resourceMap.getIcon(RES_CLEAN));
+           Icon icon = resourceMap.getIcon("RobotSimulator.clean");
+           field.jLabel.setIcon(icon);
            board[row][column] = field;
        }
      }
-     setField(0, 0, Field.Status.DUSTBIN, Field.UsedBy.EMPTY, RES_DUSTBIN);
-     setField(9, 0, Field.Status.CLEAN, Field.UsedBy.BENDER, RES_BENDER);
-     setField(9, 9, Field.Status.CLEAN, Field.UsedBy.WALL_E, RES_WALL_E);
-     setField(0, 9, Field.Status.CLEAN, Field.UsedBy.ANDROID, RES_ANDROID);
+     setField(9, 0, Field.Status.CLEAN, Field.UsedBy.BENDER,
+             "RobotSimulator.bender");
+     setField(9, 9, Field.Status.CLEAN, Field.UsedBy.WALL_E,
+             "RobotSimulator.wall-e");
+     setField(0, 9, Field.Status.CLEAN, Field.UsedBy.ANDROID,
+             "RobotSimulator.android");
+     setField(0, 0, Field.Status.DUSTBIN, Field.UsedBy.EMPTY,
+             "RobotSimulator.dustbin");
    }
    
-   /**
-    * Create (if null) and return an instance.
-    * @return a instance of Board.
-    */
-   public static Board createInstance(ResourceMap resourceMap) {
-      if (instance != null) {
-          return instance;
-      }
-      else {
-          synchronized (Board.class) {
-               if (instance == null) {
-                   instance = new Board(resourceMap);
-               }
-          }
-          return instance;
-      }
-   }
-
-   /**
-    * @return a instance of Board.
-    */
-   public static Board getInstance() {
-      return instance;
-   }
 
    public synchronized boolean tryMove(int fromColumn, int fromRow, 
            int toColumn, int toRow) {
@@ -87,7 +61,8 @@ public class Board {
         Field field = board[row][column];
         field.setStatus(status);
         field.setUsedBy(usedBy);
-        field.jLabel.setIcon(resourceMap.getIcon(iconResource));
+        ImageIcon imageIcon = resourceMap.getImageIcon(iconResource);
+        field.jLabel.setIcon(imageIcon);
    }
 
    public Field getField(int column, int row) {
