@@ -14,8 +14,8 @@ public class SimpleThreadExceptionHandler
         implements Thread.UncaughtExceptionHandler {
     private Logger logger;
 
-    public SimpleThreadExceptionHandler(Logger logger) {
-        this.logger = logger;
+    public SimpleThreadExceptionHandler() {
+        logger = Logger.getLogger(getClass().getName());
     }
 
     @Override

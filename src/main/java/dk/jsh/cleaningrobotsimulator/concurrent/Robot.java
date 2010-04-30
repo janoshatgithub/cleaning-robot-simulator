@@ -45,8 +45,7 @@ public class Robot extends Thread {
         //stacktrace.
         this.setName(threadName);
         exceptionLogger = Logger.getLogger(Robot.class.getName());
-        setUncaughtExceptionHandler(
-                new SimpleThreadExceptionHandler(exceptionLogger));
+        setUncaughtExceptionHandler(new SimpleThreadExceptionHandler());
     }
 
     @Override

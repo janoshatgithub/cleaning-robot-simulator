@@ -18,6 +18,11 @@ import javax.swing.SwingUtilities;
  * @author Jan S. Hansen
  */
 public class SimpleMainThreadExceptionHandler implements Thread.UncaughtExceptionHandler {
+    private Logger logger;
+
+    public SimpleMainThreadExceptionHandler() {
+        logger = Logger.getLogger(getClass().getName());
+    }
 
     @Override
     public void uncaughtException(final Thread t, final Throwable e) {
@@ -37,7 +42,6 @@ public class SimpleMainThreadExceptionHandler implements Thread.UncaughtExceptio
             e.printStackTrace();
             StringWriter sw = new StringWriter();
             e.printStackTrace(new PrintWriter(sw));
-            Logger logger = Logger.getLogger(getClass().getName());
             logger.log(Level.SEVERE, "Uncaught exception in main thread",
                     sw.toString());
             JOptionPane.showMessageDialog(null,

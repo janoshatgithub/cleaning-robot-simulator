@@ -55,7 +55,7 @@ public class Board {
        return moveOk;
    }
 
-   public void setField(int column, int row, Field.Status status,
+   private void setField(int column, int row, Field.Status status,
            Field.UsedBy usedBy, String iconResource) {
         testFieldArguments(column, row);
         Field field = board[row][column];
