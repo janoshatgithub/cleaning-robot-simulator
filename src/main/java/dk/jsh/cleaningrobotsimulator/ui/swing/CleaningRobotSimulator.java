@@ -1,7 +1,3 @@
-/*
- * CleaningRobotSimulator.java
- */
-
 package dk.jsh.cleaningrobotsimulator.ui.swing;
 
 import java.util.logging.FileHandler;
@@ -13,6 +9,8 @@ import org.jdesktop.application.SingleFrameApplication;
 
 /**
  * The main class of the application.
+ *
+ * @author Jan S. Hansen
  */
 public class CleaningRobotSimulator extends SingleFrameApplication {
 
@@ -20,31 +18,21 @@ public class CleaningRobotSimulator extends SingleFrameApplication {
      * At startup create and show the main frame of the application.
      */
     @Override protected void startup() {
-        Logger logger = setupLog();
-        try {
-            show(new View(this));
-        }
-        catch (Throwable t) {
-            if (logger != null) {
-                logger.log(Level.SEVERE, "Unexception exception", t);
-            }
-        }
+        show(new View(this));
     }
 
-    private Logger setupLog() {
-        Logger logger = null;
+    private static void setupLog() {
         try {
             //%t - Means that the log is located in the Systems Temp directory
             Handler fh = new FileHandler("%t/cleaning-robot-simulator.log",
                     10000, 5);
-            logger = Logger.getLogger("");
+            Logger logger = Logger.getLogger("");
             logger.addHandler(fh);
             logger.setLevel(Level.INFO);
             logger.info("Application started.");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return logger;
     }
 
     /**
@@ -67,6 +55,9 @@ public class CleaningRobotSimulator extends SingleFrameApplication {
      * Main method launching the application.
      */
     public static void main(String[] args) {
+        setupLog();
+        Thread.setDefaultUncaughtExceptionHandler(
+                new SimpleMainThreadExceptionHandler());
         launch(CleaningRobotSimulator.class, args);
     }
 }

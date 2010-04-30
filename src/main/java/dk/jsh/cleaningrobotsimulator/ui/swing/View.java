@@ -1,6 +1,3 @@
-/*
- * View.java
- */
 package dk.jsh.cleaningrobotsimulator.ui.swing;
 
 import dk.jsh.cleaningrobotsimulator.concurrent.Board;
@@ -8,12 +5,10 @@ import dk.jsh.cleaningrobotsimulator.concurrent.Constants;
 import dk.jsh.cleaningrobotsimulator.concurrent.Field;
 import dk.jsh.cleaningrobotsimulator.concurrent.Robot;
 import java.awt.GridBagConstraints;
-import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.WindowEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
@@ -36,8 +31,9 @@ public class View extends FrameView {
 
     public View(SingleFrameApplication app) {
         super(app);
-        resourceMap = getResourceMap();
         logger = Logger.getLogger(View.class.getName());
+
+        resourceMap = getResourceMap();
 
         //Cacth windowClosing event
         JFrame jFrame = this.getFrame();
@@ -71,15 +67,15 @@ public class View extends FrameView {
         jButtonContinue.setEnabled(false);
 
         //Start robot threads
-        bender = new Robot(board, jTextAreaBender, resourceMap,
+        bender = new Robot("Bender", board, jTextAreaBender, resourceMap,
                 "RobotSimulator.bender", 0, 9);
         bender.start();
 
-        android = new Robot(board, jTextAreaAndroid, resourceMap,
+        android = new Robot("Android", board, jTextAreaAndroid, resourceMap,
                 "RobotSimulator.android", 9, 0);
         android.start();
 
-        wallE = new Robot(board, jTextAreaWallE, resourceMap,
+        wallE = new Robot("Wall-E", board, jTextAreaWallE, resourceMap,
                 "RobotSimulator.wall-e", 9, 9);
         wallE.start();
     }

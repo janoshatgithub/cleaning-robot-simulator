@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import org.jdesktop.application.ResourceMap;
 
@@ -17,24 +16,24 @@ import org.jdesktop.application.ResourceMap;
  * @author Jan S. Hansen
  */
 public class Robot extends Thread {
-    public final String xRES_RECYCLE = "RobotSimulator.recycle";
-
     private boolean stopRequested = false;
     private boolean pauseRequested = false;
 
-    private JTextArea jTextArea;
+    private JTextArea jTextArea; //Use to UI log messages
     private String resource;
     private Board board;
     private int column;
     private int row;
     private ResourceMap resourceMap;
-    private Field[] prevFields = new Field[]{null, null};
+    private Field[] prevFields = new Field[]{null, null, null, null, null, null};
     private int nextPrevField = 0;
+    private Logger exceptionLogger; //Logging of exceptions in a log file.
 
     Random randomGenerator = new Random();
     SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
-    public Robot(Board board, JTextArea jTextArea, ResourceMap resourceMap,
+    public Robot(String threadName, Board board, JTextArea jTextArea,
+            ResourceMap resourceMap,
             String resource, int row, int column) {
         this.board = board;
         this.jTextArea = jTextArea;
@@ -42,6 +41,12 @@ public class Robot extends Thread {
         this.column = column;
         this.row = row;
         this.resourceMap = resourceMap;
+        //If an exceptions occurs, the this name will be part of the exception
+        //stacktrace.
+        this.setName(threadName);
+        exceptionLogger = Logger.getLogger(Robot.class.getName());
+        setUncaughtExceptionHandler(
+                new SimpleThreadExceptionHandler(exceptionLogger));
     }
 
     @Override
@@ -61,42 +66,49 @@ public class Robot extends Thread {
     private void cleaning() {
         addToPrevFields(board.getField(column, row));
         Field moveToField = getRandomNextField();
-        int toColumn = moveToField.getColumn();
-        int toRow = moveToField.getRow();
-        logMove("Try move", row, column, toRow, toColumn);
-        if (board.tryMove(column, row, toColumn, toRow)) {
-            if (toRow == 0 && toColumn == 0) { //To Dustbin
-                moveToField.jLabel.setIcon(resourceMap.getIcon("RobotSimulator.recycle"));
-            }
-            else {
-                moveToField.jLabel.setIcon(resourceMap.getIcon(resource));
-            }
-            Field fromField = board.getField(column, row);
-            if (row == 0 && column == 0) { //From dustbin
-                fromField.jLabel.setIcon(resourceMap.getIcon("RobotSimulator.dustbin"));
-            }
-            else {
-                fromField.jLabel.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
-            }
-            logMove("Move", row, column, toRow, toColumn);
-            row = toRow;
-            column = toColumn;
+        if (moveToField == null) {
+            clearPrevFields();
         }
         else {
-            log("Move failed.");
+            int toColumn = moveToField.getColumn();
+            int toRow = moveToField.getRow();
+            logMove("Try move", row, column, toRow, toColumn);
+            if (board.tryMove(column, row, toColumn, toRow)) {
+                if (toRow == 0 && toColumn == 0) { //To Dustbin
+                    moveToField.jLabel.setIcon(resourceMap.getIcon("RobotSimulator.recycle"));
+                }
+                else {
+                    moveToField.jLabel.setIcon(resourceMap.getIcon(resource));
+                }
+                Field fromField = board.getField(column, row);
+                if (row == 0 && column == 0) { //From dustbin
+                    fromField.jLabel.setIcon(resourceMap.getIcon("RobotSimulator.dustbin"));
+                }
+                else {
+                    fromField.jLabel.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
+                }
+                logMove("Move", row, column, toRow, toColumn);
+                row = toRow;
+                column = toColumn;
+            }
+            else {
+                log("Move failed.");
+            }
         }
-        try {
-            sleep(1000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Robot.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        sleepForSecs(1);
     }
 
     private void paused() {
+        sleepForSecs(1);
+    }
+
+    private void sleepForSecs(int secs) {
         try {
-            sleep(1000);
+            sleep(secs * 1000);
         } catch (InterruptedException ex) {
-            Logger.getLogger(Robot.class.getName()).log(Level.SEVERE, null, ex);
+            exceptionLogger.log(Level.SEVERE, null, ex);
+            logException();
+            requestStop();
         }
     }
 
@@ -165,11 +177,17 @@ public class Robot extends Thread {
             }
         }
         
-        logMoveToOptions(moveToOptions);
+        if (moveToOptions.isEmpty()) {
+            log("*** Robot is locked, no move is possible!");
+            return null;
+        }
+        else {
+            logMoveToOptions(moveToOptions);
 
-        //Return random
-        int index = randomGenerator.nextInt(moveToOptions.size());
-        return moveToOptions.get(index);
+            //Return random
+            int index = randomGenerator.nextInt(moveToOptions.size());
+            return moveToOptions.get(index);
+        }
     }
 
     private boolean validRowColumn(int column, int row) {
@@ -187,6 +205,14 @@ public class Robot extends Thread {
         if (nextPrevField > prevFields.length - 1) {
             nextPrevField = 0;
         }
+    }
+
+    private void clearPrevFields() {
+        log("Clear prev. fields.");
+        for (int i = 0; i < prevFields.length; i++) {
+            prevFields[i] = null;
+        }
+        nextPrevField = 0;
     }
 
     private boolean isFieldInPrevFields(Field field) {
@@ -208,6 +234,10 @@ public class Robot extends Thread {
                 new StringBuilder(timeFormat.format(new Date()));
         timeAndMessage.append(" ").append(message).append("\n");
         jTextArea.append(timeAndMessage.toString());
+    }
+
+    protected void logException() {
+        log("The thread is stopped, due to an exception, see log file.");
     }
 
     private void logMove(String message,
