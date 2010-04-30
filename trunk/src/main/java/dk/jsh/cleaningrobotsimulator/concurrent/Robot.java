@@ -230,6 +230,11 @@ public class Robot extends Thread {
     }
 
     private void log(String message) {
+        //Clear textArea after 2000 lines. TODO: Create a FIFO JTextArea
+        if (jTextArea.getLineCount() > 2000) {
+            jTextArea.setText("");
+        }
+
         StringBuilder timeAndMessage =
                 new StringBuilder(timeFormat.format(new Date()));
         timeAndMessage.append(" ").append(message).append("\n");
