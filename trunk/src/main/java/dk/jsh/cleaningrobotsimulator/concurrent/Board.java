@@ -12,6 +12,7 @@ import org.jdesktop.application.ResourceMap;
 public class Board {
    private Field[][] board;
    private ResourceMap resourceMap;
+   private int dirtyFieldsCounter;
 
    /**
     * Private constructor.
@@ -55,6 +56,24 @@ public class Board {
        return moveOk;
    }
 
+   public synchronized boolean tryMakeFieldDirty(int column, int row) {
+       boolean ok = false;
+       if (dirtyFieldsCounter + 1 <= Constants.MAX_DIRTY_FIELDS) {
+          testFieldArguments(column, row);
+          if (column == 0 && row == 0) { //Dustbin
+             throw new IllegalArgumentException("Dustbin can't be dirty");
+          }
+          Field field = getField(column, row);
+          if (field.isEmpty() && !field.isDirty()) {
+              field.setStatus(Field.Status.DIRTY);
+              dirtyFieldsCounter++;
+              ok = true;
+          }
+       }
+       return ok;
+   }
+
+
    private void setField(int column, int row, Field.Status status,
            Field.UsedBy usedBy, String iconResource) {
         testFieldArguments(column, row);
@@ -74,7 +93,12 @@ public class Board {
            throws IllegalArgumentException {
         if (column < 0 || column >= Constants.MAX_COLUMNS ||
                 row < 0 || row >= Constants.MAX_ROWS) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Error in column or row: ("
+                    + column + ", " + row + ")" );
         }
+    }
+
+    public int getDirtyFieldsCounter() {
+        return dirtyFieldsCounter;
     }
 }
