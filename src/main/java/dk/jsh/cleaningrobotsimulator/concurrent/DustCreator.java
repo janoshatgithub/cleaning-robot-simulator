@@ -2,6 +2,7 @@ package dk.jsh.cleaningrobotsimulator.concurrent;
 
 import java.util.Date;
 import java.util.Random;
+import java.util.logging.Level;
 import javax.swing.JTextArea;
 import org.jdesktop.application.ResourceMap;
 
@@ -38,6 +39,7 @@ public class DustCreator extends CommonThread {
                     log("Failed.");
                 }
             }
+            sleepForSecs(1);
         }
        log("Thread for dust creator is now finished.");
     }
@@ -49,5 +51,14 @@ public class DustCreator extends CommonThread {
         timeAndMessage.append((char)(column + 65));
         timeAndMessage.append(++row).append(".\n");;
         jTextArea.append(timeAndMessage.toString());
+    }
+
+    private void sleepForSecs(int secs) {
+        try {
+            sleep(secs * 1000);
+        } catch (InterruptedException ex) {
+            exceptionLogger.log(Level.SEVERE, null, ex);
+            logException();
+        }
     }
 }
