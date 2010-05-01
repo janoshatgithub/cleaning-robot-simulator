@@ -1,12 +1,10 @@
 package dk.jsh.cleaningrobotsimulator.concurrent;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JTextArea;
 import org.jdesktop.application.ResourceMap;
 
@@ -15,37 +13,25 @@ import org.jdesktop.application.ResourceMap;
  *
  * @author Jan S. Hansen
  */
-public class Robot extends Thread {
+public class Robot extends CommonThread {
     private boolean stopRequested = false;
     private boolean pauseRequested = false;
-
-    private JTextArea jTextArea; //Use to UI log messages
     private String resource;
-    private Board board;
     private int column;
     private int row;
-    private ResourceMap resourceMap;
     private Field[] prevFields = new Field[]{null, null, null, null, null, null};
     private int nextPrevField = 0;
-    private Logger exceptionLogger; //Logging of exceptions in a log file.
 
     Random randomGenerator = new Random();
-    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
     public Robot(String threadName, Board board, JTextArea jTextArea,
             ResourceMap resourceMap,
             String resource, int row, int column) {
-        this.board = board;
-        this.jTextArea = jTextArea;
+        super(threadName, board, jTextArea, resourceMap);
         this.resource = resource;
         this.column = column;
         this.row = row;
         this.resourceMap = resourceMap;
-        //If an exceptions occurs, the this name will be part of the exception
-        //stacktrace.
-        this.setName(threadName);
-        exceptionLogger = Logger.getLogger(Robot.class.getName());
-        setUncaughtExceptionHandler(new SimpleThreadExceptionHandler());
     }
 
     @Override
@@ -226,22 +212,6 @@ public class Robot extends Thread {
             }
         }
         return fieldFound;
-    }
-
-    private void log(String message) {
-        //Clear textArea after 2000 lines. TODO: Create a FIFO JTextArea
-        if (jTextArea.getLineCount() > 2000) {
-            jTextArea.setText("");
-        }
-
-        StringBuilder timeAndMessage =
-                new StringBuilder(timeFormat.format(new Date()));
-        timeAndMessage.append(" ").append(message).append("\n");
-        jTextArea.append(timeAndMessage.toString());
-    }
-
-    protected void logException() {
-        log("The thread is stopped, due to an exception, see log file.");
     }
 
     private void logMove(String message,

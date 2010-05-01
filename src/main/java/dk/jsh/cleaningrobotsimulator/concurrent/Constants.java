@@ -8,4 +8,5 @@ package dk.jsh.cleaningrobotsimulator.concurrent;
 public class Constants {
     public final static int MAX_ROWS = 10;
     public final static int MAX_COLUMNS = 10;
+    public final static int MAX_DIRTY_FIELDS = 10;
 }

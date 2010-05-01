@@ -2,11 +2,15 @@ package dk.jsh.cleaningrobotsimulator.ui.swing;
 
 import dk.jsh.cleaningrobotsimulator.concurrent.Board;
 import dk.jsh.cleaningrobotsimulator.concurrent.Constants;
+import dk.jsh.cleaningrobotsimulator.concurrent.DustCreator;
 import dk.jsh.cleaningrobotsimulator.concurrent.Field;
 import dk.jsh.cleaningrobotsimulator.concurrent.Robot;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.WindowEvent;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -61,6 +65,7 @@ public class View extends FrameView {
         jTabbedPane1.setIconAt(2, resourceMap.getIcon("RobotSimulator.android"));
         jTabbedPane1.setIconAt(3, resourceMap.getIcon("RobotSimulator.dirt"));
         jTabbedPane1.setIconAt(4, resourceMap.getIcon("RobotSimulator.dustbin"));
+        jTabbedPane1.setSelectedIndex(0);
 
         createUIBoard();
 
@@ -78,6 +83,14 @@ public class View extends FrameView {
         wallE = new Robot("Wall-E", board, jTextAreaWallE, resourceMap,
                 "RobotSimulator.wall-e", 9, 9);
         wallE.start();
+
+        //Get a scheduler
+        ScheduledExecutorService scheduler =
+                Executors.newSingleThreadScheduledExecutor();
+        //Run DustCreator with a 5 secs. delay between each run.
+        scheduler.scheduleWithFixedDelay(
+                new DustCreator("DustCreator", board, jTextAreaDust,
+                resourceMap), 0, 5, TimeUnit.SECONDS);
     }
 
     private void createUIBoard() {
@@ -184,7 +197,7 @@ public class View extends FrameView {
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextAreaAndroid = new javax.swing.JTextArea();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTextArea4 = new javax.swing.JTextArea();
+        jTextAreaDust = new javax.swing.JTextArea();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTextArea5 = new javax.swing.JTextArea();
         jButtonPause = new javax.swing.JButton();
@@ -341,6 +354,7 @@ public class View extends FrameView {
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
         jTextAreaBender.setColumns(20);
+        jTextAreaBender.setEditable(false);
         jTextAreaBender.setRows(5);
         jTextAreaBender.setName("jTextAreaBender"); // NOI18N
         jScrollPane1.setViewportView(jTextAreaBender);
@@ -350,6 +364,7 @@ public class View extends FrameView {
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
         jTextAreaWallE.setColumns(20);
+        jTextAreaWallE.setEditable(false);
         jTextAreaWallE.setRows(5);
         jTextAreaWallE.setName("jTextAreaWallE"); // NOI18N
         jScrollPane2.setViewportView(jTextAreaWallE);
@@ -359,6 +374,7 @@ public class View extends FrameView {
         jScrollPane3.setName("jScrollPane3"); // NOI18N
 
         jTextAreaAndroid.setColumns(20);
+        jTextAreaAndroid.setEditable(false);
         jTextAreaAndroid.setRows(5);
         jTextAreaAndroid.setName("jTextAreaAndroid"); // NOI18N
         jScrollPane3.setViewportView(jTextAreaAndroid);
@@ -367,16 +383,18 @@ public class View extends FrameView {
 
         jScrollPane4.setName("jScrollPane4"); // NOI18N
 
-        jTextArea4.setColumns(20);
-        jTextArea4.setRows(5);
-        jTextArea4.setName("jTextArea4"); // NOI18N
-        jScrollPane4.setViewportView(jTextArea4);
+        jTextAreaDust.setColumns(20);
+        jTextAreaDust.setEditable(false);
+        jTextAreaDust.setRows(5);
+        jTextAreaDust.setName("jTextAreaDust"); // NOI18N
+        jScrollPane4.setViewportView(jTextAreaDust);
 
         jTabbedPane1.addTab(resourceMap.getString("jScrollPane4.TabConstraints.tabTitle"), jScrollPane4); // NOI18N
 
         jScrollPane5.setName("jScrollPane5"); // NOI18N
 
         jTextArea5.setColumns(20);
+        jTextArea5.setEditable(false);
         jTextArea5.setRows(5);
         jTextArea5.setName("jTextArea5"); // NOI18N
         jScrollPane5.setViewportView(jTextArea5);
@@ -449,10 +467,10 @@ public class View extends FrameView {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextArea jTextArea4;
     private javax.swing.JTextArea jTextArea5;
     private javax.swing.JTextArea jTextAreaAndroid;
     private javax.swing.JTextArea jTextAreaBender;
+    private javax.swing.JTextArea jTextAreaDust;
     private javax.swing.JTextArea jTextAreaWallE;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;

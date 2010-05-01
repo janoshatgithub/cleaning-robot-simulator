@@ -339,6 +339,7 @@
                 <Component class="javax.swing.JTextArea" name="jTextAreaBender">
                   <Properties>
                     <Property name="columns" type="int" value="20"/>
+                    <Property name="editable" type="boolean" value="false"/>
                     <Property name="rows" type="int" value="5"/>
                     <Property name="name" type="java.lang.String" value="jTextAreaBender" noResource="true"/>
                   </Properties>
@@ -362,6 +363,7 @@
                 <Component class="javax.swing.JTextArea" name="jTextAreaWallE">
                   <Properties>
                     <Property name="columns" type="int" value="20"/>
+                    <Property name="editable" type="boolean" value="false"/>
                     <Property name="rows" type="int" value="5"/>
                     <Property name="name" type="java.lang.String" value="jTextAreaWallE" noResource="true"/>
                   </Properties>
@@ -385,6 +387,7 @@
                 <Component class="javax.swing.JTextArea" name="jTextAreaAndroid">
                   <Properties>
                     <Property name="columns" type="int" value="20"/>
+                    <Property name="editable" type="boolean" value="false"/>
                     <Property name="rows" type="int" value="5"/>
                     <Property name="name" type="java.lang.String" value="jTextAreaAndroid" noResource="true"/>
                   </Properties>
@@ -405,11 +408,12 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTextArea" name="jTextArea4">
+                <Component class="javax.swing.JTextArea" name="jTextAreaDust">
                   <Properties>
                     <Property name="columns" type="int" value="20"/>
+                    <Property name="editable" type="boolean" value="false"/>
                     <Property name="rows" type="int" value="5"/>
-                    <Property name="name" type="java.lang.String" value="jTextArea4" noResource="true"/>
+                    <Property name="name" type="java.lang.String" value="jTextAreaDust" noResource="true"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -431,6 +435,7 @@
                 <Component class="javax.swing.JTextArea" name="jTextArea5">
                   <Properties>
                     <Property name="columns" type="int" value="20"/>
+                    <Property name="editable" type="boolean" value="false"/>
                     <Property name="rows" type="int" value="5"/>
                     <Property name="name" type="java.lang.String" value="jTextArea5" noResource="true"/>
                   </Properties>

@@ -54,6 +54,10 @@ public class Field {
         return usedBy == UsedBy.EMPTY;
     }
 
+    public boolean isDirty() {
+        return status == Status.DIRTY;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
