@@ -1,24 +1,30 @@
 package dk.jsh.cleaningrobotsimulator.concurrent;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JTextArea;
 import org.jdesktop.application.ResourceMap;
 
 /**
- * Board status. (Singelton)
- *
+ * Board status. 
  * @author Jan S. Hansen
  */
 public class Board {
    private Field[][] board;
    private ResourceMap resourceMap;
    private int dirtyFieldsCounter;
+   private int fieldsCleand;
+   private JTextArea jTextAreaDustbin;
+   protected SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
    /**
-    * Private constructor.
+    * Constructor.
     */
-   public Board(ResourceMap resourceMap) {
+   public Board(ResourceMap resourceMap, JTextArea jTextAreaDustbin) {
      this.resourceMap = resourceMap;
+     this.jTextAreaDustbin = jTextAreaDustbin;
      board = new Field[Constants.MAX_ROWS][Constants.MAX_COLUMNS];
      //Clean board
      for (int row = 0; row < Constants.MAX_ROWS; row++) {
@@ -84,6 +90,21 @@ public class Board {
       }
       field.setStatus(Field.Status.CLEAN);
       dirtyFieldsCounter--;
+   }
+
+   public synchronized void emptyRobot(String robotName) {
+       fieldsCleand = fieldsCleand + Constants.MAX_CLEANED_FIELDS;
+        //Clear textArea after 2000 lines. TODO: Create a FIFO JTextArea
+        if (jTextAreaDustbin.getLineCount() > 2000) {
+            jTextAreaDustbin.setText("");
+        }
+
+        StringBuilder timeAndMessage =
+                new StringBuilder(timeFormat.format(new Date()));
+        timeAndMessage.append(" Dust from ").append(robotName);
+        timeAndMessage.append(" recieved - Total recieved: ");
+        timeAndMessage.append(fieldsCleand).append(".\n");
+        jTextAreaDustbin.append(timeAndMessage.toString());
    }
 
    private void setField(int column, int row, Field.Status status,
