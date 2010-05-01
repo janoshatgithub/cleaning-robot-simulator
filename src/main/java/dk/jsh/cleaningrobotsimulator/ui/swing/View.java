@@ -87,10 +87,10 @@ public class View extends FrameView {
         //Get a scheduler
         ScheduledExecutorService scheduler =
                 Executors.newSingleThreadScheduledExecutor();
-        //Run DustCreator with a 5 secs. delay between each run.
+        //Run DustCreator with a 60 secs. delay between each run.
         scheduler.scheduleWithFixedDelay(
                 new DustCreator("DustCreator", board, jTextAreaDust,
-                resourceMap), 0, 5, TimeUnit.SECONDS);
+                resourceMap), 0, 30, TimeUnit.SECONDS);
     }
 
     private void createUIBoard() {
