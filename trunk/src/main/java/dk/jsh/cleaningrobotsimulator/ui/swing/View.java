@@ -52,12 +52,11 @@ public class View extends FrameView {
         ImageIcon image = resourceMap.getImageIcon("RobotSimulator.recycle");
         jFrame.setIconImage(image.getImage());
 
-        //Create board
-        //board = Board.createInstance(resourceMap);
-        board = new Board(resourceMap);
-
         //Initialize UI
         initComponents();
+
+        //Create board
+        board = new Board(resourceMap, jTextAreaDustbin);
 
         //Set tab icons
         jTabbedPane1.setIconAt(0, resourceMap.getIcon("RobotSimulator.bender"));
@@ -73,15 +72,15 @@ public class View extends FrameView {
 
         //Start robot threads
         bender = new Robot("Bender", board, jTextAreaBender, resourceMap,
-                "RobotSimulator.bender", 0, 9);
+                "RobotSimulator.bender", "RobotSimulator.bender-full" , 0, 9);
         bender.start();
 
         android = new Robot("Android", board, jTextAreaAndroid, resourceMap,
-                "RobotSimulator.android", 9, 0);
+                "RobotSimulator.android", "RobotSimulator.android-full", 9, 0);
         android.start();
 
         wallE = new Robot("Wall-E", board, jTextAreaWallE, resourceMap,
-                "RobotSimulator.wall-e", 9, 9);
+                "RobotSimulator.wall-e", "RobotSimulator.wall-e-full", 9, 9);
         wallE.start();
 
         //Get a scheduler
@@ -199,7 +198,7 @@ public class View extends FrameView {
         jScrollPane4 = new javax.swing.JScrollPane();
         jTextAreaDust = new javax.swing.JTextArea();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTextArea5 = new javax.swing.JTextArea();
+        jTextAreaDustbin = new javax.swing.JTextArea();
         jButtonPause = new javax.swing.JButton();
         jButtonContinue = new javax.swing.JButton();
 
@@ -393,11 +392,11 @@ public class View extends FrameView {
 
         jScrollPane5.setName("jScrollPane5"); // NOI18N
 
-        jTextArea5.setColumns(20);
-        jTextArea5.setEditable(false);
-        jTextArea5.setRows(5);
-        jTextArea5.setName("jTextArea5"); // NOI18N
-        jScrollPane5.setViewportView(jTextArea5);
+        jTextAreaDustbin.setColumns(20);
+        jTextAreaDustbin.setEditable(false);
+        jTextAreaDustbin.setRows(5);
+        jTextAreaDustbin.setName("jTextAreaDustbin"); // NOI18N
+        jScrollPane5.setViewportView(jTextAreaDustbin);
 
         jTabbedPane1.addTab(resourceMap.getString("jScrollPane5.TabConstraints.tabTitle"), jScrollPane5); // NOI18N
 
@@ -467,10 +466,10 @@ public class View extends FrameView {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextArea jTextArea5;
     private javax.swing.JTextArea jTextAreaAndroid;
     private javax.swing.JTextArea jTextAreaBender;
     private javax.swing.JTextArea jTextAreaDust;
+    private javax.swing.JTextArea jTextAreaDustbin;
     private javax.swing.JTextArea jTextAreaWallE;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
