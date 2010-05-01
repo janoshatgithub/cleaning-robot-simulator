@@ -73,6 +73,18 @@ public class Board {
        return ok;
    }
 
+   public synchronized void cleanField(int column, int row) {
+      testFieldArguments(column, row);
+      if (column == 0 && row == 0) { //Dustbin
+         throw new IllegalArgumentException("Dustbin can't be cleaned");
+      }
+      Field field = getField(column, row);
+      if (!field.isDirty()) {
+          throw new IllegalArgumentException("Field is not dirty");
+      }
+      field.setStatus(Field.Status.CLEAN);
+      dirtyFieldsCounter--;
+   }
 
    private void setField(int column, int row, Field.Status status,
            Field.UsedBy usedBy, String iconResource) {

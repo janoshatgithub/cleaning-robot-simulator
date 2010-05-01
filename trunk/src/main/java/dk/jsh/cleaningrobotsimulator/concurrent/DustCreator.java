@@ -32,10 +32,10 @@ public class DustCreator extends CommonThread {
                     field.jLabel.setIcon(
                             resourceMap.getIcon("RobotSimulator.dirt"));
                     dirtyFields++;
-                    log("Dirt added");
+                    log("Dirt added.");
                 }
                 else {
-                    log("Failed");
+                    log("Failed.");
                 }
             }
         }

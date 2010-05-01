@@ -20,7 +20,8 @@ public class Robot extends CommonThread {
     private int column;
     private int row;
     private Field[] prevFields = new Field[]{null, null, null, null, null, null};
-    private int nextPrevField = 0;
+    private int nextPrevField;
+    private int fieldsCleaned;
 
     Random randomGenerator = new Random();
 
@@ -50,7 +51,7 @@ public class Robot extends CommonThread {
 
     private void cleaning() {
         addToPrevFields(board.getField(column, row));
-        Field moveToField = getRandomNextField();
+        Field moveToField = geNextField();
         if (moveToField == null) {
             clearPrevFields();
         }
@@ -63,6 +64,11 @@ public class Robot extends CommonThread {
                     moveToField.jLabel.setIcon(resourceMap.getIcon("RobotSimulator.recycle"));
                 }
                 else {
+                    if (moveToField.isDirty()) {
+                        board.cleanField(toColumn, toRow);
+                        fieldsCleaned++;
+                        log("No of fields cleaned: " + fieldsCleaned + ".");
+                    }
                     moveToField.jLabel.setIcon(resourceMap.getIcon(resource));
                 }
                 Field fromField = board.getField(column, row);
@@ -120,8 +126,9 @@ public class Robot extends CommonThread {
         return pauseRequested;
     }
 
-    private Field getRandomNextField() {
-        List<Field> moveToOptions = new ArrayList<Field>();
+    private Field geNextField() {
+        List<Field> moveToCleanFieldOptions = new ArrayList<Field>();
+        List<Field> moveToDirtyFieldOptions = new ArrayList<Field>();
         //Test fields above
         int testColumn = column - 1;
         int testRow = row - 1;
@@ -129,7 +136,12 @@ public class Robot extends CommonThread {
             if (validRowColumn(testColumn, testRow)) {
                 Field field = board.getField(testColumn, testRow);
                 if (field.isEmpty() && !isFieldInPrevFields(field)) {
-                    moveToOptions.add(field);
+                    if (field.isDirty()) {
+                        moveToDirtyFieldOptions.add(field);
+                    }
+                    else {
+                        moveToCleanFieldOptions.add(field);
+                    }
                 }
             }
         }
@@ -139,7 +151,12 @@ public class Robot extends CommonThread {
         if (validRowColumn(testColumn, testRow)) {
             Field field = board.getField(testColumn, testRow);
             if (field.isEmpty() && !isFieldInPrevFields(field)) {
-                moveToOptions.add(field);
+                if (field.isDirty()) {
+                    moveToDirtyFieldOptions.add(field);
+                }
+                else {
+                    moveToCleanFieldOptions.add(field);
+                }
             }
         }
         //Test field to the right
@@ -147,7 +164,12 @@ public class Robot extends CommonThread {
         if (validRowColumn(testColumn, testRow)) {
             Field field = board.getField(testColumn, testRow);
             if (field.isEmpty() && !isFieldInPrevFields(field)) {
-                moveToOptions.add(field);
+                if (field.isDirty()) {
+                    moveToDirtyFieldOptions.add(field);
+                }
+                else {
+                    moveToCleanFieldOptions.add(field);
+                }
             }
         }
         //Test fields below
@@ -157,22 +179,36 @@ public class Robot extends CommonThread {
             if (validRowColumn(testColumn, testRow)) {
                 Field field = board.getField(testColumn, testRow);
                 if (field.isEmpty() && !isFieldInPrevFields(field)) {
-                    moveToOptions.add(field);
+                    if (field.isDirty()) {
+                        moveToDirtyFieldOptions.add(field);
+                    }
+                    else {
+                        moveToCleanFieldOptions.add(field);
+                    }
                 }
             }
         }
-        
-        if (moveToOptions.isEmpty()) {
-            log("*** Robot is locked, no move is possible!");
-            return null;
+        Field field = null;
+        if (!moveToDirtyFieldOptions.isEmpty()) {
+            logMoveToOptions("Move to dirty field options",
+                    moveToCleanFieldOptions);
+                        //Return random
+            int index = randomGenerator.nextInt(moveToDirtyFieldOptions.size());
+            field = moveToDirtyFieldOptions.get(index);
         }
-        else {
-            logMoveToOptions(moveToOptions);
-
-            //Return random
-            int index = randomGenerator.nextInt(moveToOptions.size());
-            return moveToOptions.get(index);
+        else { //No dirty fields try empty clean fields
+            log("No dirty fields nearby.");
+            if (!moveToCleanFieldOptions.isEmpty()) {
+                logMoveToOptions("Move to clean field options",
+                        moveToCleanFieldOptions);
+                int index = randomGenerator.nextInt(moveToCleanFieldOptions.size());
+                field = moveToCleanFieldOptions.get(index);
+            }
+            else {
+                log("*** Robot is locked, no move is possible!");
+            }
         }
+        return field;
     }
 
     private boolean validRowColumn(int column, int row) {
@@ -227,10 +263,10 @@ public class Robot extends CommonThread {
         jTextArea.append(timeAndMessage.toString());
     }
 
-    private void logMoveToOptions(List<Field> fields) {
+    private void logMoveToOptions(String message, List<Field> fields) {
                 StringBuilder timeAndMessage =
                 new StringBuilder(timeFormat.format(new Date()));
-        timeAndMessage.append(" Move to options");
+        timeAndMessage.append(" ").append(message);
         String before = ": ";
         for (Field field : fields) {
             timeAndMessage.append(before);
