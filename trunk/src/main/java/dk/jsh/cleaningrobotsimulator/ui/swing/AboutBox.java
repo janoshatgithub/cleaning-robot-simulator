@@ -2,15 +2,27 @@ package dk.jsh.cleaningrobotsimulator.ui.swing;
 
 import org.jdesktop.application.Action;
 
+/**
+ * About box dialog.
+ * @author Jan S. Hansen
+ */
 public class AboutBox extends javax.swing.JDialog {
 
+    /**
+     * Constructor.
+     * @param parent parent frame
+     */
     public AboutBox(java.awt.Frame parent) {
         super(parent);
         initComponents();
         getRootPane().setDefaultButton(closeButton);
     }
 
-    @Action public void closeAboutBox() {
+    /**
+     * Close about box action.
+     */
+    @Action
+    public void closeAboutBox() {
         dispose();
     }
 

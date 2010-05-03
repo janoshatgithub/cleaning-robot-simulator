@@ -9,7 +9,6 @@ import org.jdesktop.application.SingleFrameApplication;
 
 /**
  * The main class of the application.
- *
  * @author Jan S. Hansen
  */
 public class CleaningRobotSimulator extends SingleFrameApplication {
@@ -21,6 +20,9 @@ public class CleaningRobotSimulator extends SingleFrameApplication {
         show(new View(this));
     }
 
+    /**
+     * Setup log file.
+     */
     private static void setupLog() {
         try {
             //%t - Means that the log is located in the Systems Temp directory

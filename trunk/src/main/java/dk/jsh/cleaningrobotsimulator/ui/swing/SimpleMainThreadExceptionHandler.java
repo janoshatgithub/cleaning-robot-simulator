@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package dk.jsh.cleaningrobotsimulator.ui.swing;
 
 import java.io.PrintWriter;
@@ -14,34 +9,47 @@ import javax.swing.SwingUtilities;
 
 /**
  * Main thread uncaught exception handler.
- *
  * @author Jan S. Hansen
  */
 public class SimpleMainThreadExceptionHandler implements Thread.UncaughtExceptionHandler {
     private Logger logger;
 
+    /**
+     * Constructor.
+     */
     public SimpleMainThreadExceptionHandler() {
         logger = Logger.getLogger(getClass().getName());
     }
 
+    /**
+     * Log uncaugth exceptions to a log file and show an error dialog.
+     * @param thread The thread that throw the exception
+     * @param exception Exception to log.
+     */
     @Override
-    public void uncaughtException(final Thread t, final Throwable e) {
+    public void uncaughtException(final Thread thread,
+            final Throwable exception) {
        if (SwingUtilities.isEventDispatchThread()) {
-            showAndLogException(t, e);
+            showAndLogException(thread, exception);
         } else {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    showAndLogException(t, e);
+                    showAndLogException(thread, exception);
                 }
             });
         }
     }
 
-   private void showAndLogException(Thread t, Throwable e) {
-            e.printStackTrace();
+   /**
+    * Log exception in log file and show an error dialog.
+    * @param thread The thread that throw the exception
+    * @param exception Exception to log.
+    */
+   private void showAndLogException(Thread thread, Throwable exception) {
+            exception.printStackTrace();
             StringWriter sw = new StringWriter();
-            e.printStackTrace(new PrintWriter(sw));
+            exception.printStackTrace(new PrintWriter(sw));
             logger.log(Level.SEVERE, "Uncaught exception in main thread",
                     sw.toString());
             JOptionPane.showMessageDialog(null,

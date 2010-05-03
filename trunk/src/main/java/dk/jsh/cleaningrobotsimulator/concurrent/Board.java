@@ -47,6 +47,15 @@ public class Board {
                 "RobotSimulator.dustbin");
     }
 
+    /**
+     * Try to move a robot from one field to another field.
+     * @param fromColumn from column
+     * @param fromRow from row
+     * @param toColumn to column
+     * @param toRow to row
+     * @param robotIconResource robot icon resource
+     * @return true if move was a success.
+     */
     public synchronized boolean tryMove(int fromColumn, int fromRow,
             int toColumn, int toRow, String robotIconResource) {
         testFieldArguments(fromColumn, fromRow);
@@ -72,7 +81,8 @@ public class Board {
                 }
             }
             if (toRow == 0 && toColumn == 0) {
-                toField.jLabel.setIcon(resourceMap.getIcon("RobotSimulator.recycle"));
+                toField.jLabel.setIcon(resourceMap.getIcon(
+                        "RobotSimulator.recycle"));
             } else {
                 toField.jLabel.setIcon(resourceMap.getIcon(robotIconResource));
             }
@@ -80,6 +90,12 @@ public class Board {
         return moveOk;
     }
 
+    /**
+     * Try to make a field dirty.
+     * @param column fields column
+     * @param row fields row
+     * @return true if it was a success.
+     */
     public synchronized boolean tryMakeFieldDirty(int column, int row) {
         boolean ok = false;
         if (dirtyFieldsCounter + 1 <= Constants.MAX_DIRTY_FIELDS) {
@@ -99,6 +115,11 @@ public class Board {
         return ok;
     }
 
+    /**
+     * Changes a fields status to clean.
+     * @param column fields column
+     * @param row fields row
+     */
     public synchronized void cleanField(int column, int row) {
         testFieldArguments(column, row);
         if (column == 0 && row == 0) { //Dustbin
@@ -112,6 +133,10 @@ public class Board {
         dirtyFieldsCounter--;
     }
 
+    /**
+     * Empties a robot for dust and log a message to the Dustbin log.
+     * @param robotName robot name, used in log message.
+     */
     public synchronized void emptyRobot(String robotName) {
         fieldsCleand = fieldsCleand + Constants.MAX_CLEANED_FIELDS;
         //Clear textArea after 2000 lines. TODO: Create a FIFO JTextArea
@@ -127,6 +152,33 @@ public class Board {
         jTextAreaDustbin.append(timeAndMessage.toString());
     }
 
+    /**
+     * Returns dirty fields counter.
+     * @return dirty fields counter
+     */
+    public int getDirtyFieldsCounter() {
+        return dirtyFieldsCounter;
+    }
+
+    /**
+     * Returns a field.
+     * @param column fields column
+     * @param row fields row
+     * @return field a Field
+     */
+    public Field getField(int column, int row) {
+        testFieldArguments(column, row);
+        return board[row][column];
+    }
+
+    /**
+     * Set a Fields Status and UsedBy.
+     * @param column Fields column
+     * @param row Fields row
+     * @param status Fields Status
+     * @param usedBy Fields UsedBy
+     * @param iconResource Icon resource
+     */
     private void setField(int column, int row, Field.Status status,
             Field.UsedBy usedBy, String iconResource) {
         testFieldArguments(column, row);
@@ -137,11 +189,12 @@ public class Board {
         field.jLabel.setIcon(imageIcon);
     }
 
-    public Field getField(int column, int row) {
-        testFieldArguments(column, row);
-        return board[row][column];
-    }
-
+    /**
+     * Test if is is valid column and row arguments.
+     * @param column column
+     * @param row row
+     * @throws IllegalArgumentException Illegal row or column.
+     */
     private void testFieldArguments(int column, int row)
             throws IllegalArgumentException {
         if (column < 0 || column >= Constants.MAX_COLUMNS
@@ -149,9 +202,5 @@ public class Board {
             throw new IllegalArgumentException("Error in column or row: ("
                     + column + ", " + row + ")");
         }
-    }
-
-    public int getDirtyFieldsCounter() {
-        return dirtyFieldsCounter;
     }
 }

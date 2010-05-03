@@ -7,27 +7,34 @@ import java.util.logging.Logger;
 
 /**
  * This class is used to handle uncaught exceptions in threads.
- *
  * @author Jan S. Hansen
  */
 public class SimpleThreadExceptionHandler 
         implements Thread.UncaughtExceptionHandler {
     private Logger logger;
 
+    /**
+     * Constructor.
+     */
     public SimpleThreadExceptionHandler() {
         logger = Logger.getLogger(getClass().getName());
     }
 
+    /**
+     * Log uncaugth exceptions to a log file and to the standard error stream.
+     * @param thread The thread that throw the exception
+     * @param exception Exception.
+     */
     @Override
-    public void uncaughtException(Thread t, Throwable e) {
-        e.printStackTrace();
+    public void uncaughtException(Thread thread, Throwable exception) {
+        exception.printStackTrace();
         StringWriter sw = new StringWriter();
-        e.printStackTrace(new PrintWriter(sw));
+        exception.printStackTrace(new PrintWriter(sw));
         logger.log(Level.SEVERE, "Uncaught exception in thread",
-                t.getName());
+                thread.getName());
         logger.log(Level.SEVERE, "Uncaught exception in thread", sw.toString());
-        if (t instanceof Robot) {
-            Robot robot = (Robot)t;
+        if (thread instanceof Robot) {
+            Robot robot = (Robot)thread;
             robot.logException();
         }
     }

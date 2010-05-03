@@ -24,6 +24,7 @@ import javax.swing.JLabel;
 
 /**
  * The application's main frame.
+ * @author Jan S. Hansen
  */
 public class View extends FrameView {
     private Board board;
@@ -33,6 +34,9 @@ public class View extends FrameView {
     private Robot wallE;
     private Logger logger;
 
+    /**
+     * Constructor.
+     */
     public View(SingleFrameApplication app) {
         super(app);
         logger = Logger.getLogger(View.class.getName());
@@ -92,6 +96,9 @@ public class View extends FrameView {
                 resourceMap), 0, 30, TimeUnit.SECONDS);
     }
 
+    /**
+     * Adds fields from board to UI.
+     */
     private void createUIBoard() {
         GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
         Insets insets = new Insets(1, 1, 1, 1);
@@ -107,6 +114,9 @@ public class View extends FrameView {
         }
     }
 
+    /**
+     * Show about box action.
+     */
     @Action
     public void showAboutBox() {
         if (aboutBox == null) {
@@ -117,6 +127,9 @@ public class View extends FrameView {
         CleaningRobotSimulator.getApplication().show(aboutBox);
     }
 
+    /**
+     * Pause button action.
+     */
     @Action
     public void pause() {
         bender.requestPause();
@@ -126,6 +139,9 @@ public class View extends FrameView {
         jButtonContinue.setEnabled(true);
     }
 
+    /**
+     * Continue button action.
+     */
     @Action
     public void cont() {
         bender.continueAfterPause();
@@ -135,6 +151,9 @@ public class View extends FrameView {
         jButtonContinue.setEnabled(false);
     }
 
+    /**
+     * Quit application action.
+     */
     @Action
     public void quit() {
         bender.requestStop();
