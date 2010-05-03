@@ -14,6 +14,7 @@ import org.jdesktop.application.ResourceMap;
  * @author Jan S. Hansen
  */
 public class Robot extends CommonThread {
+
     private boolean stopRequested = false;
     private boolean pauseRequested = false;
     private String resource;
@@ -23,7 +24,6 @@ public class Robot extends CommonThread {
     private Field[] prevFields = new Field[]{null, null, null, null, null, null};
     private int nextPrevField;
     private int fieldsCleaned;
-
     Random randomGenerator = new Random();
 
     public Robot(String threadName, Board board, JTextArea jTextArea,
@@ -44,8 +44,7 @@ public class Robot extends CommonThread {
         while (!isStopRequested()) {
             if (isPauseRequested()) {
                 paused();
-            }
-            else {
+            } else {
                 cleaning();
             }
         }
@@ -57,72 +56,32 @@ public class Robot extends CommonThread {
         if (fieldsCleaned >= Constants.MAX_CLEANED_FIELDS) { //Goto bin
             int toRow = row > 0 ? row - 1 : 0;
             int toColumn = column > 0 ? column - 1 : 0;
-            if (board.tryMove(column, row, toColumn, toRow)) {
+            if (board.tryMove(column, row, toColumn, toRow, fullResource)) {
                 logMove("Move to dustbin", row, column, toRow, toColumn);
-                Field fromField = board.getField(column, row);
-                Field moveToField = board.getField(toColumn, toRow);
                 if (toRow == 0 && toColumn == 0) {
-                    moveToField.jLabel.setIcon(
-                            resourceMap.getIcon("RobotSimulator.recycle"));
                     fieldsCleaned = 0;
                     board.emptyRobot(this.getName());
                     clearPrevFields();
                     log("Robot is emptied.");
                 }
-                else {
-                    moveToField.jLabel.setIcon(resourceMap.getIcon(fullResource));
-                }
-                if (fromField.isDirty()) {
-                    fromField.jLabel.setIcon(
-                            resourceMap.getIcon("RobotSimulator.dirt"));
-                }
-                else {
-                    fromField.jLabel.setIcon(
-                            resourceMap.getIcon("RobotSimulator.clean"));
-                }
                 row = toRow;
                 column = toColumn;
-            }
-            else {
+            } else {
                 log("Move to dustbin failed.");
             }
-        }
-        else { //Search and clean
+        } else { //Search and clean
             Field moveToField = getNextField();
             if (moveToField == null) {
                 clearPrevFields();
-            }
-            else {
-                boolean fieldCleaned = false;
+            } else {
                 int toColumn = moveToField.getColumn();
                 int toRow = moveToField.getRow();
                 logMove("Try move", row, column, toRow, toColumn);
-                if (board.tryMove(column, row, toColumn, toRow)) {
-                    if (toRow == 0 && toColumn == 0) { //To Dustbin
-                        moveToField.jLabel.setIcon(resourceMap.getIcon("RobotSimulator.recycle"));
-                    }
-                    else {
-                        if (moveToField.isDirty()) {
-                            board.cleanField(toColumn, toRow);
-                            fieldsCleaned++;
-                            fieldCleaned = true;
-                        }
-                        if (fieldsCleaned >= Constants.MAX_CLEANED_FIELDS) {
-                            moveToField.jLabel.setIcon(resourceMap.getIcon(fullResource));
-                        }
-                        else {
-                            moveToField.jLabel.setIcon(resourceMap.getIcon(resource));
-                        }
-                    }
-                    Field fromField = board.getField(column, row);
-                    if (row == 0 && column == 0) { //From dustbin
-                        fromField.jLabel.setIcon(resourceMap.getIcon("RobotSimulator.dustbin"));
-                    }
-                    else {
-                        fromField.jLabel.setIcon(resourceMap.getIcon("RobotSimulator.clean"));
-                    }
+                if (board.tryMove(column, row, toColumn, toRow, resource)) {
                     logMove("Move", row, column, toRow, toColumn);
-                    if (fieldCleaned) {
+                    if (moveToField.isDirty()) {
+                        board.cleanField(toColumn, toRow);
+                        fieldsCleaned++;
                         log("Number of fields cleaned: " + fieldsCleaned + ".");
                         if (fieldsCleaned >= Constants.MAX_CLEANED_FIELDS) {
                             log("Robot is full.");
@@ -130,8 +89,7 @@ public class Robot extends CommonThread {
                     }
                     row = toRow;
                     column = toColumn;
-                }
-                else {
+                } else {
                     log("Move failed.");
                 }
             }
@@ -188,8 +146,7 @@ public class Robot extends CommonThread {
                 if (field.isEmpty() && !isFieldInPrevFields(field)) {
                     if (field.isDirty()) {
                         moveToDirtyFieldOptions.add(field);
-                    }
-                    else {
+                    } else {
                         moveToCleanFieldOptions.add(field);
                     }
                 }
@@ -203,8 +160,7 @@ public class Robot extends CommonThread {
             if (field.isEmpty() && !isFieldInPrevFields(field)) {
                 if (field.isDirty()) {
                     moveToDirtyFieldOptions.add(field);
-                }
-                else {
+                } else {
                     moveToCleanFieldOptions.add(field);
                 }
             }
@@ -216,8 +172,7 @@ public class Robot extends CommonThread {
             if (field.isEmpty() && !isFieldInPrevFields(field)) {
                 if (field.isDirty()) {
                     moveToDirtyFieldOptions.add(field);
-                }
-                else {
+                } else {
                     moveToCleanFieldOptions.add(field);
                 }
             }
@@ -231,8 +186,7 @@ public class Robot extends CommonThread {
                 if (field.isEmpty() && !isFieldInPrevFields(field)) {
                     if (field.isDirty()) {
                         moveToDirtyFieldOptions.add(field);
-                    }
-                    else {
+                    } else {
                         moveToCleanFieldOptions.add(field);
                     }
                 }
@@ -242,19 +196,17 @@ public class Robot extends CommonThread {
         if (!moveToDirtyFieldOptions.isEmpty()) {
             logMoveToOptions("Move to dirty field options",
                     moveToCleanFieldOptions);
-                        //Return random
+            //Return random
             int index = randomGenerator.nextInt(moveToDirtyFieldOptions.size());
             field = moveToDirtyFieldOptions.get(index);
-        }
-        else { //No dirty fields try empty clean fields
+        } else { //No dirty fields try empty clean fields
             log("No dirty fields nearby.");
             if (!moveToCleanFieldOptions.isEmpty()) {
                 logMoveToOptions("Move to clean field options",
                         moveToCleanFieldOptions);
                 int index = randomGenerator.nextInt(moveToCleanFieldOptions.size());
                 field = moveToCleanFieldOptions.get(index);
-            }
-            else {
+            } else {
                 log("*** Robot is locked, no move is possible!");
             }
         }
@@ -263,8 +215,8 @@ public class Robot extends CommonThread {
 
     private boolean validRowColumn(int column, int row) {
         boolean ok = true;
-        if (row < 0 || row >= Constants.MAX_ROWS ||
-            column < 0 || column >= Constants.MAX_COLUMNS) {
+        if (row < 0 || row >= Constants.MAX_ROWS
+                || column < 0 || column >= Constants.MAX_COLUMNS) {
             ok = false;
         }
         if (column == 0 && row == 0) { //Dustbin
@@ -295,8 +247,7 @@ public class Robot extends CommonThread {
         while (!fieldFound && i < prevFields.length) {
             if (field.equals(prevFields[i])) {
                 fieldFound = true;
-            }
-            else {
+            } else {
                 i++;
             }
         }
@@ -304,26 +255,26 @@ public class Robot extends CommonThread {
     }
 
     private void logMove(String message,
-                         int fromRow, int fromColumn,
-                         int toRow, int toColumn) {
+            int fromRow, int fromColumn,
+            int toRow, int toColumn) {
         StringBuilder timeAndMessage =
                 new StringBuilder(timeFormat.format(new Date()));
         timeAndMessage.append(" ").append(message).append(" ");
-        timeAndMessage.append((char)(fromColumn + 65));
+        timeAndMessage.append((char) (fromColumn + 65));
         timeAndMessage.append(++fromRow).append(" to ");
-        timeAndMessage.append((char)(toColumn + 65));
+        timeAndMessage.append((char) (toColumn + 65));
         timeAndMessage.append(++toRow).append(".\n");
         jTextArea.append(timeAndMessage.toString());
     }
 
     private void logMoveToOptions(String message, List<Field> fields) {
-                StringBuilder timeAndMessage =
+        StringBuilder timeAndMessage =
                 new StringBuilder(timeFormat.format(new Date()));
         timeAndMessage.append(" ").append(message);
         String before = ": ";
         for (Field field : fields) {
             timeAndMessage.append(before);
-            timeAndMessage.append((char)(field.getColumn() + 65));
+            timeAndMessage.append((char) (field.getColumn() + 65));
             timeAndMessage.append(field.getRow() + 1);
             before = ", ";
         }
