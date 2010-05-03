@@ -163,7 +163,8 @@ public class View extends FrameView {
             try {
                 Thread.sleep(50);
             } catch (InterruptedException ex) {
-                logger.log(Level.SEVERE, null, ex);
+                logger.log(Level.SEVERE, "Error waiting for robots to stop.",
+                        ex);
             }
         }
         logger.log(Level.INFO, "Application stopped.");
