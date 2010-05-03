@@ -147,7 +147,12 @@ public class Robot extends CommonThread {
      */
     private void sleepForSecs(int secs) {
         try {
-            sleep(secs * 1000);
+            int msecs = secs * 1000;
+            int i = 0;
+            while (i < (msecs / 100) && !isStopRequested()) {
+                sleep(100);
+                i++;
+            }
         } catch (InterruptedException ex) {
             exceptionLogger.log(Level.SEVERE, null, ex);
             logException();
