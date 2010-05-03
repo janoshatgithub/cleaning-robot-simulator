@@ -248,7 +248,7 @@ public class Robot extends CommonThread {
         Field field = null;
         if (!moveToDirtyFieldOptions.isEmpty()) {
             logMoveToOptions("Move to dirty field options",
-                    moveToCleanFieldOptions);
+                    moveToDirtyFieldOptions);
             //Return random
             int index = randomGenerator.nextInt(moveToDirtyFieldOptions.size());
             field = moveToDirtyFieldOptions.get(index);
