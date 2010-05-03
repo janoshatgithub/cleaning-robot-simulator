@@ -94,7 +94,7 @@ public class Robot extends CommonThread {
                 int toRow = moveToField.getRow();
                 logMove("Try move", row, column, toRow, toColumn);
                 if (board.tryMove(column, row, toColumn, toRow, resource)) {
-                    logMove("Move", row, column, toRow, toColumn);
+                    logMove("Moved from", row, column, toRow, toColumn);
                     if (moveToField.isDirty()) {
                         board.cleanField(toColumn, toRow);
                         fieldsCleaned++;
