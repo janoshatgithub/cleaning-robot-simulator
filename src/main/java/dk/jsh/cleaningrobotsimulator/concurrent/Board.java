@@ -119,18 +119,21 @@ public class Board {
      * Changes a fields status to clean.
      * @param column fields column
      * @param row fields row
+     * @return true if it was a success.
      */
-    public synchronized void cleanField(int column, int row) {
+    public synchronized boolean tryCleanField(int column, int row) {
+        boolean ok = false;
         testFieldArguments(column, row);
         if (column == 0 && row == 0) { //Dustbin
             throw new IllegalArgumentException("Dustbin can't be cleaned");
         }
         Field field = getField(column, row);
-        if (!field.isDirty()) {
-            throw new IllegalArgumentException("Field is not dirty");
+        if (field.isDirty()) {
+            field.setStatus(Field.Status.CLEAN);
+            dirtyFieldsCounter--;
+            ok = true;
         }
-        field.setStatus(Field.Status.CLEAN);
-        dirtyFieldsCounter--;
+        return ok;
     }
 
     /**
