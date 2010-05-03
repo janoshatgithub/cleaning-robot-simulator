@@ -96,11 +96,17 @@ public class Robot extends CommonThread {
                 if (board.tryMove(column, row, toColumn, toRow, resource)) {
                     logMove("Moved from", row, column, toRow, toColumn);
                     if (moveToField.isDirty()) {
-                        board.cleanField(toColumn, toRow);
-                        fieldsCleaned++;
-                        log("Number of fields cleaned: " + fieldsCleaned + ".");
-                        if (fieldsCleaned >= Constants.MAX_CLEANED_FIELDS) {
-                            log("Robot is full.");
+                        if (board.tryCleanField(toColumn, toRow)) {
+                            fieldsCleaned++;
+                            log("Number of fields cleaned: " +
+                                    fieldsCleaned + ".");
+                            if (fieldsCleaned >= Constants.MAX_CLEANED_FIELDS) {
+                                log("Robot is full.");
+                            }
+                        }
+                        else {
+                            log("The field is no longer dirty, after moving " +
+                                    "robot.");
                         }
                     }
                     row = toRow;
