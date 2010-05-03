@@ -188,11 +188,13 @@ public class Robot extends CommonThread {
         for (testColumn = column - 1; testColumn <= column + 1; testColumn++) {
             if (validRowColumn(testColumn, testRow)) {
                 Field field = board.getField(testColumn, testRow);
-                if (field.isEmpty() && !isFieldInPrevFields(field)) {
+                if (field.isEmpty()) {
                     if (field.isDirty()) {
                         moveToDirtyFieldOptions.add(field);
                     } else {
-                        moveToCleanFieldOptions.add(field);
+                         if(!isFieldInPrevFields(field)) {
+                            moveToCleanFieldOptions.add(field);
+                         }
                     }
                 }
             }
@@ -202,11 +204,13 @@ public class Robot extends CommonThread {
         testColumn = column - 1;
         if (validRowColumn(testColumn, testRow)) {
             Field field = board.getField(testColumn, testRow);
-            if (field.isEmpty() && !isFieldInPrevFields(field)) {
+            if (field.isEmpty()) {
                 if (field.isDirty()) {
                     moveToDirtyFieldOptions.add(field);
                 } else {
-                    moveToCleanFieldOptions.add(field);
+                     if(!isFieldInPrevFields(field)) {
+                        moveToCleanFieldOptions.add(field);
+                     }
                 }
             }
         }
@@ -214,11 +218,13 @@ public class Robot extends CommonThread {
         testColumn = column + 1;
         if (validRowColumn(testColumn, testRow)) {
             Field field = board.getField(testColumn, testRow);
-            if (field.isEmpty() && !isFieldInPrevFields(field)) {
+            if (field.isEmpty()) {
                 if (field.isDirty()) {
                     moveToDirtyFieldOptions.add(field);
                 } else {
-                    moveToCleanFieldOptions.add(field);
+                     if(!isFieldInPrevFields(field)) {
+                        moveToCleanFieldOptions.add(field);
+                     }
                 }
             }
         }
@@ -228,11 +234,13 @@ public class Robot extends CommonThread {
         for (testColumn = column - 1; testColumn <= column + 1; testColumn++) {
             if (validRowColumn(testColumn, testRow)) {
                 Field field = board.getField(testColumn, testRow);
-                if (field.isEmpty() && !isFieldInPrevFields(field)) {
+                if (field.isEmpty()) {
                     if (field.isDirty()) {
                         moveToDirtyFieldOptions.add(field);
                     } else {
-                        moveToCleanFieldOptions.add(field);
+                         if(!isFieldInPrevFields(field)) {
+                            moveToCleanFieldOptions.add(field);
+                         }
                     }
                 }
             }
@@ -244,7 +252,7 @@ public class Robot extends CommonThread {
             //Return random
             int index = randomGenerator.nextInt(moveToDirtyFieldOptions.size());
             field = moveToDirtyFieldOptions.get(index);
-        } else { //No dirty fields to movw to, try clean fields.
+        } else { //No dirty fields to move to, try clean fields.
             log("No dirty fields nearby.");
             if (!moveToCleanFieldOptions.isEmpty()) {
                 logMoveToOptions("Move to clean field options",
