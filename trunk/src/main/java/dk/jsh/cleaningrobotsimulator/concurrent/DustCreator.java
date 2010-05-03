@@ -29,9 +29,6 @@ public class DustCreator extends CommonThread {
             if (row != 0 || column != 0) { //Dustbin
                 logTrySetFieldDirty(row, column);
                 if (board.tryMakeFieldDirty(column, row)) {
-                    Field field = board.getField(column, row);
-                    field.jLabel.setIcon(
-                            resourceMap.getIcon("RobotSimulator.dirt"));
                     dirtyFields++;
                     log("Dirt added.");
                 }
