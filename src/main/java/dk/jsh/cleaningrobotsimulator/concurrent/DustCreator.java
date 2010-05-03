@@ -13,11 +13,21 @@ import org.jdesktop.application.ResourceMap;
 public class DustCreator extends CommonThread {
     Random randomGenerator = new Random();
 
+    /**
+     * Constructor.
+     * @param threadName Thread name
+     * @param board A Board object
+     * @param jTextArea A JTextArea to use as log for this thread.
+     * @param resourceMap A ResourceMap
+     */
     public DustCreator(String threadName, Board board, JTextArea jTextArea,
             ResourceMap resourceMap) {
         super(threadName, board, jTextArea, resourceMap);
     }
 
+    /**
+     * The threads run method.
+     */
     @Override
     public void run() {
         log("Thread for dust creator is now running.");
@@ -41,6 +51,12 @@ public class DustCreator extends CommonThread {
        log("Thread for dust creator is now finished.");
     }
 
+    /**
+     * Log a "Try put dirt on field" message.
+     * @param row fields row, used in log message, converted to row + 1
+     * @param column fields column, used in log message, converted to A, B, C
+     * etc.
+     */
     private void logTrySetFieldDirty(int row, int column) {
         StringBuilder timeAndMessage =
                 new StringBuilder(timeFormat.format(new Date()));
@@ -50,6 +66,10 @@ public class DustCreator extends CommonThread {
         jTextArea.append(timeAndMessage.toString());
     }
 
+    /**
+     * Makes this thread goto sleep for a given number of seconds.
+     * @param secs seconds
+     */
     private void sleepForSecs(int secs) {
         try {
             sleep(secs * 1000);

@@ -1,11 +1,9 @@
 package dk.jsh.cleaningrobotsimulator.concurrent;
 
-import javax.swing.Icon;
 import javax.swing.JLabel;
 
 /**
- * Field UsedBy and status
- *
+ * Field value object.
  * @author Jan S. Hansen
  */
 public class Field {
@@ -18,6 +16,13 @@ public class Field {
     private int row;
     public JLabel jLabel;
 
+    /**
+     * Constructor.
+     * @param column Fields column
+     * @param row Fields row
+     * @param status Fields Status
+     * @param usedBy Fields UsedBy
+     */
     public Field(int column, int row, Status status, UsedBy usedBy) {
         this.column = column;
         this.row = row;
@@ -26,38 +31,76 @@ public class Field {
         this.jLabel = new JLabel();
     }
 
+    /**
+     * Gets Fields column.
+     * @return column number
+     */
     public int getColumn() {
         return column;
     }
 
+    /**
+     * Gets Fields row.
+     * @return row number
+     */
     public int getRow() {
         return row;
     }
 
+    /**
+     * Gets Fields Status.
+     * @return Status
+     */
     public Status getStatus() {
         return status;
     }
 
+    /**
+     * Sets Fields Status
+     * @param status Status
+     */
     public void setStatus(Status status) {
         this.status = status;
     }
 
+    /**
+     * Gets Fields UsedBt
+     * @return UsedBy
+     */
     public UsedBy getUsedBy() {
         return usedBy;
     }
 
+    /**
+     * Sets Fields UsedBy
+     * @param usedBy UsedBy
+     */
     public void setUsedBy(UsedBy usedBy) {
         this.usedBy = usedBy;
     }
 
+    /**
+     * Returns true if Field is empty.
+     * @return true if empty
+     */
     public boolean isEmpty() {
         return usedBy == UsedBy.EMPTY;
     }
 
+    /**
+     * Returns true if Field is dirty.
+     * @return true if dirty
+     */
     public boolean isDirty() {
         return status == Status.DIRTY;
     }
 
+    /**
+     * Test if this field is equal to a given object.</br>
+     * Row and column is tested.
+     * @param obj object to Test
+     * @return true if equal.
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

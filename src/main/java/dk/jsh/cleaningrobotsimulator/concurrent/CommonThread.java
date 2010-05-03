@@ -15,9 +15,15 @@ abstract public class CommonThread extends Thread {
     protected Board board;
     protected ResourceMap resourceMap;
     protected Logger exceptionLogger; //Logging of exceptions in a log file.
-
     protected SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
+    /**
+     * Constructor.
+     * @param threadName thread name
+     * @param board A Board object
+     * @param jTextArea A JTextArea to use as log for this thread
+     * @param resourceMap A ResourceMap
+     */
     public CommonThread(String threadName, Board board, JTextArea jTextArea,
             ResourceMap resourceMap) {
         this.board = board;
@@ -30,6 +36,10 @@ abstract public class CommonThread extends Thread {
         setUncaughtExceptionHandler(new SimpleThreadExceptionHandler());
     }
 
+    /**
+     * Log a message a the JTestArea. See constructor. 
+     * @param message message to log.
+     */
     protected void log(String message) {
         //Clear textArea after 2000 lines. TODO: Create a FIFO JTextArea
         if (jTextArea.getLineCount() > 2000) {
@@ -42,6 +52,9 @@ abstract public class CommonThread extends Thread {
         jTextArea.append(timeAndMessage.toString());
     }
 
+    /**
+     * Log that an exception has occured in the thread.
+     */
     protected void logException() {
         log("The thread is stopped, due to an exception, see log file.");
     }

@@ -10,7 +10,6 @@ import org.jdesktop.application.ResourceMap;
 
 /**
  * Robot thread.
- *
  * @author Jan S. Hansen
  */
 public class Robot extends CommonThread {
@@ -21,11 +20,22 @@ public class Robot extends CommonThread {
     private String fullResource;
     private int column;
     private int row;
-    private Field[] prevFields = new Field[]{null, null, null, null, null, null};
+    private Field[] prevFields = new Field[]{null,null,null,null,null,null};
     private int nextPrevField;
     private int fieldsCleaned;
     Random randomGenerator = new Random();
 
+    /**
+     * Constructor.
+     * @param threadName Thread name
+     * @param board A Board object
+     * @param jTextArea A JTextArea to use as log for this thread
+     * @param resourceMap A ResourceMap
+     * @param resource Robots normal icon resource
+     * @param fullResource Robots full icon resource
+     * @param row Robots start row position
+     * @param column Robots start column position
+     */
     public Robot(String threadName, Board board, JTextArea jTextArea,
             ResourceMap resourceMap,
             String resource, String fullResource,
@@ -38,6 +48,9 @@ public class Robot extends CommonThread {
         this.resourceMap = resourceMap;
     }
 
+    /**
+     * The threads run method.
+     */
     @Override
     public void run() {
         log("Thread for robot is now running.");
@@ -51,6 +64,9 @@ public class Robot extends CommonThread {
         log("Thread for robot is now stopped");
     }
 
+    /**
+     * Robot is in cleaning mode
+     */
     private void cleaning() {
         addToPrevFields(board.getField(column, row));
         if (fieldsCleaned >= Constants.MAX_CLEANED_FIELDS) { //Goto bin
@@ -97,10 +113,17 @@ public class Robot extends CommonThread {
         sleepForSecs(1);
     }
 
+    /**
+     * Paused this thread for 1 second.
+     */
     private void paused() {
         sleepForSecs(1);
     }
 
+    /**
+     * Makes this thread goto sleep for a given number of seconds.
+     * @param secs seconds
+     */
     private void sleepForSecs(int secs) {
         try {
             sleep(secs * 1000);
@@ -111,29 +134,51 @@ public class Robot extends CommonThread {
         }
     }
 
+    /**
+     * Request this thread to stop
+     */
     public synchronized void requestStop() {
         log("Stop requested for robot.");
         stopRequested = true;
     }
 
+    /**'
+     * Returns true if this thread is requested to stop.
+     * @return true if this thread is requested to stop
+     */
     private synchronized boolean isStopRequested() {
         return stopRequested;
     }
 
+    /**
+     * Request this thread to go into pause mode.
+     */
     public synchronized void requestPause() {
         log("Pause requested for robot.");
         pauseRequested = true;
     }
 
+    /**
+     * Request this thread to go into running mode.
+     */
     public synchronized void continueAfterPause() {
         log("Continue requested for robot.");
         pauseRequested = false;
     }
 
+    /**
+     * Returns true if this thread is requested to go into pause mode.
+     * @return true if this thread is requested to go into pause mode
+     */
     private synchronized boolean isPauseRequested() {
         return pauseRequested;
     }
 
+    /**
+     * Returns the next field the Robot should try to go to. Dirty Fields has
+     * priority.
+     * @return A Field or null if no move is possible
+     */
     private Field getNextField() {
         List<Field> moveToCleanFieldOptions = new ArrayList<Field>();
         List<Field> moveToDirtyFieldOptions = new ArrayList<Field>();
@@ -199,12 +244,13 @@ public class Robot extends CommonThread {
             //Return random
             int index = randomGenerator.nextInt(moveToDirtyFieldOptions.size());
             field = moveToDirtyFieldOptions.get(index);
-        } else { //No dirty fields try empty clean fields
+        } else { //No dirty fields to movw to, try clean fields.
             log("No dirty fields nearby.");
             if (!moveToCleanFieldOptions.isEmpty()) {
                 logMoveToOptions("Move to clean field options",
                         moveToCleanFieldOptions);
-                int index = randomGenerator.nextInt(moveToCleanFieldOptions.size());
+                int index = randomGenerator.nextInt(
+                        moveToCleanFieldOptions.size());
                 field = moveToCleanFieldOptions.get(index);
             } else {
                 log("*** Robot is locked, no move is possible!");
@@ -213,6 +259,12 @@ public class Robot extends CommonThread {
         return field;
     }
 
+    /**
+     * Test if a pair of column and row is valid, for a move.
+     * @param column Column
+     * @param row Row
+     * @return true if valid pair of column and row
+     */
     private boolean validRowColumn(int column, int row) {
         boolean ok = true;
         if (row < 0 || row >= Constants.MAX_ROWS
@@ -225,6 +277,11 @@ public class Robot extends CommonThread {
         return ok;
     }
 
+    /**
+     * Add a Field to a circular buffer with previous fields this Robot has
+     * visited.
+     * @param field Field to add to buffer
+     */
     private void addToPrevFields(Field field) {
         prevFields[nextPrevField] = field;
         nextPrevField++;
@@ -233,6 +290,10 @@ public class Robot extends CommonThread {
         }
     }
 
+    /**
+     * Clear a circular buffer with previous fields this Robot has
+     * visited.
+     */
     private void clearPrevFields() {
         log("Clear prev. fields.");
         for (int i = 0; i < prevFields.length; i++) {
@@ -241,6 +302,13 @@ public class Robot extends CommonThread {
         nextPrevField = 0;
     }
 
+    /**
+     * Returns true if this field is in the circular buffer with previous
+     * fields.
+     * @param field Field to test
+     * @return true if this field is in the circular buffer with previous
+     * fields. 
+     */
     private boolean isFieldInPrevFields(Field field) {
         int i = 0;
         boolean fieldFound = false;
@@ -254,6 +322,14 @@ public class Robot extends CommonThread {
         return fieldFound;
     }
 
+    /**
+     * Log a move.
+     * @param message Message before from and to text.
+     * @param fromRow from row
+     * @param fromColumn from column
+     * @param toRow to row
+     * @param toColumn to column
+     */
     private void logMove(String message,
             int fromRow, int fromColumn,
             int toRow, int toColumn) {
@@ -267,6 +343,11 @@ public class Robot extends CommonThread {
         jTextArea.append(timeAndMessage.toString());
     }
 
+    /**
+     * Log all move to options.
+     * @param message Message before options
+     * @param fields A List of Fields
+     */
     private void logMoveToOptions(String message, List<Field> fields) {
         StringBuilder timeAndMessage =
                 new StringBuilder(timeFormat.format(new Date()));

@@ -1,8 +1,7 @@
 package dk.jsh.cleaningrobotsimulator.concurrent;
 
 /**
- * Cleaning robot simulator constants
- *
+ * Cleaning robot simulator constants.
  * @author Jan S. Hansen
  */
 public class Constants {
