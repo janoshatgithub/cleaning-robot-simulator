@@ -70,53 +70,68 @@ public class Robot extends CommonThread {
     private void cleaning() {
         addToPrevFields(board.getField(column, row));
         if (fieldsCleaned >= Constants.MAX_CLEANED_FIELDS) { //Goto bin
-            int toRow = row > 0 ? row - 1 : 0;
-            int toColumn = column > 0 ? column - 1 : 0;
-            if (board.tryMove(column, row, toColumn, toRow, fullResource)) {
-                logMove("Move to dustbin", row, column, toRow, toColumn);
-                if (toRow == 0 && toColumn == 0) {
-                    fieldsCleaned = 0;
-                    board.emptyRobot(this.getName());
-                    clearPrevFields();
-                    log("Robot is emptied.");
+            gotoDustbinMode();
+        } else { //Search and clean
+            cleaningMode();
+        }
+        sleepForSecs(1);
+    }
+
+    /**
+     * Search for dirty nearby fields. If found clean a random
+     * dirty field, else goto randon a nearby empty and clean field.
+     */
+    private void cleaningMode() {
+        //Search and clean
+        Field moveToField = getNextField();
+        if (moveToField == null) {
+            clearPrevFields();
+        } else {
+            int toColumn = moveToField.getColumn();
+            int toRow = moveToField.getRow();
+            logMove("Try move", row, column, toRow, toColumn);
+            if (board.tryMove(column, row, toColumn, toRow, resource)) {
+                logMove("Moved from", row, column, toRow, toColumn);
+                if (moveToField.isDirty()) {
+                    if (board.tryCleanField(toColumn, toRow)) {
+                        fieldsCleaned++;
+                        log("Number of fields cleaned: " + fieldsCleaned + ".");
+                        if (fieldsCleaned >= Constants.MAX_CLEANED_FIELDS) {
+                            log("Robot is full.");
+                        }
+                    } else {
+                        log("*** The field is no longer dirty, after moving " + "robot.");
+                    }
                 }
                 row = toRow;
                 column = toColumn;
             } else {
-                log("*** Move to dustbin failed.");
-            }
-        } else { //Search and clean
-            Field moveToField = getNextField();
-            if (moveToField == null) {
-                clearPrevFields();
-            } else {
-                int toColumn = moveToField.getColumn();
-                int toRow = moveToField.getRow();
-                logMove("Try move", row, column, toRow, toColumn);
-                if (board.tryMove(column, row, toColumn, toRow, resource)) {
-                    logMove("Moved from", row, column, toRow, toColumn);
-                    if (moveToField.isDirty()) {
-                        if (board.tryCleanField(toColumn, toRow)) {
-                            fieldsCleaned++;
-                            log("Number of fields cleaned: " +
-                                    fieldsCleaned + ".");
-                            if (fieldsCleaned >= Constants.MAX_CLEANED_FIELDS) {
-                                log("Robot is full.");
-                            }
-                        }
-                        else {
-                            log("*** The field is no longer dirty, after moving " +
-                                    "robot.");
-                        }
-                    }
-                    row = toRow;
-                    column = toColumn;
-                } else {
-                    log("*** Move failed.");
-                }
+                log("*** Move failed.");
             }
         }
-        sleepForSecs(1);
+    }
+
+    /**
+     * Move robot closer to the dustbin. If robot is on the dustbin field, the
+     * robot is emptied.
+     */
+    private void gotoDustbinMode() {
+        //Goto bin
+        int toRow = row > 0 ? row - 1 : 0;
+        int toColumn = column > 0 ? column - 1 : 0;
+        if (board.tryMove(column, row, toColumn, toRow, fullResource)) {
+            logMove("Move to dustbin", row, column, toRow, toColumn);
+            if (toRow == 0 && toColumn == 0) {
+                fieldsCleaned = 0;
+                board.emptyRobot(this.getName());
+                clearPrevFields();
+                log("Robot is emptied.");
+            }
+            row = toRow;
+            column = toColumn;
+        } else {
+            log("*** Move to dustbin failed.");
+        }
     }
 
     /**
