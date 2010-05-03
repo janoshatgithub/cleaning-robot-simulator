@@ -83,7 +83,7 @@ public class Robot extends CommonThread {
                 row = toRow;
                 column = toColumn;
             } else {
-                log("Move to dustbin failed.");
+                log("*** Move to dustbin failed.");
             }
         } else { //Search and clean
             Field moveToField = getNextField();
@@ -105,14 +105,14 @@ public class Robot extends CommonThread {
                             }
                         }
                         else {
-                            log("The field is no longer dirty, after moving " +
+                            log("*** The field is no longer dirty, after moving " +
                                     "robot.");
                         }
                     }
                     row = toRow;
                     column = toColumn;
                 } else {
-                    log("Move failed.");
+                    log("*** Move failed.");
                 }
             }
         }
