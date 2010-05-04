@@ -445,6 +445,7 @@ public class View extends FrameView {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         mainPanel.add(jTabbedPane1, gridBagConstraints);
 
         jButtonPause.setAction(actionMap.get("pause")); // NOI18N
@@ -456,7 +457,7 @@ public class View extends FrameView {
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
-        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         mainPanel.add(jButtonPause, gridBagConstraints);
 
         jButtonContinue.setAction(actionMap.get("cont")); // NOI18N
@@ -468,7 +469,7 @@ public class View extends FrameView {
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
-        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
         mainPanel.add(jButtonContinue, gridBagConstraints);
 
         setComponent(mainPanel);
