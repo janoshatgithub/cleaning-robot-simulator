@@ -1,5 +1,6 @@
 package dk.jsh.cleaningrobotsimulator.concurrent;
 
+import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Logger;
