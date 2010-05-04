@@ -7,6 +7,8 @@ import dk.jsh.cleaningrobotsimulator.concurrent.Field;
 import dk.jsh.cleaningrobotsimulator.concurrent.Robot;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.WindowEvent;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -27,6 +29,7 @@ import javax.swing.JLabel;
  * @author Jan S. Hansen
  */
 public class View extends FrameView {
+
     private Board board;
     private ResourceMap resourceMap;
     private Robot bender;
@@ -46,12 +49,13 @@ public class View extends FrameView {
         //Cacth windowClosing event
         JFrame jFrame = this.getFrame();
         jFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+
             @Override
             public void windowClosing(WindowEvent winEvt) {
                 quit();
             }
         });
-        
+
         //Set icon in upper left corner
         ImageIcon image = resourceMap.getImageIcon("RobotSimulator.recycle");
         jFrame.setIconImage(image.getImage());
@@ -70,13 +74,28 @@ public class View extends FrameView {
         jTabbedPane1.setIconAt(4, resourceMap.getIcon("RobotSimulator.dustbin"));
         jTabbedPane1.setSelectedIndex(0);
 
-        createUIBoard();
-
         jButtonContinue.setEnabled(false);
+
+        //Set JFrame's min. hight and width.
+        jFrame.addComponentListener(new ComponentAdapter() {
+            private final static int MIN_WIDTH = 855;
+            private final static int MIN_HIGHT = 450;
+            @Override
+            public void componentResized(ComponentEvent e) {
+                JFrame frame = (JFrame) e.getSource();
+                int width = frame.getWidth() < MIN_WIDTH
+                        ? MIN_WIDTH : frame.getWidth();
+                int hight = frame.getHeight() < MIN_HIGHT
+                        ? MIN_HIGHT : frame.getHeight();
+                frame.setSize(width, hight);
+            }
+        });
+
+        createUIBoard();
 
         //Start robot threads
         bender = new Robot("Bender", board, jTextAreaBender, resourceMap,
-                "RobotSimulator.bender", "RobotSimulator.bender-full" , 0, 9);
+                "RobotSimulator.bender", "RobotSimulator.bender-full", 0, 9);
         bender.start();
 
         android = new Robot("Android", board, jTextAreaAndroid, resourceMap,
@@ -455,7 +474,6 @@ public class View extends FrameView {
         setComponent(mainPanel);
         setMenuBar(menuBar);
     }// </editor-fold>//GEN-END:initComponents
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonContinue;
     private javax.swing.JButton jButtonPause;
@@ -494,6 +512,5 @@ public class View extends FrameView {
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
     // End of variables declaration//GEN-END:variables
-
     private JDialog aboutBox;
 }
