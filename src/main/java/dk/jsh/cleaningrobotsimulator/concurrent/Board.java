@@ -8,7 +8,10 @@ import javax.swing.JTextArea;
 import org.jdesktop.application.ResourceMap;
 
 /**
- * Board status. 
+ * A Board. Consist of 10x10 Fields. (See fields).</br>
+ * Each field can be either clean or dirty (one is the Dustbin).
+ * A field can only hold one robot.</br>
+ * Objects of this class is thread safe.
  * @author Jan S. Hansen
  */
 public class Board {
