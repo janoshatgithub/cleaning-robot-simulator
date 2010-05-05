@@ -177,7 +177,8 @@ public class Board {
     }
 
     /**
-     * Returns a read only field.
+     * Returns a read only field. To prevent that a field is updated outside
+     * this board instance.
      * @param column fields column
      * @param row fields row
      * @return field a ReadOnlyField
