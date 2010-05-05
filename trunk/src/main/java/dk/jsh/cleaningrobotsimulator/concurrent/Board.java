@@ -9,7 +9,7 @@ import org.jdesktop.application.ResourceMap;
 /**
  * A Board class. A board consist of 10x10 fields
  * (see {@link dk.jsh.cleaningrobotsimulator.concurrent.Field Field}).<br>
- * Each field can be either clean or dirty (one is the Dustbin).
+ * Each field can be either clean or dirty (one is the dustbin).
  * A field can only hold one robot.<br>
  * Objects of this class is thread safe.
  * @see dk.jsh.cleaningrobotsimulator.cuncurrent.Field
