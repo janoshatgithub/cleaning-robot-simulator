@@ -91,7 +91,8 @@ public class Board {
                     toField.jLabel.setIcon(resourceMap.getIcon(
                             "RobotSimulator.recycle"));
                 } else {
-                    toField.jLabel.setIcon(resourceMap.getIcon(robotIconResource));
+                    toField.jLabel.setIcon(resourceMap.getIcon(
+                            robotIconResource));
                 }
             }
             return moveOk;
@@ -110,7 +111,7 @@ public class Board {
         synchronized (this) {
             if (dirtyFieldsCounter + 1 <= Constants.MAX_DIRTY_FIELDS) {
                 if (column == 0 && row == 0) { //Dustbin
-                    throw new IllegalArgumentException("Dustbin can't be dirty");
+                   throw new IllegalArgumentException("Dustbin can't be dirty");
                 }
                 Field field = getField(column, row);
                 if (field.isEmpty() && !field.isDirty()) {

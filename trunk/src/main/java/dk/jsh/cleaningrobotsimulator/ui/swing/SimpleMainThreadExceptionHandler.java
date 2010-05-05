@@ -11,7 +11,8 @@ import javax.swing.SwingUtilities;
  * Main thread uncaught exception handler.
  * @author Jan S. Hansen
  */
-public class SimpleMainThreadExceptionHandler implements Thread.UncaughtExceptionHandler {
+public class SimpleMainThreadExceptionHandler
+        implements Thread.UncaughtExceptionHandler {
     private Logger logger;
 
     /**
