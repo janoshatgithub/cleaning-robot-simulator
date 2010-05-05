@@ -3,7 +3,11 @@ package dk.jsh.cleaningrobotsimulator.concurrent;
 import javax.swing.JLabel;
 
 /**
- * Field value object.
+ * Field value object.<br>
+ * A field has a row and a column, both starting from 0.<br>
+ * A field has a status that can be CLEAR, DIRTY or DUSTBIN, and <br>
+ * a field can be used by either robot BENDER, WALL-E of ANDROID or else the
+ * field is EMPTY.
  * @author Jan S. Hansen
  */
 public class Field {

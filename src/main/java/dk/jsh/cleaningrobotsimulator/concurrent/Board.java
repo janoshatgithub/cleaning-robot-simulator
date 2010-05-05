@@ -7,10 +7,12 @@ import javax.swing.JTextArea;
 import org.jdesktop.application.ResourceMap;
 
 /**
- * A Board. Consist of 10x10 Fields. (See fields).</br>
+ * A Board class. A board consist of 10x10 fields
+ * (see {@link dk.jsh.cleaningrobotsimulator.concurrent.Field Field}).<br>
  * Each field can be either clean or dirty (one is the Dustbin).
- * A field can only hold one robot.</br>
+ * A field can only hold one robot.<br>
  * Objects of this class is thread safe.
+ * @see dk.jsh.cleaningrobotsimulator.cuncurrent.Field
  * @author Jan S. Hansen
  */
 public class Board {
