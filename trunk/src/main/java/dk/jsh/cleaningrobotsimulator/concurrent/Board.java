@@ -177,16 +177,26 @@ public class Board {
     }
 
     /**
+     * Returns a read only field.
+     * @param column fields column
+     * @param row fields row
+     * @return field a ReadOnlyField
+     */
+    public ReadOnlyField getReadOnlyField(int column, int row) {
+        testFieldArguments(column, row);
+        synchronized (this) {
+            return board[row][column];
+        }
+    }
+
+    /**
      * Returns a field.
      * @param column fields column
      * @param row fields row
      * @return field a Field
      */
-    public Field getField(int column, int row) {
-        testFieldArguments(column, row);
-        synchronized (this) {
-            return board[row][column];
-        }
+    private Field getField(int column, int row) {
+        return board[row][column];
     }
 
     /**

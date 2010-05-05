@@ -20,7 +20,8 @@ public class Robot extends BaseThread {
     private String fullResource;
     private int column;
     private int row;
-    private Field[] prevFields = new Field[]{null,null,null,null,null,null};
+    private ReadOnlyField[] prevFields =
+            new ReadOnlyField[]{null, null, null, null, null, null};
     private int nextPrevField;
     private int fieldsCleaned;
     Random randomGenerator = new Random();
@@ -68,7 +69,7 @@ public class Robot extends BaseThread {
      * Robot is in cleaning mode
      */
     private void cleaning() {
-        addToPrevFields(board.getField(column, row));
+        addToPrevFields(board.getReadOnlyField(column, row));
         if (fieldsCleaned >= Constants.MAX_CLEANED_FIELDS) { //Goto bin
             gotoDustbinMode();
         } else { //Search and clean
@@ -83,7 +84,7 @@ public class Robot extends BaseThread {
      */
     private void cleaningMode() {
         //Search and clean
-        Field moveToField = getNextField();
+        ReadOnlyField moveToField = getNextField();
         if (moveToField == null) {
             clearPrevFields();
         } else {
@@ -205,15 +206,17 @@ public class Robot extends BaseThread {
      * priority.
      * @return A Field or null if no move is possible
      */
-    private Field getNextField() {
-        List<Field> moveToCleanFieldOptions = new ArrayList<Field>();
-        List<Field> moveToDirtyFieldOptions = new ArrayList<Field>();
+    private ReadOnlyField getNextField() {
+        List<ReadOnlyField> moveToCleanFieldOptions =
+                new ArrayList<ReadOnlyField>();
+        List<ReadOnlyField> moveToDirtyFieldOptions =
+                new ArrayList<ReadOnlyField>();
         //Test fields above
         int testColumn = column - 1;
         int testRow = row - 1;
         for (testColumn = column - 1; testColumn <= column + 1; testColumn++) {
             if (validRowColumn(testColumn, testRow)) {
-                Field field = board.getField(testColumn, testRow);
+                ReadOnlyField field = board.getReadOnlyField(testColumn, testRow);
                 if (field.isEmpty()) {
                     if (field.isDirty()) {
                         moveToDirtyFieldOptions.add(field);
@@ -229,7 +232,7 @@ public class Robot extends BaseThread {
         testRow = row;
         testColumn = column - 1;
         if (validRowColumn(testColumn, testRow)) {
-            Field field = board.getField(testColumn, testRow);
+            ReadOnlyField field = board.getReadOnlyField(testColumn, testRow);
             if (field.isEmpty()) {
                 if (field.isDirty()) {
                     moveToDirtyFieldOptions.add(field);
@@ -243,7 +246,7 @@ public class Robot extends BaseThread {
         //Test field to the right
         testColumn = column + 1;
         if (validRowColumn(testColumn, testRow)) {
-            Field field = board.getField(testColumn, testRow);
+            ReadOnlyField field = board.getReadOnlyField(testColumn, testRow);
             if (field.isEmpty()) {
                 if (field.isDirty()) {
                     moveToDirtyFieldOptions.add(field);
@@ -259,7 +262,8 @@ public class Robot extends BaseThread {
         testRow = row + 1;
         for (testColumn = column - 1; testColumn <= column + 1; testColumn++) {
             if (validRowColumn(testColumn, testRow)) {
-                Field field = board.getField(testColumn, testRow);
+                ReadOnlyField field =
+                        board.getReadOnlyField(testColumn, testRow);
                 if (field.isEmpty()) {
                     if (field.isDirty()) {
                         moveToDirtyFieldOptions.add(field);
@@ -271,7 +275,7 @@ public class Robot extends BaseThread {
                 }
             }
         }
-        Field field = null;
+        ReadOnlyField field = null;
         if (!moveToDirtyFieldOptions.isEmpty()) {
             logMoveToOptions("Move to dirty field options",
                     moveToDirtyFieldOptions);
@@ -314,9 +318,9 @@ public class Robot extends BaseThread {
     /**
      * Add a Field to a circular buffer with previous fields this Robot has
      * visited.
-     * @param field Field to add to buffer
+     * @param field ReadOnlyField to add to buffer
      */
-    private void addToPrevFields(Field field) {
+    private void addToPrevFields(ReadOnlyField field) {
         prevFields[nextPrevField] = field;
         nextPrevField++;
         if (nextPrevField > prevFields.length - 1) {
@@ -339,11 +343,11 @@ public class Robot extends BaseThread {
     /**
      * Returns true if this field is in the circular buffer with previous
      * fields.
-     * @param field Field to test
+     * @param field ReadOnlyField to test
      * @return true if this field is in the circular buffer with previous
      * fields. 
      */
-    private boolean isFieldInPrevFields(Field field) {
+    private boolean isFieldInPrevFields(ReadOnlyField field) {
         int i = 0;
         boolean fieldFound = false;
         while (!fieldFound && i < prevFields.length) {
@@ -382,12 +386,12 @@ public class Robot extends BaseThread {
      * @param message Message before options
      * @param fields A List of Fields
      */
-    private void logMoveToOptions(String message, List<Field> fields) {
+    private void logMoveToOptions(String message, List<ReadOnlyField> fields) {
         StringBuilder timeAndMessage =
                 new StringBuilder(Constants.timeFormat.format(new Date()));
         timeAndMessage.append(" ").append(message);
         String before = ": ";
-        for (Field field : fields) {
+        for (ReadOnlyField field : fields) {
             timeAndMessage.append(before);
             timeAndMessage.append((char) (field.getColumn() + 65));
             timeAndMessage.append(field.getRow() + 1);
