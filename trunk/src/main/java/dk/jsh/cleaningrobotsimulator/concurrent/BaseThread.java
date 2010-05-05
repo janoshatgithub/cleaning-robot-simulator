@@ -11,7 +11,7 @@ import org.jdesktop.application.ResourceMap;
  * Abstract class with common thread functions
  * @author Jan S. Hansen
  */
-abstract public class CommonThread extends Thread {
+abstract public class BaseThread extends Thread {
     protected JTextArea jTextArea;
     protected Board board;
     protected ResourceMap resourceMap;
@@ -25,7 +25,7 @@ abstract public class CommonThread extends Thread {
      * @param jTextArea A JTextArea to use as log for this thread
      * @param resourceMap A ResourceMap
      */
-    public CommonThread(String threadName, Board board, JTextArea jTextArea,
+    public BaseThread(String threadName, Board board, JTextArea jTextArea,
             ResourceMap resourceMap) {
         this.board = board;
         this.jTextArea = jTextArea;

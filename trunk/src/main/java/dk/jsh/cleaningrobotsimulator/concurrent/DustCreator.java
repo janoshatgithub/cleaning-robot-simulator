@@ -10,7 +10,7 @@ import org.jdesktop.application.ResourceMap;
  * Dust creator thread.
  * @author Jan S. Hansen
  */
-public class DustCreator extends CommonThread {
+public class DustCreator extends BaseThread {
     Random randomGenerator = new Random();
 
     /**
