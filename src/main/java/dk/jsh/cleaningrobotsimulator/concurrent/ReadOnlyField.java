@@ -8,7 +8,7 @@ package dk.jsh.cleaningrobotsimulator.concurrent;
 import javax.swing.JLabel;
 
 /**
- * A read only Field interface. Used by Board, so it can returns a read only
+ * A read only Field interface. Used by Board, so it can return a read only
  * field.
  * @author Jan S. Hansen
  */
