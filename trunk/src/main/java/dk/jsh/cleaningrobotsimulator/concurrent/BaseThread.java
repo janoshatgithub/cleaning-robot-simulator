@@ -1,7 +1,6 @@
 package dk.jsh.cleaningrobotsimulator.concurrent;
 
 import java.util.Date;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTextArea;
 import org.jdesktop.application.ResourceMap;
