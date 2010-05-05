@@ -2,9 +2,6 @@ package dk.jsh.cleaningrobotsimulator.concurrent;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicLong;
-import javax.annotation.Generated;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JTextArea;
@@ -18,7 +15,7 @@ public class Board {
 
     private Field[][] board;
     private ResourceMap resourceMap;
-    private AtomicInteger dirtyFieldsCounter = new AtomicInteger(0);
+    private int dirtyFieldsCounter;
     private long fieldsCleaned;
     private JTextArea jTextAreaDustbin;
     protected SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
@@ -59,38 +56,40 @@ public class Board {
      * @param robotIconResource robot icon resource
      * @return true if move was a success.
      */
-    public synchronized boolean tryMove(int fromColumn, int fromRow,
+    public boolean tryMove(int fromColumn, int fromRow,
             int toColumn, int toRow, String robotIconResource) {
         testFieldArguments(fromColumn, fromRow);
         testFieldArguments(toColumn, toRow);
-        Field fromField = getField(fromColumn, fromRow);
-        Field toField = getField(toColumn, toRow);
         boolean moveOk = false;
-        if (toField.isEmpty() && !fromField.isEmpty()) {
-            toField.setUsedBy(fromField.getUsedBy());
-            fromField.setUsedBy(Field.UsedBy.EMPTY);
-            moveOk = true;
-            //Set icons
-            if (fromColumn == 0 && fromRow == 0) {
-                fromField.jLabel.setIcon(
-                        resourceMap.getIcon("RobotSimulator.dustbin"));
-            } else {
-                if (fromField.isDirty()) {
+        synchronized (this) {
+            Field fromField = getField(fromColumn, fromRow);
+            Field toField = getField(toColumn, toRow);
+            if (toField.isEmpty() && !fromField.isEmpty()) {
+                toField.setUsedBy(fromField.getUsedBy());
+                fromField.setUsedBy(Field.UsedBy.EMPTY);
+                moveOk = true;
+                //Set icons
+                if (fromColumn == 0 && fromRow == 0) {
                     fromField.jLabel.setIcon(
-                            resourceMap.getIcon("RobotSimulator.dirt"));
+                            resourceMap.getIcon("RobotSimulator.dustbin"));
                 } else {
-                    fromField.jLabel.setIcon(
-                            resourceMap.getIcon("RobotSimulator.clean"));
+                    if (fromField.isDirty()) {
+                        fromField.jLabel.setIcon(
+                                resourceMap.getIcon("RobotSimulator.dirt"));
+                    } else {
+                        fromField.jLabel.setIcon(
+                                resourceMap.getIcon("RobotSimulator.clean"));
+                    }
+                }
+                if (toRow == 0 && toColumn == 0) {
+                    toField.jLabel.setIcon(resourceMap.getIcon(
+                            "RobotSimulator.recycle"));
+                } else {
+                    toField.jLabel.setIcon(resourceMap.getIcon(robotIconResource));
                 }
             }
-            if (toRow == 0 && toColumn == 0) {
-                toField.jLabel.setIcon(resourceMap.getIcon(
-                        "RobotSimulator.recycle"));
-            } else {
-                toField.jLabel.setIcon(resourceMap.getIcon(robotIconResource));
-            }
+            return moveOk;
         }
-        return moveOk;
     }
 
     /**
@@ -99,23 +98,25 @@ public class Board {
      * @param row fields row
      * @return true if it was a success.
      */
-    public synchronized boolean tryMakeFieldDirty(int column, int row) {
+    public boolean tryMakeFieldDirty(int column, int row) {
+        testFieldArguments(column, row);
         boolean ok = false;
-        if (dirtyFieldsCounter.get() + 1 <= Constants.MAX_DIRTY_FIELDS) {
-            testFieldArguments(column, row);
-            if (column == 0 && row == 0) { //Dustbin
-                throw new IllegalArgumentException("Dustbin can't be dirty");
+        synchronized (this) {
+            if (dirtyFieldsCounter + 1 <= Constants.MAX_DIRTY_FIELDS) {
+                if (column == 0 && row == 0) { //Dustbin
+                    throw new IllegalArgumentException("Dustbin can't be dirty");
+                }
+                Field field = getField(column, row);
+                if (field.isEmpty() && !field.isDirty()) {
+                    field.setStatus(Field.Status.DIRTY);
+                    dirtyFieldsCounter++;
+                    ok = true;
+                    field.jLabel.setIcon(
+                            resourceMap.getIcon("RobotSimulator.dirt"));
+                }
             }
-            Field field = getField(column, row);
-            if (field.isEmpty() && !field.isDirty()) {
-                field.setStatus(Field.Status.DIRTY);
-                dirtyFieldsCounter.incrementAndGet();
-                ok = true;
-                field.jLabel.setIcon(
-                        resourceMap.getIcon("RobotSimulator.dirt"));
-            }
+            return ok;
         }
-        return ok;
     }
 
     /**
@@ -124,19 +125,21 @@ public class Board {
      * @param row fields row
      * @return true if it was a success.
      */
-    public synchronized boolean tryCleanField(int column, int row) {
+    public boolean tryCleanField(int column, int row) {
         boolean ok = false;
         testFieldArguments(column, row);
-        if (column == 0 && row == 0) { //Dustbin
-            throw new IllegalArgumentException("Dustbin can't be cleaned");
+        synchronized (this) {
+            if (column == 0 && row == 0) { //Dustbin
+                throw new IllegalArgumentException("Dustbin can't be cleaned");
+            }
+            Field field = getField(column, row);
+            if (field.isDirty()) {
+                field.setStatus(Field.Status.CLEAN);
+                dirtyFieldsCounter--;
+                ok = true;
+            }
+            return ok;
         }
-        Field field = getField(column, row);
-        if (field.isDirty()) {
-            field.setStatus(Field.Status.CLEAN);
-            dirtyFieldsCounter.decrementAndGet();
-            ok = true;
-        }
-        return ok;
     }
 
     /**
@@ -162,8 +165,8 @@ public class Board {
      * Returns dirty fields counter.
      * @return dirty fields counter
      */
-    public int getDirtyFieldsCounter() {
-        return dirtyFieldsCounter.get();
+    public synchronized int getDirtyFieldsCounter() {
+        return dirtyFieldsCounter;
     }
 
     /**
@@ -172,9 +175,11 @@ public class Board {
      * @param row fields row
      * @return field a Field
      */
-    public synchronized Field getField(int column, int row) {
+    public Field getField(int column, int row) {
         testFieldArguments(column, row);
-        return board[row][column];
+        synchronized (this) {
+            return board[row][column];
+        }
     }
 
     /**
