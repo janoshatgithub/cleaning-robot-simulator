@@ -2,6 +2,9 @@ package dk.jsh.cleaningrobotsimulator.concurrent;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
+import javax.annotation.Generated;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JTextArea;
@@ -15,8 +18,8 @@ public class Board {
 
     private Field[][] board;
     private ResourceMap resourceMap;
-    private int dirtyFieldsCounter;
-    private int fieldsCleand;
+    private AtomicInteger dirtyFieldsCounter = new AtomicInteger(0);
+    private long fieldsCleaned;
     private JTextArea jTextAreaDustbin;
     protected SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
@@ -98,7 +101,7 @@ public class Board {
      */
     public synchronized boolean tryMakeFieldDirty(int column, int row) {
         boolean ok = false;
-        if (dirtyFieldsCounter + 1 <= Constants.MAX_DIRTY_FIELDS) {
+        if (dirtyFieldsCounter.get() + 1 <= Constants.MAX_DIRTY_FIELDS) {
             testFieldArguments(column, row);
             if (column == 0 && row == 0) { //Dustbin
                 throw new IllegalArgumentException("Dustbin can't be dirty");
@@ -106,7 +109,7 @@ public class Board {
             Field field = getField(column, row);
             if (field.isEmpty() && !field.isDirty()) {
                 field.setStatus(Field.Status.DIRTY);
-                dirtyFieldsCounter++;
+                dirtyFieldsCounter.incrementAndGet();
                 ok = true;
                 field.jLabel.setIcon(
                         resourceMap.getIcon("RobotSimulator.dirt"));
@@ -130,7 +133,7 @@ public class Board {
         Field field = getField(column, row);
         if (field.isDirty()) {
             field.setStatus(Field.Status.CLEAN);
-            dirtyFieldsCounter--;
+            dirtyFieldsCounter.decrementAndGet();
             ok = true;
         }
         return ok;
@@ -141,7 +144,7 @@ public class Board {
      * @param robotName robot name, used in log message.
      */
     public synchronized void emptyRobot(String robotName) {
-        fieldsCleand = fieldsCleand + Constants.MAX_CLEANED_FIELDS;
+        fieldsCleaned+=Constants.MAX_CLEANED_FIELDS;
         //Clear textArea after 2000 lines. TODO: Create a FIFO JTextArea
         if (jTextAreaDustbin.getLineCount() > 2000) {
             jTextAreaDustbin.setText("");
@@ -151,7 +154,7 @@ public class Board {
                 new StringBuilder(timeFormat.format(new Date()));
         timeAndMessage.append(" Dust from ").append(robotName);
         timeAndMessage.append(" recieved - Total recieved: ");
-        timeAndMessage.append(fieldsCleand).append(".\n");
+        timeAndMessage.append(fieldsCleaned).append(".\n");
         jTextAreaDustbin.append(timeAndMessage.toString());
     }
 
@@ -160,7 +163,7 @@ public class Board {
      * @return dirty fields counter
      */
     public int getDirtyFieldsCounter() {
-        return dirtyFieldsCounter;
+        return dirtyFieldsCounter.get();
     }
 
     /**
@@ -169,7 +172,7 @@ public class Board {
      * @param row fields row
      * @return field a Field
      */
-    public Field getField(int column, int row) {
+    public synchronized Field getField(int column, int row) {
         testFieldArguments(column, row);
         return board[row][column];
     }
