@@ -59,7 +59,7 @@ public class DustCreator extends BaseThread {
      */
     private void logTrySetFieldDirty(int row, int column) {
         StringBuilder timeAndMessage =
-                new StringBuilder(timeFormat.format(new Date()));
+                new StringBuilder(Constants.timeFormat.format(new Date()));
         timeAndMessage.append(" Try put dirt on field ");
         timeAndMessage.append((char)(column + 65));
         timeAndMessage.append(++row).append(".\n");;
