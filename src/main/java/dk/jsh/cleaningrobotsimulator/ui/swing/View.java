@@ -4,6 +4,7 @@ import dk.jsh.cleaningrobotsimulator.concurrent.Board;
 import dk.jsh.cleaningrobotsimulator.concurrent.Constants;
 import dk.jsh.cleaningrobotsimulator.concurrent.DustCreator;
 import dk.jsh.cleaningrobotsimulator.concurrent.Field;
+import dk.jsh.cleaningrobotsimulator.concurrent.ReadOnlyField;
 import dk.jsh.cleaningrobotsimulator.concurrent.Robot;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -123,8 +124,8 @@ public class View extends FrameView {
         Insets insets = new Insets(1, 1, 1, 1);
         for (int row = 0; row < Constants.MAX_ROWS; row++) {
             for (int column = 0; column < Constants.MAX_COLUMNS; column++) {
-                Field field = board.getField(column, row);
-                JLabel jLabel = field.jLabel;
+                ReadOnlyField field = board.getReadOnlyField(column, row);
+                JLabel jLabel = field.getLabel();
                 gridBagConstraints.gridx = column + 1;
                 gridBagConstraints.gridy = row + 1;
                 gridBagConstraints.insets = insets;

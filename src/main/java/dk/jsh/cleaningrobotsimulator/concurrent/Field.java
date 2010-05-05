@@ -10,9 +10,7 @@ import javax.swing.JLabel;
  * field is EMPTY.
  * @author Jan S. Hansen
  */
-public class Field {
-    public enum Status {CLEAN, DIRTY, DUSTBIN}
-    public enum UsedBy {BENDER, WALL_E, ANDROID, EMPTY}
+public class Field implements ReadOnlyField {
 
     private Status status;
     private UsedBy usedBy;
@@ -39,6 +37,7 @@ public class Field {
      * Gets Fields column.
      * @return column number
      */
+    @Override
     public int getColumn() {
         return column;
     }
@@ -47,6 +46,7 @@ public class Field {
      * Gets Fields row.
      * @return row number
      */
+    @Override
     public int getRow() {
         return row;
     }
@@ -55,6 +55,7 @@ public class Field {
      * Gets Fields Status.
      * @return Status
      */
+    @Override
     public Status getStatus() {
         return status;
     }
@@ -71,6 +72,7 @@ public class Field {
      * Gets Fields UsedBt
      * @return UsedBy
      */
+    @Override
     public UsedBy getUsedBy() {
         return usedBy;
     }
@@ -87,6 +89,7 @@ public class Field {
      * Returns true if Field is empty.
      * @return true if empty
      */
+    @Override
     public boolean isEmpty() {
         return usedBy == UsedBy.EMPTY;
     }
@@ -95,8 +98,18 @@ public class Field {
      * Returns true if Field is dirty.
      * @return true if dirty
      */
+    @Override
     public boolean isDirty() {
         return status == Status.DIRTY;
+    }
+
+    /**
+     * Returns JLabel.
+     * @return JLabel
+     */
+    @Override
+    public JLabel getLabel() {
+        return jLabel;
     }
 
     /**
