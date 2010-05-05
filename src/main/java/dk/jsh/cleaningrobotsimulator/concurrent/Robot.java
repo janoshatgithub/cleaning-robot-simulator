@@ -12,7 +12,7 @@ import org.jdesktop.application.ResourceMap;
  * Robot thread.
  * @author Jan S. Hansen
  */
-public class Robot extends CommonThread {
+public class Robot extends BaseThread {
 
     private boolean stopRequested = false;
     private boolean pauseRequested = false;
