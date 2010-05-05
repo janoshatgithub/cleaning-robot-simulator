@@ -23,7 +23,7 @@ public class Board {
     private long fieldsCleaned;
     private JTextArea jTextAreaDustbin;
 
-    //Fields that is not changed by this class.
+    //Read-only fields.
     private ResourceMap resourceMap;
 
     /**
