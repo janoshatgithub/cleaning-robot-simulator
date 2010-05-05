@@ -368,7 +368,7 @@ public class Robot extends BaseThread {
             int fromRow, int fromColumn,
             int toRow, int toColumn) {
         StringBuilder timeAndMessage =
-                new StringBuilder(timeFormat.format(new Date()));
+                new StringBuilder(Constants.timeFormat.format(new Date()));
         timeAndMessage.append(" ").append(message).append(" ");
         timeAndMessage.append((char) (fromColumn + 65));
         timeAndMessage.append(++fromRow).append(" to ");
@@ -384,7 +384,7 @@ public class Robot extends BaseThread {
      */
     private void logMoveToOptions(String message, List<Field> fields) {
         StringBuilder timeAndMessage =
-                new StringBuilder(timeFormat.format(new Date()));
+                new StringBuilder(Constants.timeFormat.format(new Date()));
         timeAndMessage.append(" ").append(message);
         String before = ": ";
         for (Field field : fields) {

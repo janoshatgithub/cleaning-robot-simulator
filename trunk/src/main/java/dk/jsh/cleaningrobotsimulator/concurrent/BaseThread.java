@@ -1,7 +1,5 @@
 package dk.jsh.cleaningrobotsimulator.concurrent;
 
-import java.awt.Color;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Logger;
 import javax.swing.JTextArea;
@@ -16,7 +14,6 @@ abstract public class BaseThread extends Thread {
     protected Board board;
     protected ResourceMap resourceMap;
     protected Logger exceptionLogger; //Logging of exceptions in a log file.
-    protected SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
     /**
      * Constructor.
@@ -48,7 +45,7 @@ abstract public class BaseThread extends Thread {
         }
 
         StringBuilder timeAndMessage =
-                new StringBuilder(timeFormat.format(new Date()));
+                new StringBuilder(Constants.timeFormat.format(new Date()));
         timeAndMessage.append(" ").append(message).append("\n");
         jTextArea.append(timeAndMessage.toString());
     }

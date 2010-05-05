@@ -1,6 +1,5 @@
 package dk.jsh.cleaningrobotsimulator.concurrent;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -16,12 +15,14 @@ import org.jdesktop.application.ResourceMap;
  */
 public class Board {
 
+    //Thread safety - following fields is guarded by "this".
     private Field[][] board;
-    private ResourceMap resourceMap;
     private int dirtyFieldsCounter;
     private long fieldsCleaned;
     private JTextArea jTextAreaDustbin;
-    protected SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+
+    //Fields that is not changed by this class.
+    private ResourceMap resourceMap;
 
     /**
      * Constructor.
@@ -157,7 +158,7 @@ public class Board {
         }
 
         StringBuilder timeAndMessage =
-                new StringBuilder(timeFormat.format(new Date()));
+                new StringBuilder(Constants.timeFormat.format(new Date()));
         timeAndMessage.append(" Dust from ").append(robotName);
         timeAndMessage.append(" recieved - Total recieved: ");
         timeAndMessage.append(fieldsCleaned).append(".\n");
