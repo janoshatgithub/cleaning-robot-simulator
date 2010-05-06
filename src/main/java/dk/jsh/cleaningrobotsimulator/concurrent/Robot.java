@@ -69,6 +69,7 @@ public class Robot extends BaseThread {
      * Robot is in cleaning mode
      */
     private void cleaning() {
+        logPrevFields();
         addToPrevFields(board.getReadOnlyField(column, row));
         if (fieldsCleaned >= Constants.MAX_CLEANED_FIELDS) { //Goto bin
             gotoDustbinMode();
@@ -396,6 +397,39 @@ public class Robot extends BaseThread {
             timeAndMessage.append((char) (field.getColumn() + 65));
             timeAndMessage.append(field.getRow() + 1);
             before = ", ";
+        }
+        timeAndMessage.append(".\n");
+        jTextArea.append(timeAndMessage.toString());
+    }
+
+    /**
+     * Log prev. fields.
+     */
+    private void logPrevFields() {
+        StringBuilder timeAndMessage =
+                new StringBuilder(Constants.timeFormat.format(new Date()));
+        timeAndMessage.append(" Previous fields: ");
+        String before = null;
+        int i = nextPrevField;
+        boolean noPrevFields = true;
+        for (int c = 0; c < prevFields.length; c++) {
+            ReadOnlyField field = prevFields[i];
+            if (field != null) {
+                noPrevFields = false;
+                if (before != null) {
+                    timeAndMessage.append(before);
+                }
+                timeAndMessage.append((char) (field.getColumn() + 65));
+                timeAndMessage.append(field.getRow() + 1);
+                before = ", ";
+            }
+            i++;
+            if (i > prevFields.length - 1) {
+                i  = 0;
+            }
+        }
+        if (noPrevFields) {
+            timeAndMessage.append("No previous fields");
         }
         timeAndMessage.append(".\n");
         jTextArea.append(timeAndMessage.toString());
