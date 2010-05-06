@@ -11,7 +11,7 @@ import org.jdesktop.application.ResourceMap;
  * (see {@link dk.jsh.cleaningrobotsimulator.concurrent.Field Field}).<br>
  * Each field can be either clean or dirty (one is the dustbin).
  * A field can only hold one robot.<br>
- * Objects of this class is thread safe.
+ * This class is thread safe.
  * @see dk.jsh.cleaningrobotsimulator.cuncurrent.Field
  * @author Jan S. Hansen
  */
