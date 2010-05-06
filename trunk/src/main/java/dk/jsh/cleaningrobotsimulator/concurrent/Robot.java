@@ -299,7 +299,7 @@ public class Robot extends BaseThread {
     }
 
     /**
-     * Test if a pair of column and row is valid, for a move.
+     * Test if a given column and row is valid.
      * @param column Column
      * @param row Row
      * @return true if valid pair of column and row
