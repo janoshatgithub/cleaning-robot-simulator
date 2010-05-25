@@ -1,0 +1,462 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>Robot.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST0 {color: #969696; font-family: Monospaced; font-weight: bold}
+.comment {color: #969696}
+.line-number {background-color: #e9e8e2}
+.ST1 {color: #ce7b00; font-family: Monospaced; font-weight: bold}
+.character {color: #ce7b00}
+.keyword-directive {color: #0000e6}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">\dk\jsh\cleaningrobotsimulator\concurrent\Robot.java</td></tr></table>
+<pre>
+<span class="line-number">  1</span> <span class="keyword-directive">package</span> dk.jsh.cleaningrobotsimulator.concurrent;
+<span class="line-number">  2</span> 
+<span class="line-number">  3</span> <span class="keyword-directive">import</span> java.util.ArrayList;
+<span class="line-number">  4</span> <span class="keyword-directive">import</span> java.util.Date;
+<span class="line-number">  5</span> <span class="keyword-directive">import</span> java.util.List;
+<span class="line-number">  6</span> <span class="keyword-directive">import</span> java.util.Random;
+<span class="line-number">  7</span> <span class="keyword-directive">import</span> java.util.logging.Level;
+<span class="line-number">  8</span> <span class="keyword-directive">import</span> javax.swing.JTextArea;
+<span class="line-number">  9</span> <span class="keyword-directive">import</span> org.jdesktop.application.ResourceMap;
+<span class="line-number"> 10</span> 
+<span class="line-number"> 11</span> <span class="comment">/**</span>
+<span class="line-number"> 12</span> <span class="comment"> * </span><span class="comment">Robot</span> <span class="comment">thread</span><span class="comment">.</span>
+<span class="line-number"> 13</span> <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">Jan</span> <span class="comment">S</span><span class="comment">.</span> <span class="comment">Hansen</span>
+<span class="line-number"> 14</span>  <span class="comment">*/</span>
+<span class="line-number"> 15</span> <span class="keyword-directive">pu</span><span class="keyword-directive">blic</span> <span class="keyword-directive">class</span> Robot <span class="keyword-directive">extends</span> BaseThread {
+<span class="line-number"> 16</span> 
+<span class="line-number"> 17</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">boolean</span> stopRequested = <span class="keyword-directive">false</span>;
+<span class="line-number"> 18</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">boolean</span> pauseRequested = <span class="keyword-directive">false</span>;
+<span class="line-number"> 19</span>     <span class="keyword-directive">private</span> String resource;
+<span class="line-number"> 20</span>     <span class="keyword-directive">private</span> String fullResource;
+<span class="line-number"> 21</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">int</span> column;
+<span class="line-number"> 22</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">int</span> row;
+<span class="line-number"> 23</span>     <span class="keyword-directive">private</span> ReadOnlyField[] prevFields =
+<span class="line-number"> 24</span>             <span class="keyword-directive">new</span> ReadOnlyField[]{<span class="keyword-directive">null</span>, <span class="keyword-directive">null</span>, <span class="keyword-directive">null</span>, <span class="keyword-directive">null</span>, <span class="keyword-directive">null</span>, <span class="keyword-directive">null</span>};
+<span class="line-number"> 25</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">int</span> nextPrevField;
+<span class="line-number"> 26</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">int</span> fieldsCleaned;
+<span class="line-number"> 27</span>     Random randomGenerator = <span class="keyword-directive">new</span> Random();
+<span class="line-number"> 28</span> 
+<span class="line-number"> 29</span>     <span class="comment">/**</span>
+<span class="line-number"> 30</span> <span class="comment">     * </span><span class="comment">Constru</span><span class="comment">ctor</span><span class="comment">.</span>
+<span class="line-number"> 31</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">threadName</span> <span class="comment">Thread</span> <span class="comment">name</span>
+<span class="line-number"> 32</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">board</span> <span class="comment">A</span> <span class="comment">Board</span> <span class="comment">object</span>
+<span class="line-number"> 33</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">jTextArea</span> <span class="comment">A</span> <span class="comment">JTextArea</span> <span class="comment">to</span> <span class="comment">use</span> <span class="comment">as</span> <span class="comment">log</span> <span class="comment">for</span> <span class="comment">th</span><span class="comment">is</span> <span class="comment">thread</span>
+<span class="line-number"> 34</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">resourceMap</span> <span class="comment">A</span> <span class="comment">ResourceMap</span>
+<span class="line-number"> 35</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">resource</span> <span class="comment">Robots</span> <span class="comment">normal</span> <span class="comment">icon</span> <span class="comment">resource</span>
+<span class="line-number"> 36</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">fullResource</span> <span class="comment">Robots</span> <span class="comment">ful</span><span class="comment">l</span> <span class="comment">icon</span> <span class="comment">resource</span>
+<span class="line-number"> 37</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">row</span> <span class="comment">Robots</span> <span class="comment">start</span> <span class="comment">row</span> <span class="comment">position</span>
+<span class="line-number"> 38</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">column</span> <span class="comment">Robots</span> <span class="comment">start</span> <span class="comment">column</span> <span class="comment">position</span>
+<span class="line-number"> 39</span>      <span class="comment">*/</span>
+<span class="line-number"> 40</span>     <span class="keyword-directive">public</span> Robot(String threadName, Board board, JTextArea jTextArea,
+<span class="line-number"> 41</span>             ResourceMap resourceMap,
+<span class="line-number"> 42</span>             String resource, String fullResource,
+<span class="line-number"> 43</span>             <span class="keyword-directive">int</span> row, <span class="keyword-directive">int</span> column) {
+<span class="line-number"> 44</span>         <span class="keyword-directive">super</span>(threadName, board, jTextArea, resourceMap);
+<span class="line-number"> 45</span>         <span class="keyword-directive">this</span>.resource = resource;
+<span class="line-number"> 46</span>         <span class="keyword-directive">this</span>.fullResource = fullResource;
+<span class="line-number"> 47</span>         <span class="keyword-directive">this</span>.column = column;
+<span class="line-number"> 48</span>         <span class="keyword-directive">this</span>.row = row;
+<span class="line-number"> 49</span>         <span class="keyword-directive">this</span>.resourceMap = resourceMap;
+<span class="line-number"> 50</span>     }
+<span class="line-number"> 51</span> 
+<span class="line-number"> 52</span>     <span class="comment">/**</span>
+<span class="line-number"> 53</span> <span class="comment">     * </span><span class="comment">The</span> <span class="comment">threads</span> <span class="comment">run</span> <span class="comment">method</span><span class="comment">.</span>
+<span class="line-number"> 54</span>      <span class="comment">*/</span>
+<span class="line-number"> 55</span>     @Override
+<span class="line-number"> 56</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> run() {
+<span class="line-number"> 57</span>         log(<span class="character">&quot;</span><span class="character">Thread for robot is now running.</span><span class="character">&quot;</span>);
+<span class="line-number"> 58</span>         <span class="keyword-directive">while</span> (!isStopRequested()) {
+<span class="line-number"> 59</span>             <span class="keyword-directive">if</span> (isPauseRequested()) {
+<span class="line-number"> 60</span>                 paused();
+<span class="line-number"> 61</span>             } <span class="keyword-directive">else</span> {
+<span class="line-number"> 62</span>                 cleaning();
+<span class="line-number"> 63</span>             }
+<span class="line-number"> 64</span>         }
+<span class="line-number"> 65</span>         log(<span class="character">&quot;</span><span class="character">Thread for robot is now stopped</span><span class="character">&quot;</span>);
+<span class="line-number"> 66</span>     }
+<span class="line-number"> 67</span> 
+<span class="line-number"> 68</span>     <span class="comment">/**</span>
+<span class="line-number"> 69</span> <span class="comment">     * </span><span class="comment">Robot</span> <span class="comment">is</span> <span class="comment">in</span> <span class="comment">cleaning</span> <span class="comment">mode</span>
+<span class="line-number"> 70</span>      <span class="comment">*/</span>
+<span class="line-number"> 71</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">void</span> cleaning() {
+<span class="line-number"> 72</span>         logPrevFields();
+<span class="line-number"> 73</span>         addToPrevFields(board.getReadOnlyField(column, row));
+<span class="line-number"> 74</span>         <span class="keyword-directive">if</span> (fieldsCleaned &gt;= Constants.MAX_CLEANED_FIELDS) { <span class="comment">//Goto bin</span>
+<span class="line-number"> 75</span>             gotoDustbinMode();
+<span class="line-number"> 76</span>         } <span class="keyword-directive">else</span> { <span class="comment">//Search</span><span class="comment"> and clean</span>
+<span class="line-number"> 77</span>             cleaningMode();
+<span class="line-number"> 78</span>         }
+<span class="line-number"> 79</span>         sleepForSecs(1);
+<span class="line-number"> 80</span>     }
+<span class="line-number"> 81</span> 
+<span class="line-number"> 82</span>     <span class="comment">/**</span>
+<span class="line-number"> 83</span> <span class="comment">     * </span><span class="comment">Search</span> <span class="comment">for</span> <span class="comment">dirty</span> <span class="comment">nearby</span> <span class="comment">fields</span><span class="comment">.</span> <span class="comment">If</span> <span class="comment">found</span> <span class="comment">cl</span><span class="comment">ean</span> <span class="comment">a</span> <span class="comment">random</span>
+<span class="line-number"> 84</span> <span class="comment">     * </span><span class="comment">dirty</span> <span class="comment">field</span><span class="comment">, </span><span class="comment">else</span> <span class="comment">goto</span> <span class="comment">randon</span> <span class="comment">a</span> <span class="comment">nearby</span> <span class="comment">empty</span> <span class="comment">and</span> <span class="comment">clean</span> <span class="comment">field</span><span class="comment">.</span>
+<span class="line-number"> 85</span>      <span class="comment">*/</span>
+<span class="line-number"> 86</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">void</span> cleaningMode() {
+<span class="line-number"> 87</span>         <span class="comment">//Search </span><span class="comment">and clean</span>
+<span class="line-number"> 88</span>         ReadOnlyField moveToField = getNextField();
+<span class="line-number"> 89</span>         <span class="keyword-directive">if</span> (moveToField == <span class="keyword-directive">null</span>) {
+<span class="line-number"> 90</span>             clearPrevFields();
+<span class="line-number"> 91</span>         } <span class="keyword-directive">else</span> {
+<span class="line-number"> 92</span>             <span class="keyword-directive">int</span> toColumn = moveToField.getColumn();
+<span class="line-number"> 93</span>             <span class="keyword-directive">int</span> toRow = moveToField.getRow();
+<span class="line-number"> 94</span>             logMove(<span class="character">&quot;</span><span class="character">Try move</span><span class="character">&quot;</span>, row, column, toRow, toColumn);
+<span class="line-number"> 95</span>             <span class="keyword-directive">if</span> (board.tryMove(column, row, toColumn, toRow, resource)) {
+<span class="line-number"> 96</span>                 logMove(<span class="character">&quot;</span><span class="character">Moved from</span><span class="character">&quot;</span>, row, column, toRow, toColumn);
+<span class="line-number"> 97</span>                 <span class="keyword-directive">if</span> (moveToField.isDirty()) {
+<span class="line-number"> 98</span>                     <span class="keyword-directive">if</span> (board.tryCleanField(toColumn, toRow)) {
+<span class="line-number"> 99</span>                         fieldsCleaned++;
+<span class="line-number">100</span>                         log(<span class="character">&quot;</span><span class="character">Number of fields cleaned: </span><span class="character">&quot;</span> + fieldsCleaned + <span class="character">&quot;</span><span class="character">.</span><span class="character">&quot;</span>);
+<span class="line-number">101</span>                         <span class="keyword-directive">if</span> (fieldsCleaned &gt;= Constants.MAX_CLEANED_FIELDS) {
+<span class="line-number">102</span>                             log(<span class="character">&quot;</span><span class="character">Robot is full.</span><span class="character">&quot;</span>);
+<span class="line-number">103</span>                         }
+<span class="line-number">104</span>                     } <span class="keyword-directive">else</span> {
+<span class="line-number">105</span>                         log(<span class="character">&quot;</span><span class="character">*** The field is no longer dirty, after moving </span><span class="character">&quot;</span> + <span class="character">&quot;</span><span class="character">robot.</span><span class="character">&quot;</span>);
+<span class="line-number">106</span>                     }
+<span class="line-number">107</span>                 }
+<span class="line-number">108</span>                 row = toRow;
+<span class="line-number">109</span>                 column = toColumn;
+<span class="line-number">110</span>             } <span class="keyword-directive">else</span> {
+<span class="line-number">111</span>                 log(<span class="character">&quot;</span><span class="character">*** Move failed.</span><span class="character">&quot;</span>);
+<span class="line-number">112</span>             }
+<span class="line-number">113</span>         }
+<span class="line-number">114</span>     }
+<span class="line-number">115</span> 
+<span class="line-number">116</span>     <span class="comment">/**</span>
+<span class="line-number">117</span> <span class="comment">     * </span><span class="comment">Move</span> <span class="comment">robot</span> <span class="comment">closer</span> <span class="comment">to</span> <span class="comment">the</span> <span class="comment">dustbin</span><span class="comment">.</span> <span class="comment">If</span> <span class="comment">robot</span> <span class="comment">is</span> <span class="comment">on</span> <span class="comment">the</span> <span class="comment">dustbin</span> <span class="comment">field</span><span class="comment">, </span><span class="comment">the</span>
+<span class="line-number">118</span> <span class="comment">     * </span><span class="comment">rob</span><span class="comment">ot</span> <span class="comment">is</span> <span class="comment">emptied</span><span class="comment">.</span>
+<span class="line-number">119</span>      <span class="comment">*/</span>
+<span class="line-number">120</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">void</span> gotoDustbinMode() {
+<span class="line-number">121</span>         <span class="comment">//Goto bin</span>
+<span class="line-number">122</span>         <span class="keyword-directive">int</span> toRow = row &gt; 0 ? row - 1 : 0;
+<span class="line-number">123</span>         <span class="keyword-directive">int</span> toColumn = column &gt; 0 ? column - 1 : 0;
+<span class="line-number">124</span>         <span class="keyword-directive">if</span> (board.tryMove(column, row, toColumn, toRow, fullResource)) {
+<span class="line-number">125</span>             logMove(<span class="character">&quot;</span><span class="character">Move to dustbin</span><span class="character">&quot;</span>, row, column, toRow, toColumn);
+<span class="line-number">126</span>             <span class="keyword-directive">if</span> (toRow == 0 &amp;&amp; toColumn == 0) {
+<span class="line-number">127</span>                 fieldsCleaned = 0;
+<span class="line-number">128</span>                 board.emptyRobot(<span class="keyword-directive">this</span>.getName());
+<span class="line-number">129</span>                 clearPrevFields();
+<span class="line-number">130</span>                 log(<span class="character">&quot;</span><span class="character">Robot is emptied.</span><span class="character">&quot;</span>);
+<span class="line-number">131</span>             }
+<span class="line-number">132</span>             row = toRow;
+<span class="line-number">133</span>             column = toColumn;
+<span class="line-number">134</span>         } <span class="keyword-directive">else</span> {
+<span class="line-number">135</span>             log(<span class="character">&quot;</span><span class="character">*** Move to dustbin failed.</span><span class="character">&quot;</span>);
+<span class="line-number">136</span>         }
+<span class="line-number">137</span>     }
+<span class="line-number">138</span> 
+<span class="line-number">139</span>     <span class="comment">/**</span>
+<span class="line-number">140</span> <span class="comment">     * </span><span class="comment">Paused</span> <span class="comment">this</span> <span class="comment">thread</span> <span class="comment">for</span><span class="comment"> 1 </span><span class="comment">second</span><span class="comment">.</span>
+<span class="line-number">141</span>      <span class="comment">*/</span>
+<span class="line-number">142</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">void</span> paused() {
+<span class="line-number">143</span>         sleepForSecs(1);
+<span class="line-number">144</span>     }
+<span class="line-number">145</span> 
+<span class="line-number">146</span>     <span class="comment">/**</span>
+<span class="line-number">147</span> <span class="comment">     * </span><span class="comment">Makes</span> <span class="comment">this</span> <span class="comment">thread</span> <span class="comment">goto</span> <span class="comment">sleep</span> <span class="comment">for</span> <span class="comment">a</span> <span class="comment">given</span> <span class="comment">numb</span><span class="comment">er</span> <span class="comment">of</span> <span class="comment">seconds</span><span class="comment">.</span>
+<span class="line-number">148</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">secs</span> <span class="comment">seconds</span>
+<span class="line-number">149</span>      <span class="comment">*/</span>
+<span class="line-number">150</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">void</span> sleepForSecs(<span class="keyword-directive">int</span> secs) {
+<span class="line-number">151</span>         <span class="keyword-directive">try</span> {
+<span class="line-number">152</span>             <span class="keyword-directive">int</span> msecs = secs * 1000;
+<span class="line-number">153</span>             <span class="keyword-directive">int</span> i = 0;
+<span class="line-number">154</span>             <span class="keyword-directive">while</span> (i &lt; (msecs / 100) &amp;&amp; !isStopRequested()) {
+<span class="line-number">155</span>                 sleep(100);
+<span class="line-number">156</span>                 i++;
+<span class="line-number">157</span>             }
+<span class="line-number">158</span>         } <span class="keyword-directive">catch</span> (InterruptedException ex) {
+<span class="line-number">159</span>             exceptionLogger.log(Level.SEVERE, <span class="keyword-directive">null</span>, ex);
+<span class="line-number">160</span>             logException();
+<span class="line-number">161</span>             requestStop();
+<span class="line-number">162</span>         }
+<span class="line-number">163</span>     }
+<span class="line-number">164</span> 
+<span class="line-number">165</span>     <span class="comment">/**</span>
+<span class="line-number">166</span> <span class="comment">     * </span><span class="comment">Request</span> <span class="comment">this</span> <span class="comment">thread</span> <span class="comment">to</span> <span class="comment">stop</span>
+<span class="line-number">167</span>      <span class="comment">*/</span>
+<span class="line-number">168</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">synchronized</span> <span class="keyword-directive">void</span> requestStop() {
+<span class="line-number">169</span>         log(<span class="character">&quot;</span><span class="character">Stop requested for </span><span class="character">robot.</span><span class="character">&quot;</span>);
+<span class="line-number">170</span>         stopRequested = <span class="keyword-directive">true</span>;
+<span class="line-number">171</span>     }
+<span class="line-number">172</span> 
+<span class="line-number">173</span>     <span class="comment">/**</span><span class="comment">&#39;</span>
+<span class="line-number">174</span> <span class="comment">     * </span><span class="comment">Returns</span> <span class="comment">true</span> <span class="comment">if</span> <span class="comment">this</span> <span class="comment">thread</span> <span class="comment">is</span> <span class="comment">requested</span> <span class="comment">to</span> <span class="comment">stop</span><span class="comment">.</span>
+<span class="line-number">175</span> <span class="comment">     * </span><span class="ST0">@return</span> <span class="comment">true</span> <span class="comment">if</span> <span class="comment">th</span><span class="comment">is</span> <span class="comment">thread</span> <span class="comment">is</span> <span class="comment">requested</span> <span class="comment">to</span> <span class="comment">stop</span>
+<span class="line-number">176</span>      <span class="comment">*/</span>
+<span class="line-number">177</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">synchronized</span> <span class="keyword-directive">boolean</span> isStopRequested() {
+<span class="line-number">178</span>         <span class="keyword-directive">return</span> stopRequested;
+<span class="line-number">179</span>     }
+<span class="line-number">180</span> 
+<span class="line-number">181</span>     <span class="comment">/**</span>
+<span class="line-number">182</span> <span class="comment">     * </span><span class="comment">Request</span> <span class="comment">this</span> <span class="comment">th</span><span class="comment">read</span> <span class="comment">to</span> <span class="comment">go</span> <span class="comment">into</span> <span class="comment">pause</span> <span class="comment">mode</span><span class="comment">.</span>
+<span class="line-number">183</span>      <span class="comment">*/</span>
+<span class="line-number">184</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">synchronized</span> <span class="keyword-directive">void</span> requestPause() {
+<span class="line-number">185</span>         log(<span class="character">&quot;</span><span class="character">Pause requested for robot.</span><span class="character">&quot;</span>);
+<span class="line-number">186</span>         pauseRequested = <span class="keyword-directive">true</span>;
+<span class="line-number">187</span>     }
+<span class="line-number">188</span> 
+<span class="line-number">189</span>     <span class="comment">/**</span>
+<span class="line-number">190</span> <span class="comment">     * </span><span class="comment">Request</span> <span class="comment">this</span> <span class="comment">thread</span> <span class="comment">to</span> <span class="comment">go</span> <span class="comment">into</span> <span class="comment">running</span> <span class="comment">mode</span><span class="comment">.</span>
+<span class="line-number">191</span>      <span class="comment">*/</span>
+<span class="line-number">192</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">synchronized</span> <span class="keyword-directive">void</span> continueAfterPause() {
+<span class="line-number">193</span>         log(<span class="character">&quot;</span><span class="character">Continue requested for robot.</span><span class="character">&quot;</span>);
+<span class="line-number">194</span>         pauseRequested = <span class="keyword-directive">false</span>;
+<span class="line-number">195</span>     }
+<span class="line-number">196</span> 
+<span class="line-number">197</span>     <span class="comment">/**</span>
+<span class="line-number">198</span> <span class="comment">     * </span><span class="comment">Returns</span> <span class="comment">true</span> <span class="comment">if</span> <span class="comment">this</span> <span class="comment">thread</span> <span class="comment">is</span> <span class="comment">requested</span> <span class="comment">to</span> <span class="comment">go</span> <span class="comment">into</span> <span class="comment">pause</span> <span class="comment">mode</span><span class="comment">.</span>
+<span class="line-number">199</span> <span class="comment">     * </span><span class="ST0">@re</span><span class="ST0">turn</span> <span class="comment">true</span> <span class="comment">if</span> <span class="comment">this</span> <span class="comment">thread</span> <span class="comment">is</span> <span class="comment">requested</span> <span class="comment">to</span> <span class="comment">go</span> <span class="comment">into</span> <span class="comment">pause</span> <span class="comment">mode</span>
+<span class="line-number">200</span>      <span class="comment">*/</span>
+<span class="line-number">201</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">synchronized</span> <span class="keyword-directive">boolean</span> isPauseRequested() {
+<span class="line-number">202</span>         <span class="keyword-directive">return</span> pauseRequested;
+<span class="line-number">203</span>     }
+<span class="line-number">204</span> 
+<span class="line-number">205</span>     <span class="comment">/**</span>
+<span class="line-number">206</span> <span class="comment">     * </span><span class="comment">Returns</span> <span class="comment">the</span> <span class="comment">n</span><span class="comment">ext</span> <span class="comment">field</span> <span class="comment">the</span> <span class="comment">Robot</span> <span class="comment">should</span> <span class="comment">try</span> <span class="comment">to</span> <span class="comment">go</span> <span class="comment">to</span><span class="comment">.</span> <span class="comment">Dirty</span> <span class="comment">Fields</span> <span class="comment">has</span>
+<span class="line-number">207</span> <span class="comment">     * </span><span class="comment">priority</span><span class="comment">.</span>
+<span class="line-number">208</span> <span class="comment">     * </span><span class="ST0">@return</span> <span class="comment">A</span> <span class="comment">Field</span> <span class="comment">or</span> <span class="comment">null</span> <span class="comment">if</span> <span class="comment">no</span> <span class="comment">move</span> <span class="comment">is</span> <span class="comment">possible</span>
+<span class="line-number">209</span>      <span class="comment">*/</span>
+<span class="line-number">210</span>     <span class="keyword-directive">private</span> ReadOnlyField getNextField() {
+<span class="line-number">211</span>         List&lt;ReadOnlyField&gt; moveToCleanFieldOptions =
+<span class="line-number">212</span>                 <span class="keyword-directive">new</span> ArrayList&lt;ReadOnlyField&gt;();
+<span class="line-number">213</span>         List&lt;ReadOnlyField&gt; moveToDirtyFieldOptions =
+<span class="line-number">214</span>                 <span class="keyword-directive">new</span> ArrayList&lt;ReadOnlyField&gt;();
+<span class="line-number">215</span>         <span class="comment">//Test fields above</span>
+<span class="line-number">216</span>         <span class="keyword-directive">int</span> testColumn = column - 1;
+<span class="line-number">217</span>         <span class="keyword-directive">int</span> testRow = row - 1;
+<span class="line-number">218</span>         <span class="keyword-directive">for</span> (testColumn = column - 1; testColumn &lt;= column + 1; testColumn++) {
+<span class="line-number">219</span>             <span class="keyword-directive">if</span> (validRowColumn(testColumn, testRow)) {
+<span class="line-number">220</span>                 ReadOnlyField field = board.getReadOnlyField(testColumn, testRow);
+<span class="line-number">221</span>                 <span class="keyword-directive">if</span> (field.isEmpty()) {
+<span class="line-number">222</span>                     <span class="keyword-directive">if</span> (field.isDirty()) {
+<span class="line-number">223</span>                         moveToDirtyFieldOptions.add(field);
+<span class="line-number">224</span>                     } <span class="keyword-directive">else</span> {
+<span class="line-number">225</span>                          <span class="keyword-directive">if</span>(!isFieldInPrevFields(field)) {
+<span class="line-number">226</span>                             moveToCleanFieldOptions.add(field);
+<span class="line-number">227</span>                          }
+<span class="line-number">228</span>                     }
+<span class="line-number">229</span>                 }
+<span class="line-number">230</span>             }
+<span class="line-number">231</span>         }
+<span class="line-number">232</span>         <span class="comment">//Test field to the left</span>
+<span class="line-number">233</span>         testRow = row;
+<span class="line-number">234</span>         testColumn = column - 1;
+<span class="line-number">235</span>         <span class="keyword-directive">if</span> (validRowColumn(testColumn, testRow)) {
+<span class="line-number">236</span>             ReadOnlyField field = board.getReadOnlyField(testColumn, testRow);
+<span class="line-number">237</span>             <span class="keyword-directive">if</span> (field.isEmpty()) {
+<span class="line-number">238</span>                 <span class="keyword-directive">if</span> (field.isDirty()) {
+<span class="line-number">239</span>                     moveToDirtyFieldOptions.add(field);
+<span class="line-number">240</span>                 } <span class="keyword-directive">else</span> {
+<span class="line-number">241</span>                      <span class="keyword-directive">if</span>(!isFieldInPrevFields(field)) {
+<span class="line-number">242</span>                         moveToCleanFieldOptions.add(field);
+<span class="line-number">243</span>                      }
+<span class="line-number">244</span>                 }
+<span class="line-number">245</span>             }
+<span class="line-number">246</span>         }
+<span class="line-number">247</span>         <span class="comment">//Test field to the right</span>
+<span class="line-number">248</span>         testColumn = column + 1;
+<span class="line-number">249</span>         <span class="keyword-directive">if</span> (validRowColumn(testColumn, testRow)) {
+<span class="line-number">250</span>             ReadOnlyField field = board.getReadOnlyField(testColumn, testRow);
+<span class="line-number">251</span>             <span class="keyword-directive">if</span> (field.isEmpty()) {
+<span class="line-number">252</span>                 <span class="keyword-directive">if</span> (field.isDirty()) {
+<span class="line-number">253</span>                     moveToDirtyFieldOptions.add(field);
+<span class="line-number">254</span>                 } <span class="keyword-directive">else</span> {
+<span class="line-number">255</span>                      <span class="keyword-directive">if</span>(!isFieldInPrevFields(field)) {
+<span class="line-number">256</span>                         moveToCleanFieldOptions.add(field);
+<span class="line-number">257</span>                      }
+<span class="line-number">258</span>                 }
+<span class="line-number">259</span>             }
+<span class="line-number">260</span>         }
+<span class="line-number">261</span>         <span class="comment">//Test fields below</span>
+<span class="line-number">262</span>         testColumn = column - 1;
+<span class="line-number">263</span>         testRow = row + 1;
+<span class="line-number">264</span>         <span class="keyword-directive">for</span> (testColumn = column - 1; testColumn &lt;= column + 1; testColumn++) {
+<span class="line-number">265</span>             <span class="keyword-directive">if</span> (validRowColumn(testColumn, testRow)) {
+<span class="line-number">266</span>                 ReadOnlyField field =
+<span class="line-number">267</span>                         board.getReadOnlyField(testColumn, testRow);
+<span class="line-number">268</span>                 <span class="keyword-directive">if</span> (field.isEmpty()) {
+<span class="line-number">269</span>                     <span class="keyword-directive">if</span> (field.isDirty()) {
+<span class="line-number">270</span>                         moveToDirtyFieldOptions.add(field);
+<span class="line-number">271</span>                     } <span class="keyword-directive">els</span><span class="keyword-directive">e</span> {
+<span class="line-number">272</span>                          <span class="keyword-directive">if</span>(!isFieldInPrevFields(field)) {
+<span class="line-number">273</span>                             moveToCleanFieldOptions.add(field);
+<span class="line-number">274</span>                          }
+<span class="line-number">275</span>                     }
+<span class="line-number">276</span>                 }
+<span class="line-number">277</span>             }
+<span class="line-number">278</span>         }
+<span class="line-number">279</span>         ReadOnlyField field = <span class="keyword-directive">null</span>;
+<span class="line-number">280</span>         <span class="keyword-directive">if</span> (!moveToDirtyFieldOptions.isEmpty()) {
+<span class="line-number">281</span>             logMoveToOptions(<span class="character">&quot;</span><span class="character">Move to dirty field options</span><span class="character">&quot;</span>,
+<span class="line-number">282</span>                     moveToDirtyFieldOptions);
+<span class="line-number">283</span>             <span class="comment">//Return r</span><span class="comment">andom</span>
+<span class="line-number">284</span>             <span class="keyword-directive">int</span> index = randomGenerator.nextInt(moveToDirtyFieldOptions.size());
+<span class="line-number">285</span>             field = moveToDirtyFieldOptions.get(index);
+<span class="line-number">286</span>         } <span class="keyword-directive">else</span> { <span class="comment">//No dirty fields to move to, try clean fields.</span>
+<span class="line-number">287</span>             log(<span class="character">&quot;</span><span class="character">No dirty fields nearby.</span><span class="character">&quot;</span>);
+<span class="line-number">288</span>             <span class="keyword-directive">if</span> (!moveToCleanFieldOptions.isEmpty()) {
+<span class="line-number">289</span>                 logMoveToOptions(<span class="character">&quot;</span><span class="character">Move to clean field options</span><span class="character">&quot;</span>,
+<span class="line-number">290</span>                         moveToCleanFieldOptions);
+<span class="line-number">291</span>                 <span class="keyword-directive">int</span> index = randomGenerator.nextInt(
+<span class="line-number">292</span>                         moveToCleanFieldOptions.size());
+<span class="line-number">293</span>                 field = moveToCleanFieldOptions.get(index);
+<span class="line-number">294</span>             } <span class="keyword-directive">else</span> {
+<span class="line-number">295</span>                 log(<span class="character">&quot;</span><span class="character">*** Robot is locked, no move is possible!</span><span class="character">&quot;</span>);
+<span class="line-number">296</span>             }
+<span class="line-number">297</span>         }
+<span class="line-number">298</span>         <span class="keyword-directive">return</span> field;
+<span class="line-number">299</span>     }
+<span class="line-number">300</span> 
+<span class="line-number">301</span>     <span class="comment">/**</span>
+<span class="line-number">302</span>  <span class="comment">    * </span><span class="comment">Test</span> <span class="comment">if</span> <span class="comment">a</span> <span class="comment">given</span> <span class="comment">column</span> <span class="comment">and</span> <span class="comment">row</span> <span class="comment">is</span> <span class="comment">valid</span><span class="comment">.</span>
+<span class="line-number">303</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">column</span> <span class="comment">Column</span>
+<span class="line-number">304</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">row</span> <span class="comment">Row</span>
+<span class="line-number">305</span> <span class="comment">     * </span><span class="ST0">@return</span> <span class="comment">true</span> <span class="comment">if</span> <span class="comment">valid</span> <span class="comment">pair</span> <span class="comment">of</span> <span class="comment">column</span> <span class="comment">and</span> <span class="comment">row</span>
+<span class="line-number">306</span>      <span class="comment">*/</span>
+<span class="line-number">307</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">boolea</span><span class="keyword-directive">n</span> validRowColumn(<span class="keyword-directive">int</span> column, <span class="keyword-directive">int</span> row) {
+<span class="line-number">308</span>         <span class="keyword-directive">boolean</span> ok = <span class="keyword-directive">true</span>;
+<span class="line-number">309</span>         <span class="keyword-directive">if</span> (row &lt; 0 || row &gt;= Constants.MAX_ROWS
+<span class="line-number">310</span>                 || column &lt; 0 || column &gt;= Constants.MAX_COLUMNS) {
+<span class="line-number">311</span>             ok = <span class="keyword-directive">false</span>;
+<span class="line-number">312</span>         }
+<span class="line-number">313</span>         <span class="keyword-directive">if</span> (column == 0 &amp;&amp; row == 0) { <span class="comment">//Dustbin</span>
+<span class="line-number">314</span>             ok = <span class="keyword-directive">false</span>;
+<span class="line-number">315</span>         }
+<span class="line-number">316</span>         <span class="keyword-directive">ret</span><span class="keyword-directive">urn</span> ok;
+<span class="line-number">317</span>     }
+<span class="line-number">318</span> 
+<span class="line-number">319</span>     <span class="comment">/**</span>
+<span class="line-number">320</span> <span class="comment">     * </span><span class="comment">Add</span> <span class="comment">a</span> <span class="comment">Field</span> <span class="comment">to</span> <span class="comment">a</span> <span class="comment">circular</span> <span class="comment">buffer</span> <span class="comment">with</span> <span class="comment">previous</span> <span class="comment">fields</span> <span class="comment">this</span> <span class="comment">Robot</span> <span class="comment">has</span>
+<span class="line-number">321</span> <span class="comment">     * </span><span class="comment">visited</span><span class="comment">.</span>
+<span class="line-number">322</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">field</span> <span class="comment">R</span><span class="comment">eadOnlyField</span> <span class="comment">to</span> <span class="comment">add</span> <span class="comment">to</span> <span class="comment">buffer</span>
+<span class="line-number">323</span>      <span class="comment">*/</span>
+<span class="line-number">324</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">void</span> addToPrevFields(ReadOnlyField field) {
+<span class="line-number">325</span>         prevFields[nextPrevField] = field;
+<span class="line-number">326</span>         nextPrevField++;
+<span class="line-number">327</span>         <span class="keyword-directive">if</span> (nextPrevField &gt; prevFields.length - 1) {
+<span class="line-number">328</span>             nextPrevField = 0;
+<span class="line-number">329</span>         }
+<span class="line-number">330</span>     }
+<span class="line-number">331</span> 
+<span class="line-number">332</span>     <span class="comment">/**</span>
+<span class="line-number">333</span> <span class="comment">     * </span><span class="comment">Clear</span> <span class="comment">a</span> <span class="comment">circ</span><span class="comment">ular</span> <span class="comment">buffer</span> <span class="comment">with</span> <span class="comment">previous</span> <span class="comment">fields</span> <span class="comment">this</span> <span class="comment">Robot</span> <span class="comment">has</span>
+<span class="line-number">334</span> <span class="comment">     * </span><span class="comment">visited</span><span class="comment">.</span>
+<span class="line-number">335</span>      <span class="comment">*/</span>
+<span class="line-number">336</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">void</span> clearPrevFields() {
+<span class="line-number">337</span>         log(<span class="character">&quot;</span><span class="character">Clear prev. fields.</span><span class="character">&quot;</span>);
+<span class="line-number">338</span>         <span class="keyword-directive">for</span> (<span class="keyword-directive">int</span> i = 0; i &lt; prevFields.length; i++) {
+<span class="line-number">339</span>             prevFields[i] = <span class="keyword-directive">null</span>;
+<span class="line-number">340</span>         }
+<span class="line-number">341</span>         nextPrevField = 0;
+<span class="line-number">342</span>     }
+<span class="line-number">343</span> 
+<span class="line-number">344</span>     <span class="comment">/**</span>
+<span class="line-number">345</span> <span class="comment">     * </span><span class="comment">Returns</span> <span class="comment">true</span> <span class="comment">if</span> <span class="comment">this</span> <span class="comment">field</span> <span class="comment">is</span> <span class="comment">in</span> <span class="comment">th</span><span class="comment">e</span> <span class="comment">circular</span> <span class="comment">buffer</span> <span class="comment">with</span> <span class="comment">previous</span>
+<span class="line-number">346</span> <span class="comment">     * </span><span class="comment">fields</span><span class="comment">.</span>
+<span class="line-number">347</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">field</span> <span class="comment">ReadOnlyField</span> <span class="comment">to</span> <span class="comment">test</span>
+<span class="line-number">348</span> <span class="comment">     * </span><span class="ST0">@return</span> <span class="comment">true</span> <span class="comment">if</span> <span class="comment">this</span> <span class="comment">field</span> <span class="comment">is</span> <span class="comment">in</span> <span class="comment">the</span> <span class="comment">circular</span> <span class="comment">buffer</span> <span class="comment">with</span> <span class="comment">previo</span><span class="comment">us</span>
+<span class="line-number">349</span> <span class="comment">     * </span><span class="comment">fields</span><span class="comment">.</span> 
+<span class="line-number">350</span>      <span class="comment">*/</span>
+<span class="line-number">351</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">boolean</span> isFieldInPrevFields(ReadOnlyField field) {
+<span class="line-number">352</span>         <span class="keyword-directive">int</span> i = 0;
+<span class="line-number">353</span>         <span class="keyword-directive">boolean</span> fieldFound = <span class="keyword-directive">false</span>;
+<span class="line-number">354</span>         <span class="keyword-directive">while</span> (!fieldFound &amp;&amp; i &lt; prevFields.length) {
+<span class="line-number">355</span>             <span class="keyword-directive">if</span> (field.equals(prevFields[i])) {
+<span class="line-number">356</span>                 fieldFound = <span class="keyword-directive">true</span>;
+<span class="line-number">357</span>             } <span class="keyword-directive">else</span> {
+<span class="line-number">358</span>                 i++;
+<span class="line-number">359</span>             }
+<span class="line-number">360</span>         }
+<span class="line-number">361</span>         <span class="keyword-directive">return</span> fieldFound;
+<span class="line-number">362</span>     }
+<span class="line-number">363</span> 
+<span class="line-number">364</span>     <span class="comment">/**</span>
+<span class="line-number">365</span> <span class="comment">     * </span><span class="comment">Log</span> <span class="comment">a</span> <span class="comment">move</span><span class="comment">.</span>
+<span class="line-number">366</span>  <span class="comment">    * </span><span class="ST0">@param</span> <span class="comment">message</span> <span class="comment">Message</span> <span class="comment">before</span> <span class="comment">from</span> <span class="comment">and</span> <span class="comment">to</span> <span class="comment">text</span><span class="comment">.</span>
+<span class="line-number">367</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">fromRow</span> <span class="comment">from</span> <span class="comment">row</span>
+<span class="line-number">368</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">fromColumn</span> <span class="comment">from</span> <span class="comment">column</span>
+<span class="line-number">369</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">toRow</span> <span class="comment">to</span> <span class="comment">row</span>
+<span class="line-number">370</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">toColumn</span> <span class="comment">to</span> <span class="comment">column</span>
+<span class="line-number">371</span>      <span class="comment">*/</span>
+<span class="line-number">372</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">void</span> logMove(String message,
+<span class="line-number">373</span>             <span class="keyword-directive">int</span> fromRow, <span class="keyword-directive">int</span> fromColumn,
+<span class="line-number">374</span>             <span class="keyword-directive">int</span> toRow, <span class="keyword-directive">int</span> toColumn) {
+<span class="line-number">375</span>         StringBuilder timeAndMessage =
+<span class="line-number">376</span>                 <span class="keyword-directive">new</span> StringBuilder(Constants.timeFormat.format(<span class="keyword-directive">new</span> Date()));
+<span class="line-number">377</span>         timeAndMessage.append(<span class="character">&quot;</span> <span class="character">&quot;</span>).append(message).append(<span class="character">&quot;</span> <span class="character">&quot;</span>);
+<span class="line-number">378</span>         timeAndMessage.append((<span class="keyword-directive">char</span>) (fromColumn + 65));
+<span class="line-number">379</span>         timeAndMessage.append(++fromRow).append(<span class="character">&quot;</span><span class="character"> to </span><span class="character">&quot;</span>);
+<span class="line-number">380</span>         timeAndMessage.append((<span class="keyword-directive">char</span>) (toColumn + 65));
+<span class="line-number">381</span>         timeAndMessage.append(++toRow).append(<span class="character">&quot;</span><span class="character">.</span><span class="ST1">\n</span><span class="character">&quot;</span>);
+<span class="line-number">382</span>         jTextArea.append(timeAndMessage.toString());
+<span class="line-number">383</span>     }
+<span class="line-number">384</span> 
+<span class="line-number">385</span>     <span class="comment">/**</span>
+<span class="line-number">386</span> <span class="comment">     *</span> <span class="comment">Log</span> <span class="comment">all</span> <span class="comment">move</span> <span class="comment">to</span> <span class="comment">options</span><span class="comment">.</span>
+<span class="line-number">387</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">message</span> <span class="comment">Message</span> <span class="comment">before</span> <span class="comment">options</span>
+<span class="line-number">388</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">fields</span> <span class="comment">A</span> <span class="comment">List</span> <span class="comment">of</span> <span class="comment">Fields</span>
+<span class="line-number">389</span>      <span class="comment">*/</span>
+<span class="line-number">390</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">void</span> logMoveToOptions(String message, List&lt;ReadOnlyField&gt; fields) {
+<span class="line-number">391</span>         StringBuilder timeAndMessage =
+<span class="line-number">392</span>                 <span class="keyword-directive">new</span> StringBuilder(Constants.timeFormat.format(<span class="keyword-directive">new</span> Date()));
+<span class="line-number">393</span>         timeAndMessage.append(<span class="character">&quot;</span> <span class="character">&quot;</span>).append(message);
+<span class="line-number">394</span>         String before = <span class="character">&quot;</span><span class="character">: </span><span class="character">&quot;</span>;
+<span class="line-number">395</span>         <span class="keyword-directive">for</span> (ReadOnlyField field : fields) {
+<span class="line-number">396</span>             timeAndMessage.append(before);
+<span class="line-number">397</span>             timeAndMessage.append((<span class="keyword-directive">char</span>) (field.getColumn() + 65));
+<span class="line-number">398</span>             timeAndMessage.append(field.getRow() + 1);
+<span class="line-number">399</span>             before = <span class="character">&quot;</span><span class="character">, </span><span class="character">&quot;</span>;
+<span class="line-number">400</span>         }
+<span class="line-number">401</span>         timeAndMessage.append(<span class="character">&quot;</span><span class="character">.</span><span class="ST1">\n</span><span class="character">&quot;</span>);
+<span class="line-number">402</span>         jTextArea.append(timeAndMessage.toString());
+<span class="line-number">403</span>     }
+<span class="line-number">404</span> 
+<span class="line-number">405</span>     <span class="comment">/**</span>
+<span class="line-number">406</span> <span class="comment">     * </span><span class="comment">Log</span> <span class="comment">prev</span><span class="comment">.</span> <span class="comment">fields</span><span class="comment">.</span>
+<span class="line-number">407</span>      <span class="comment">*/</span>
+<span class="line-number">408</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">void</span> logPrevFields() {
+<span class="line-number">409</span>         StringBuilder timeAndMessage =
+<span class="line-number">410</span>                 <span class="keyword-directive">new</span> StringBuilder(Constants.timeFormat.format(<span class="keyword-directive">new</span> Date()));
+<span class="line-number">411</span>         timeAndMessage.append(<span class="character">&quot;</span><span class="character"> Previous fields: </span><span class="character">&quot;</span>);
+<span class="line-number">412</span>         String before = <span class="keyword-directive">null</span>;
+<span class="line-number">413</span>         <span class="keyword-directive">int</span> i = nextPrevField;
+<span class="line-number">414</span>         <span class="keyword-directive">boolean</span> noPrevFields = <span class="keyword-directive">true</span>;
+<span class="line-number">415</span>         <span class="keyword-directive">for</span> (<span class="keyword-directive">int</span> c = 0; c &lt; prevFields.length; c++) {
+<span class="line-number">416</span>             ReadOnlyField field = prevFields[i];
+<span class="line-number">417</span>             <span class="keyword-directive">if</span> (field != <span class="keyword-directive">null</span>) {
+<span class="line-number">418</span>                 noPrevFields = <span class="keyword-directive">false</span>;
+<span class="line-number">419</span>                 <span class="keyword-directive">if</span> (before != <span class="keyword-directive">null</span>) {
+<span class="line-number">420</span>                     timeAndMessage.append(before);
+<span class="line-number">421</span>                 }
+<span class="line-number">422</span>                 timeAndMessage.append((<span class="keyword-directive">char</span>) (field.getColumn() + 65));
+<span class="line-number">423</span>                 timeAndMessage.append(field.getRow() + 1);
+<span class="line-number">424</span>                 before = <span class="character">&quot;</span><span class="character">, </span><span class="character">&quot;</span>;
+<span class="line-number">425</span>             }
+<span class="line-number">426</span>             i++;
+<span class="line-number">427</span>             <span class="keyword-directive">if</span> (i &gt; prevFields.length - 1) {
+<span class="line-number">428</span>                 i  = 0;
+<span class="line-number">429</span>             }
+<span class="line-number">430</span>         }
+<span class="line-number">431</span>         <span class="keyword-directive">if</span> (noPrevFields) {
+<span class="line-number">432</span>             timeAndMessage.append(<span class="character">&quot;</span><span class="character">No previous field</span><span class="character">s</span><span class="character">&quot;</span>);
+<span class="line-number">433</span>         }
+<span class="line-number">434</span>         timeAndMessage.append(<span class="character">&quot;</span><span class="character">.</span><span class="ST1">\n</span><span class="character">&quot;</span>);
+<span class="line-number">435</span>         jTextArea.append(timeAndMessage.toString());
+<span class="line-number">436</span>     }
+<span class="line-number">437</span> }
+<span class="line-number">438</span> 
+</pre></body>
+</html>

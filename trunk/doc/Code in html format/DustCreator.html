@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>DustCreator.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST0 {color: #969696; font-family: Monospaced; font-weight: bold}
+.comment {color: #969696}
+.line-number {background-color: #e9e8e2}
+.ST1 {color: #ce7b00; font-family: Monospaced; font-weight: bold}
+.character {color: #ce7b00}
+.keyword-directive {color: #0000e6}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">\dk\jsh\cleaningrobotsimulator\concurrent\DustCreator.java</td></tr></table>
+<pre>
+<span class="line-number"> 1</span> <span class="keyword-directive">package</span> dk.jsh.cleaningrobotsimulator.concurrent;
+<span class="line-number"> 2</span> 
+<span class="line-number"> 3</span> <span class="keyword-directive">import</span> java.util.Date;
+<span class="line-number"> 4</span> <span class="keyword-directive">import</span> java.util.Random;
+<span class="line-number"> 5</span> <span class="keyword-directive">import</span> java.util.logging.Level;
+<span class="line-number"> 6</span> <span class="keyword-directive">import</span> javax.swing.JTextArea;
+<span class="line-number"> 7</span> <span class="keyword-directive">import</span> org.jdesktop.application.ResourceMap;
+<span class="line-number"> 8</span> 
+<span class="line-number"> 9</span> <span class="comment">/**</span>
+<span class="line-number">10</span> <span class="comment"> * </span><span class="comment">Dust</span> <span class="comment">creator</span> <span class="comment">thread</span><span class="comment">.</span>
+<span class="line-number">11</span> <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">Jan</span> <span class="comment">S</span><span class="comment">.</span> <span class="comment">Hansen</span>
+<span class="line-number">12</span>  <span class="comment">*/</span>
+<span class="line-number">13</span> <span class="keyword-directive">public</span> <span class="keyword-directive">class</span> DustCreator <span class="keyword-directive">extends</span> BaseThread {
+<span class="line-number">14</span>     Random randomGenerator = <span class="keyword-directive">new</span> Random();
+<span class="line-number">15</span> 
+<span class="line-number">16</span>     <span class="comment">/**</span>
+<span class="line-number">17</span> <span class="comment">     * </span><span class="comment">Constructor</span><span class="comment">.</span>
+<span class="line-number">18</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">threadName</span> <span class="comment">Thread</span> <span class="comment">name</span>
+<span class="line-number">19</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">board</span> <span class="comment">A</span> <span class="comment">Board</span> <span class="comment">object</span>
+<span class="line-number">20</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">jTextArea</span> <span class="comment">A</span> <span class="comment">J</span><span class="comment">TextArea</span> <span class="comment">to</span> <span class="comment">use</span> <span class="comment">as</span> <span class="comment">log</span> <span class="comment">for</span> <span class="comment">this</span> <span class="comment">thread</span><span class="comment">.</span>
+<span class="line-number">21</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">resourceMap</span> <span class="comment">A</span> <span class="comment">ResourceMap</span>
+<span class="line-number">22</span>      <span class="comment">*/</span>
+<span class="line-number">23</span>     <span class="keyword-directive">public</span> DustCreator(String threadName, Board board, JTextArea jTextArea,
+<span class="line-number">24</span>             ResourceMap resourceMap) {
+<span class="line-number">25</span>         <span class="keyword-directive">super</span>(threadName, board, jTextArea, resourceMap);
+<span class="line-number">26</span>     }
+<span class="line-number">27</span> 
+<span class="line-number">28</span>     <span class="comment">/**</span>
+<span class="line-number">29</span> <span class="comment">     * </span><span class="comment">The</span> <span class="comment">threads</span> <span class="comment">run</span> <span class="comment">method</span><span class="comment">.</span>
+<span class="line-number">30</span>      <span class="comment">*/</span>
+<span class="line-number">31</span>     @Override
+<span class="line-number">32</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> run() {
+<span class="line-number">33</span>         log(<span class="character">&quot;</span><span class="character">Thread for dust creator is now running.</span><span class="character">&quot;</span>);
+<span class="line-number">34</span>         <span class="keyword-directive">int</span> dirtyFields = board.getDirtyFieldsCounter();
+<span class="line-number">35</span>         log(<span class="character">&quot;</span><span class="character">Di</span><span class="character">rty fields on board: </span><span class="character">&quot;</span> + dirtyFields);
+<span class="line-number">36</span>         <span class="keyword-directive">while</span> (dirtyFields &lt; Constants.MAX_DIRTY_FIELDS) {
+<span class="line-number">37</span>             <span class="keyword-directive">int</span> row = randomGenerator.nextInt(Constants.MAX_ROWS);
+<span class="line-number">38</span>             <span class="keyword-directive">int</span> column = randomGenerator.nextInt(Constants.MAX_COLUMNS);
+<span class="line-number">39</span>             <span class="keyword-directive">if</span> (row != 0 || column != 0) { <span class="comment">//Dustbin</span>
+<span class="line-number">40</span>                 logTrySetFieldDirty(row, column);
+<span class="line-number">41</span>                 <span class="keyword-directive">if</span> (board.tryMakeFieldDirty(column, row)) {
+<span class="line-number">42</span>                     dirtyFields++;
+<span class="line-number">43</span>                     log(<span class="character">&quot;</span><span class="character">Dirt added.</span><span class="character">&quot;</span>);
+<span class="line-number">44</span>                 }
+<span class="line-number">45</span>                 <span class="keyword-directive">else</span> {
+<span class="line-number">46</span>                     log(<span class="character">&quot;</span><span class="character">Failed.</span><span class="character">&quot;</span>);
+<span class="line-number">47</span>                 }
+<span class="line-number">48</span>             }
+<span class="line-number">49</span>             sleepForSecs(1);
+<span class="line-number">50</span>         }
+<span class="line-number">51</span>        log(<span class="character">&quot;</span><span class="character">Thread for dust creator is now finished.</span><span class="character">&quot;</span>);
+<span class="line-number">52</span>     }
+<span class="line-number">53</span> 
+<span class="line-number">54</span>     <span class="comment">/**</span>
+<span class="line-number">55</span> <span class="comment">     * </span><span class="comment">Log</span> <span class="comment">a</span><span class="comment"> &quot;</span><span class="comment">Try</span> <span class="comment">put</span> <span class="comment">dirt</span> <span class="comment">on</span> <span class="comment">field</span><span class="comment">&quot; </span><span class="comment">message</span><span class="comment">.</span>
+<span class="line-number">56</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">row</span> <span class="comment">fields</span> <span class="comment">row</span><span class="comment">, </span><span class="comment">used</span> <span class="comment">in</span> <span class="comment">log</span> <span class="comment">message</span><span class="comment">, </span><span class="comment">converted</span> <span class="comment">to</span> <span class="comment">row</span><span class="comment"> + 1</span>
+<span class="line-number">57</span>  <span class="comment">    * </span><span class="ST0">@param</span> <span class="comment">column</span> <span class="comment">fields</span> <span class="comment">column</span><span class="comment">, </span><span class="comment">used</span> <span class="comment">in</span> <span class="comment">log</span> <span class="comment">message</span><span class="comment">, </span><span class="comment">converted</span> <span class="comment">to</span> <span class="comment">A</span><span class="comment">, </span><span class="comment">B</span><span class="comment">, </span><span class="comment">C</span>
+<span class="line-number">58</span> <span class="comment">     * </span><span class="comment">etc</span><span class="comment">.</span>
+<span class="line-number">59</span>      <span class="comment">*/</span>
+<span class="line-number">60</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">void</span> logTrySetFieldDirty(<span class="keyword-directive">int</span> row, <span class="keyword-directive">int</span> column) {
+<span class="line-number">61</span>         StringBuilder timeAndMessage =
+<span class="line-number">62</span>                 <span class="keyword-directive">new</span> StringBuilder(Constants.timeFormat.format(<span class="keyword-directive">new</span> Date()));
+<span class="line-number">63</span>         timeAndMessage.append(<span class="character">&quot;</span><span class="character"> Try put dirt on field </span><span class="character">&quot;</span>);
+<span class="line-number">64</span>         timeAndMessage.append((<span class="keyword-directive">char</span>)(column + 65));
+<span class="line-number">65</span>         timeAndMessage.append(++row).append(<span class="character">&quot;</span><span class="character">.</span><span class="ST1">\n</span><span class="character">&quot;</span>);;
+<span class="line-number">66</span>         jTextArea.append(timeAndMessage.toString());
+<span class="line-number">67</span>     }
+<span class="line-number">68</span> 
+<span class="line-number">69</span>     <span class="comment">/**</span>
+<span class="line-number">70</span> <span class="comment">     * </span><span class="comment">Makes</span> <span class="comment">this</span> <span class="comment">thread</span> <span class="comment">goto</span> <span class="comment">sleep</span> <span class="comment">for</span> <span class="comment">a</span> <span class="comment">given</span> <span class="comment">number</span> <span class="comment">of</span> <span class="comment">se</span><span class="comment">conds</span><span class="comment">.</span>
+<span class="line-number">71</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">secs</span> <span class="comment">seconds</span>
+<span class="line-number">72</span>      <span class="comment">*/</span>
+<span class="line-number">73</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">void</span> sleepForSecs(<span class="keyword-directive">int</span> secs) {
+<span class="line-number">74</span>         <span class="keyword-directive">try</span> {
+<span class="line-number">75</span>             sleep(secs * 1000);
+<span class="line-number">76</span>         } <span class="keyword-directive">catch</span> (InterruptedException ex) {
+<span class="line-number">77</span>             exceptionLogger.log(Level.SEVERE, <span class="keyword-directive">null</span>, ex);
+<span class="line-number">78</span>             logException();
+<span class="line-number">79</span>         }
+<span class="line-number">80</span>     }
+<span class="line-number">81</span> }
+<span class="line-number">82</span> 
+</pre></body>
+</html>

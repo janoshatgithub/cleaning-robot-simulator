@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>SimpleThreadExceptionHandler.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST0 {color: #969696; font-family: Monospaced; font-weight: bold}
+.comment {color: #969696}
+.line-number {background-color: #e9e8e2}
+.character {color: #ce7b00}
+.keyword-directive {color: #0000e6}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">\dk\jsh\cleaningrobotsimulator\concurrent\SimpleThreadExceptionHandler.java</td></tr></table>
+<pre>
+<span class="line-number"> 1</span> <span class="keyword-directive">package</span> dk.jsh.cleaningrobotsimulator.concurrent;
+<span class="line-number"> 2</span> 
+<span class="line-number"> 3</span> <span class="keyword-directive">import</span> java.io.PrintWriter;
+<span class="line-number"> 4</span> <span class="keyword-directive">import</span> java.io.StringWriter;
+<span class="line-number"> 5</span> <span class="keyword-directive">import</span> java.util.logging.Level;
+<span class="line-number"> 6</span> <span class="keyword-directive">import</span> java.util.logging.Logger;
+<span class="line-number"> 7</span> 
+<span class="line-number"> 8</span> <span class="comment">/**</span>
+<span class="line-number"> 9</span> <span class="comment"> * </span><span class="comment">This</span> <span class="comment">class</span> <span class="comment">is</span> <span class="comment">used</span> <span class="comment">to</span> <span class="comment">handle</span> <span class="comment">uncaught</span> <span class="comment">exceptions</span> <span class="comment">in</span> <span class="comment">threads</span><span class="comment">.</span>
+<span class="line-number">10</span> <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">Jan</span> <span class="comment">S</span><span class="comment">.</span> <span class="comment">Hansen</span>
+<span class="line-number">11</span>  <span class="comment">*/</span>
+<span class="line-number">12</span> <span class="keyword-directive">public</span> <span class="keyword-directive">class</span> SimpleThreadExceptionHandler 
+<span class="line-number">13</span>         <span class="keyword-directive">implements</span> Thread.UncaughtExceptionHandler {
+<span class="line-number">14</span>     <span class="keyword-directive">private</span> Logger logger;
+<span class="line-number">15</span> 
+<span class="line-number">16</span>     <span class="comment">/**</span>
+<span class="line-number">17</span> <span class="comment">     * </span><span class="comment">Constructor</span><span class="comment">.</span>
+<span class="line-number">18</span>      <span class="comment">*/</span>
+<span class="line-number">19</span>     <span class="keyword-directive">public</span> SimpleThreadExceptionHandler() {
+<span class="line-number">20</span>         logger = Logger.getLogger(getClass().getName());
+<span class="line-number">21</span>     }
+<span class="line-number">22</span> 
+<span class="line-number">23</span>     <span class="comment">/**</span>
+<span class="line-number">24</span> <span class="comment">     * </span><span class="comment">Log</span> <span class="comment">uncaugth</span> <span class="comment">exceptions</span> <span class="comment">to</span> <span class="comment">a</span> <span class="comment">log</span> <span class="comment">file</span> <span class="comment">and</span> <span class="comment">to</span> <span class="comment">the</span> <span class="comment">standard</span> <span class="comment">error</span> <span class="comment">stream</span><span class="comment">.</span>
+<span class="line-number">25</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">thread</span> <span class="comment">The</span> <span class="comment">thread</span> <span class="comment">th</span><span class="comment">at</span> <span class="comment">throw</span> <span class="comment">the</span> <span class="comment">exception</span>
+<span class="line-number">26</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">exception</span> <span class="comment">Exception</span><span class="comment">.</span>
+<span class="line-number">27</span>      <span class="comment">*/</span>
+<span class="line-number">28</span>     @Override
+<span class="line-number">29</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> uncaughtException(Thread thread, Throwable exception) {
+<span class="line-number">30</span>         exception.printStackTrace();
+<span class="line-number">31</span>         StringWriter sw = <span class="keyword-directive">new</span> StringWriter();
+<span class="line-number">32</span>         exception.printStackTrace(<span class="keyword-directive">new</span> PrintWriter(sw));
+<span class="line-number">33</span>         logger.log(Level.SEVERE, <span class="character">&quot;</span><span class="character">Uncaught exception in thread</span><span class="character">&quot;</span>,
+<span class="line-number">34</span>                 thread.getName());
+<span class="line-number">35</span>         logger.log(Level.SEVERE, <span class="character">&quot;</span><span class="character">Uncaught exception in thread</span><span class="character">&quot;</span>, sw.toString());
+<span class="line-number">36</span>         <span class="keyword-directive">if</span> (thread <span class="keyword-directive">instanceof</span> Robot) {
+<span class="line-number">37</span>             Robot robot = (Robot)thread;
+<span class="line-number">38</span>             robot.logException();
+<span class="line-number">39</span>         }
+<span class="line-number">40</span>     }
+<span class="line-number">41</span> }
+<span class="line-number">42</span> 
+</pre></body>
+</html>
