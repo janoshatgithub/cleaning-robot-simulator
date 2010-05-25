@@ -3,7 +3,6 @@ package dk.jsh.cleaningrobotsimulator.ui.swing;
 import dk.jsh.cleaningrobotsimulator.concurrent.Board;
 import dk.jsh.cleaningrobotsimulator.concurrent.Constants;
 import dk.jsh.cleaningrobotsimulator.concurrent.DustCreator;
-import dk.jsh.cleaningrobotsimulator.concurrent.Field;
 import dk.jsh.cleaningrobotsimulator.concurrent.ReadOnlyField;
 import dk.jsh.cleaningrobotsimulator.concurrent.Robot;
 import java.awt.GridBagConstraints;
