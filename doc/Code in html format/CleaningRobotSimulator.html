@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>CleaningRobotSimulator.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST0 {color: #969696; font-family: Monospaced; font-weight: bold}
+.comment {color: #969696}
+.line-number {background-color: #e9e8e2}
+.character {color: #ce7b00}
+.keyword-directive {color: #0000e6}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">\dk\jsh\cleaningrobotsimulator\ui\swing\CleaningRobotSimulator.java</td></tr></table>
+<pre>
+<span class="line-number"> 1</span> <span class="keyword-directive">package</span> dk.jsh.cleaningrobotsimulator.ui.swing;
+<span class="line-number"> 2</span> 
+<span class="line-number"> 3</span> <span class="keyword-directive">import</span> java.util.logging.FileHandler;
+<span class="line-number"> 4</span> <span class="keyword-directive">import</span> java.util.logging.Handler;
+<span class="line-number"> 5</span> <span class="keyword-directive">import</span> java.util.logging.Level;
+<span class="line-number"> 6</span> <span class="keyword-directive">import</span> java.util.logging.Logger;
+<span class="line-number"> 7</span> <span class="keyword-directive">import</span> org.jdesktop.application.Application;
+<span class="line-number"> 8</span> <span class="keyword-directive">import</span> org.jdesktop.application.SingleFrameApplication;
+<span class="line-number"> 9</span> 
+<span class="line-number">10</span> <span class="comment">/**</span>
+<span class="line-number">11</span> <span class="comment"> * </span><span class="comment">The</span> <span class="comment">main</span> <span class="comment">class</span> <span class="comment">of</span> <span class="comment">t</span><span class="comment">he</span> <span class="comment">application</span><span class="comment">.</span>
+<span class="line-number">12</span> <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">Jan</span> <span class="comment">S</span><span class="comment">.</span> <span class="comment">Hansen</span>
+<span class="line-number">13</span>  <span class="comment">*/</span>
+<span class="line-number">14</span> <span class="keyword-directive">public</span> <span class="keyword-directive">class</span> CleaningRobotSimulator <span class="keyword-directive">extends</span> SingleFrameApplication {
+<span class="line-number">15</span> 
+<span class="line-number">16</span>     <span class="comment">/**</span>
+<span class="line-number">17</span> <span class="comment">     * </span><span class="comment">At</span> <span class="comment">startup</span> <span class="comment">cre</span><span class="comment">ate</span> <span class="comment">and</span> <span class="comment">show</span> <span class="comment">the</span> <span class="comment">main</span> <span class="comment">frame</span> <span class="comment">of</span> <span class="comment">the</span> <span class="comment">application</span><span class="comment">.</span>
+<span class="line-number">18</span>      <span class="comment">*/</span>
+<span class="line-number">19</span>     @Override <span class="keyword-directive">protected</span> <span class="keyword-directive">void</span> startup() {
+<span class="line-number">20</span>         show(<span class="keyword-directive">new</span> View(<span class="keyword-directive">this</span>));
+<span class="line-number">21</span>     }
+<span class="line-number">22</span> 
+<span class="line-number">23</span>     <span class="comment">/**</span>
+<span class="line-number">24</span> <span class="comment">     * </span><span class="comment">Setup</span> <span class="comment">log</span> <span class="comment">file</span><span class="comment">.</span>
+<span class="line-number">25</span>      <span class="comment">*/</span>
+<span class="line-number">26</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">static</span> <span class="keyword-directive">void</span> setupLog() {
+<span class="line-number">27</span>         <span class="keyword-directive">try</span> {
+<span class="line-number">28</span>             <span class="comment">//%t - Means that the log is located in the Systems Temp directory</span>
+<span class="line-number">29</span>             Handler fh = <span class="keyword-directive">new</span> FileHandler(<span class="character">&quot;</span><span class="character">%t/cleaning-robot-simulator.log</span><span class="character">&quot;</span>,
+<span class="line-number">30</span>                     10000, 5);
+<span class="line-number">31</span>             Logger logger = Logger.getLogger(<span class="character">&quot;&quot;</span>);
+<span class="line-number">32</span>             logger.addHandler(fh);
+<span class="line-number">33</span>             logger.setLevel(Level.INFO);
+<span class="line-number">34</span>             logger.info(<span class="character">&quot;</span><span class="character">Application started.</span><span class="character">&quot;</span>);
+<span class="line-number">35</span>         } <span class="keyword-directive">catch</span> (Exception ex) {
+<span class="line-number">36</span>             ex.printStackTrace();
+<span class="line-number">37</span>         }
+<span class="line-number">38</span>     }
+<span class="line-number">39</span> 
+<span class="line-number">40</span>     <span class="comment">/**</span>
+<span class="line-number">41</span> <span class="comment">     * </span><span class="comment">This</span> <span class="comment">method</span> <span class="comment">is</span> <span class="comment">to</span> <span class="comment">initialize</span> <span class="comment">the</span> <span class="comment">specified</span> <span class="comment">window</span> <span class="comment">by</span> <span class="comment">injecting</span> <span class="comment">resources</span><span class="comment">.</span>
+<span class="line-number">42</span> <span class="comment">     * </span><span class="comment">Windows</span> <span class="comment">shown</span> <span class="comment">in</span> <span class="comment">our</span> <span class="comment">applicatio</span><span class="comment">n</span> <span class="comment">come</span> <span class="comment">fully</span> <span class="comment">initialized</span> <span class="comment">from</span> <span class="comment">the</span> <span class="comment">GUI</span>
+<span class="line-number">43</span> <span class="comment">     * </span><span class="comment">builder</span><span class="comment">, </span><span class="comment">so</span> <span class="comment">this</span> <span class="comment">additional</span> <span class="comment">configuration</span> <span class="comment">is</span> <span class="comment">not</span> <span class="comment">needed</span><span class="comment">.</span>
+<span class="line-number">44</span>      <span class="comment">*/</span>
+<span class="line-number">45</span>     @Override <span class="keyword-directive">protected</span> <span class="keyword-directive">void</span> configureWindow(java.awt.Window root) {
+<span class="line-number">46</span>     }
+<span class="line-number">47</span> 
+<span class="line-number">48</span>     <span class="comment">/**</span>
+<span class="line-number">49</span> <span class="comment">     * </span><span class="comment">A</span> <span class="comment">convenient</span> <span class="comment">static</span> <span class="comment">getter</span> <span class="comment">for</span> <span class="comment">the</span> <span class="comment">application</span> <span class="comment">instance</span><span class="comment">.</span>
+<span class="line-number">50</span> <span class="comment">     * </span><span class="ST0">@return</span> <span class="comment">the</span> <span class="comment">instance</span> <span class="comment">of</span> <span class="comment">CleaningRobotSimul</span><span class="comment">ator</span>
+<span class="line-number">51</span>      <span class="comment">*/</span>
+<span class="line-number">52</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">static</span> CleaningRobotSimulator getApplication() {
+<span class="line-number">53</span>         <span class="keyword-directive">return</span> Application.getInstance(CleaningRobotSimulator.<span class="keyword-directive">class</span>);
+<span class="line-number">54</span>     }
+<span class="line-number">55</span> 
+<span class="line-number">56</span>     <span class="comment">/**</span>
+<span class="line-number">57</span> <span class="comment">     * </span><span class="comment">Main</span> <span class="comment">method</span> <span class="comment">launching</span> <span class="comment">the</span> <span class="comment">application</span><span class="comment">.</span>
+<span class="line-number">58</span>      <span class="comment">*/</span>
+<span class="line-number">59</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">static</span> <span class="keyword-directive">void</span> main(String[] args) {
+<span class="line-number">60</span>         setupLog();
+<span class="line-number">61</span>         Thread.setDefaultUncaughtExceptionHandler(
+<span class="line-number">62</span>                 <span class="keyword-directive">new</span> SimpleMainThreadExceptionHandler());
+<span class="line-number">63</span>         launch(CleaningRobotSimulator.<span class="keyword-directive">class</span>, args);
+<span class="line-number">64</span>     }
+<span class="line-number">65</span> }
+<span class="line-number">66</span> 
+</pre></body>
+</html>

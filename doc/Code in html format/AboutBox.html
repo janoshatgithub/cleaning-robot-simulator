@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>AboutBox.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST0 {color: #969696; font-family: Monospaced; font-weight: bold}
+.comment {color: #969696}
+.line-number {background-color: #e9e8e2}
+.character {color: #ce7b00}
+.keyword-directive {color: #0000e6}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">\dk\jsh\cleaningrobotsimulator\ui\swing\AboutBox.java</td></tr></table>
+<pre>
+<span class="line-number">  1</span> <span class="keyword-directive">package</span> dk.jsh.cleaningrobotsimulator.ui.swing;
+<span class="line-number">  2</span> 
+<span class="line-number">  3</span> <span class="keyword-directive">import</span> org.jdesktop.application.Action;
+<span class="line-number">  4</span> 
+<span class="line-number">  5</span> <span class="comment">/**</span>
+<span class="line-number">  6</span> <span class="comment"> * </span><span class="comment">About</span> <span class="comment">box</span> <span class="comment">dialog</span><span class="comment">.</span>
+<span class="line-number">  7</span> <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">Jan</span> <span class="comment">S</span><span class="comment">.</span> <span class="comment">Hansen</span>
+<span class="line-number">  8</span>  <span class="comment">*/</span>
+<span class="line-number">  9</span> <span class="keyword-directive">public</span> <span class="keyword-directive">class</span> AboutBox <span class="keyword-directive">extends</span> javax.swing.JDialog {
+<span class="line-number"> 10</span> 
+<span class="line-number"> 11</span>     <span class="comment">/**</span>
+<span class="line-number"> 12</span> <span class="comment">     * </span><span class="comment">Constructor</span><span class="comment">.</span>
+<span class="line-number"> 13</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">parent</span> <span class="comment">parent</span> <span class="comment">frame</span>
+<span class="line-number"> 14</span>      <span class="comment">*/</span>
+<span class="line-number"> 15</span>     <span class="keyword-directive">public</span> AboutBox(java.awt.Frame parent) {
+<span class="line-number"> 16</span>         <span class="keyword-directive">supe</span><span class="keyword-directive">r</span>(parent);
+<span class="line-number"> 17</span>         initComponents();
+<span class="line-number"> 18</span>         getRootPane().setDefaultButton(closeButton);
+<span class="line-number"> 19</span>     }
+<span class="line-number"> 20</span> 
+<span class="line-number"> 21</span>     <span class="comment">/**</span>
+<span class="line-number"> 22</span> <span class="comment">     * </span><span class="comment">Close</span> <span class="comment">about</span> <span class="comment">box</span> <span class="comment">action</span><span class="comment">.</span>
+<span class="line-number"> 23</span>      <span class="comment">*/</span>
+<span class="line-number"> 24</span>     @Action
+<span class="line-number"> 25</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> closeAboutBox() {
+<span class="line-number"> 26</span>         dispose();
+<span class="line-number"> 27</span>     }
+<span class="line-number"> 28</span> 
+<span class="line-number"> 29</span>     <span class="comment">/**</span> <span class="comment">This</span> <span class="comment">method</span> <span class="comment">is</span> <span class="comment">called</span> <span class="comment">from</span> <span class="comment">within</span> <span class="comment">the</span> <span class="comment">constructo</span><span class="comment">r</span> <span class="comment">to</span>
+<span class="line-number"> 30</span> <span class="comment">     * </span><span class="comment">initialize</span> <span class="comment">the</span> <span class="comment">form</span><span class="comment">.</span>
+<span class="line-number"> 31</span> <span class="comment">     * </span><span class="comment">WARNING</span><span class="comment">: </span><span class="comment">Do</span> <span class="comment">NOT</span> <span class="comment">modify</span> <span class="comment">this</span> <span class="comment">code</span><span class="comment">.</span> <span class="comment">The</span> <span class="comment">content</span> <span class="comment">of</span> <span class="comment">this</span> <span class="comment">method</span> <span class="comment">is</span>
+<span class="line-number"> 32</span> <span class="comment">     * </span><span class="comment">always</span> <span class="comment">regenerated</span> <span class="comment">by</span> <span class="comment">the</span> <span class="comment">Form</span> <span class="comment">Editor</span><span class="comment">.</span>
+<span class="line-number"> 33</span>      <span class="comment">*/</span>
+<span class="line-number"> 34</span>     <span class="comment">// &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code&quot;&gt;                          </span>
+<span class="line-number"> 35</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">void</span> initComponents() {
+<span class="line-number"> 36</span> 
+<span class="line-number"> 37</span>         closeButton = <span class="keyword-directive">new</span> javax.swing.JButton();
+<span class="line-number"> 38</span>         javax.swing.JLabel appTitleLabel = <span class="keyword-directive">new</span> javax.swing.JLabel();
+<span class="line-number"> 39</span>         javax.swing.JLabel versionLabel = <span class="keyword-directive">new</span> javax.swing.JLabel();
+<span class="line-number"> 40</span>         javax.swing.JLabel appVersionLabel = <span class="keyword-directive">new</span> javax.swing.JLabel();
+<span class="line-number"> 41</span>         javax.swing.JLabel vendorLabel = <span class="keyword-directive">new</span> javax.swing.JLabel();
+<span class="line-number"> 42</span>         javax.swing.JLabel appVendorLabel = <span class="keyword-directive">new</span> javax.swing.JLabel();
+<span class="line-number"> 43</span>         javax.swing.JLabel homepageLabel = <span class="keyword-directive">new</span> javax.swing.JLabel();
+<span class="line-number"> 44</span>         javax.swing.JLabel appHomepageLabel = <span class="keyword-directive">new</span> javax.swing.JLabel();
+<span class="line-number"> 45</span>         javax.swing.JLabel appDescLabel = <span class="keyword-directive">new</span> javax.swing.JLabel();
+<span class="line-number"> 46</span>         javax.swing.JLabel imageLabel = <span class="keyword-directive">new</span> javax.swing.JLabel();
+<span class="line-number"> 47</span> 
+<span class="line-number"> 48</span>         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+<span class="line-number"> 49</span>         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(dk.jsh.cleaningrobotsimulator.ui.swing.CleaningRobotSimulator.<span class="keyword-directive">class</span>).getContext().getResourceMap(AboutBox.<span class="keyword-directive">class</span>);
+<span class="line-number"> 50</span>         setTitle(resourceMap.getString(<span class="character">&quot;</span><span class="character">title</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number"> 51</span>         setModal(<span class="keyword-directive">true</span>);
+<span class="line-number"> 52</span>         setName(<span class="character">&quot;</span><span class="character">aboutBox</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number"> 53</span>         setResizable(<span class="keyword-directive">false</span>);
+<span class="line-number"> 54</span> 
+<span class="line-number"> 55</span>         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(dk.jsh.cleaningrobotsimulator.ui.swing.CleaningRobotSimulator.<span class="keyword-directive">class</span>).getContext().getActionMap(AboutBox.<span class="keyword-directive">class</span>, <span class="keyword-directive">this</span>);
+<span class="line-number"> 56</span>         closeButton.setAction(actionMap.get(<span class="character">&quot;</span><span class="character">closeAboutBox</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number"> 57</span>         closeButton.setName(<span class="character">&quot;</span><span class="character">closeButton</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number"> 58</span> 
+<span class="line-number"> 59</span>         appTitleLabel.setFont(appTitleLabel.getFont().deriveFont(appTitleLabel.getFont().getStyle() | java.awt.Font.BOLD, appTitleLabel.getFont().getSize()+4));
+<span class="line-number"> 60</span>         appTitleLabel.setText(resourceMap.getString(<span class="character">&quot;</span><span class="character">Application.title</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number"> 61</span>         appTitleLabel.setName(<span class="character">&quot;</span><span class="character">appTitleLabe</span><span class="character">l</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number"> 62</span> 
+<span class="line-number"> 63</span>         versionLabel.setFont(versionLabel.getFont().deriveFont(versionLabel.getFont().getStyle() | java.awt.Font.BOLD));
+<span class="line-number"> 64</span>         versionLabel.setText(resourceMap.getString(<span class="character">&quot;</span><span class="character">versionLabel.text</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number"> 65</span>         versionLabel.setName(<span class="character">&quot;</span><span class="character">versionLabel</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number"> 66</span> 
+<span class="line-number"> 67</span>         appVersionLabel.setText(resourceMap.getString(<span class="character">&quot;</span><span class="character">Application.vers</span><span class="character">ion</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number"> 68</span>         appVersionLabel.setName(<span class="character">&quot;</span><span class="character">appVersionLabel</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number"> 69</span> 
+<span class="line-number"> 70</span>         vendorLabel.setFont(vendorLabel.getFont().deriveFont(vendorLabel.getFont().getStyle() | java.awt.Font.BOLD));
+<span class="line-number"> 71</span>         vendorLabel.setText(resourceMap.getString(<span class="character">&quot;</span><span class="character">vendorLabel.text</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number"> 72</span>         vendorLabel.setName(<span class="character">&quot;</span><span class="character">vendorLabel</span><span class="character">&quot;</span>); <span class="comment">//</span><span class="comment"> NOI18N</span>
+<span class="line-number"> 73</span> 
+<span class="line-number"> 74</span>         appVendorLabel.setText(resourceMap.getString(<span class="character">&quot;</span><span class="character">Application.vendor</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number"> 75</span>         appVendorLabel.setName(<span class="character">&quot;</span><span class="character">appVendo</span><span class="character">rLabel</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number"> 76</span> 
+<span class="line-number"> 77</span>         homepageLabel.setFont(homepageLabel.getFont().deriveFont(homepageLabel.getFont().getStyle() | java.awt.Font.BOLD));
+<span class="line-number"> 78</span>         homepageLabel.setText(resourceMap.getString(<span class="character">&quot;</span><span class="character">homepageLabel.text</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number"> 79</span>         homepageLabel.setName(<span class="character">&quot;</span><span class="character">homepageLabel</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number"> 80</span> 
+<span class="line-number"> 81</span>         appHomepageLabel.setText(resourceMap.getString(<span class="character">&quot;</span><span class="character">Application.h</span><span class="character">omepage</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number"> 82</span>         appHomepageLabel.setName(<span class="character">&quot;</span><span class="character">appHomepageLabel</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number"> 83</span> 
+<span class="line-number"> 84</span>         appDescLabel.setText(resourceMap.getString(<span class="character">&quot;</span><span class="character">appDescLabe</span><span class="character">l.text</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number"> 85</span>         appDescLabel.setName(<span class="character">&quot;</span><span class="character">appDescLabel</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number"> 86</span> 
+<span class="line-number"> 87</span>         imageLabel.setIcon(resourceMap.getIcon(<span class="character">&quot;</span><span class="character">imageLabel.icon</span><span class="character">&quot;</span>)); <span class="comment">// </span><span class="comment">NOI18N</span>
+<span class="line-number"> 88</span>         imageLabel.setName(<span class="character">&quot;</span><span class="character">imageLabel</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number"> 89</span> 
+<span class="line-number"> 90</span>         org.jdesktop.layout.GroupLayout layout = <span class="keyword-directive">new</span> org.jdesktop.layout.GroupLayout(getContentPane());
+<span class="line-number"> 91</span>         getContentPane().setLayout(layout);
+<span class="line-number"> 92</span>         layout.setHorizontalGroup(
+<span class="line-number"> 93</span>             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+<span class="line-number"> 94</span>             .add(layout.createSequentialGroup()
+<span class="line-number"> 95</span>                 .add(imageLabel)
+<span class="line-number"> 96</span>                 .add(18, 18, 18)
+<span class="line-number"> 97</span>                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+<span class="line-number"> 98</span>                     .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
+<span class="line-number"> 99</span>                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+<span class="line-number">100</span>                             .add(versionLabel)
+<span class="line-number">101</span>                             .add(vendorLabel)
+<span class="line-number">102</span>                             .add(homepageLabel))
+<span class="line-number">103</span>                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+<span class="line-number">104</span>                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+<span class="line-number">105</span>                             .add(appVersionLabel)
+<span class="line-number">106</span>                             .add(appVendorLabel)
+<span class="line-number">107</span>                             .add(appHomepageLabel)))
+<span class="line-number">108</span>                     .add(org.jdesktop.layout.GroupLayout.LEADING, appTitleLabel)
+<span class="line-number">109</span>                     .add(org.jdesktop.layout.GroupLayout.LEADING, appDescLabel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)
+<span class="line-number">110</span>                     .add(closeButton))
+<span class="line-number">111</span>                 .addContainerGap())
+<span class="line-number">112</span>         );
+<span class="line-number">113</span>         layout.setVerticalGroup(
+<span class="line-number">114</span>             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+<span class="line-number">115</span>             .add(imageLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+<span class="line-number">116</span>             .add(layout.createSequentialGroup()
+<span class="line-number">117</span>                 .addContainerGap()
+<span class="line-number">118</span>                 .add(appTitleLabel)
+<span class="line-number">119</span>                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+<span class="line-number">120</span>                 .add(appDescLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+<span class="line-number">121</span>                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+<span class="line-number">122</span>                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+<span class="line-number">123</span>                     .add(versionLabel)
+<span class="line-number">124</span>                     .add(appVersionLabel))
+<span class="line-number">125</span>                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+<span class="line-number">126</span>                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+<span class="line-number">127</span>                     .add(vendorLabel)
+<span class="line-number">128</span>                     .add(appVendorLabel))
+<span class="line-number">129</span>                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+<span class="line-number">130</span>                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+<span class="line-number">131</span>                     .add(homepageLabel)
+<span class="line-number">132</span>                     .add(appHomepageLabel))
+<span class="line-number">133</span>                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 33, Short.MAX_VALUE)
+<span class="line-number">134</span>                 .add(closeButton)
+<span class="line-number">135</span>                 .addContainerGap())
+<span class="line-number">136</span>         );
+<span class="line-number">137</span> 
+<span class="line-number">138</span>         pack();
+<span class="line-number">139</span>     }<span class="comment">// &lt;/editor-fold&gt;        </span>                
+<span class="line-number">140</span>     
+<span class="line-number">141</span>     <span class="comment">// Variables declaration - do not modify                     </span>
+<span class="line-number">142</span>     <span class="keyword-directive">private</span> javax.swing.JButton closeButton;
+<span class="line-number">143</span>     <span class="comment">// End o</span><span class="comment">f variables declaration                   </span>
+<span class="line-number">144</span>     
+<span class="line-number">145</span> }
+<span class="line-number">146</span> 
+</pre></body>
+</html>

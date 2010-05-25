@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>Constants.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST0 {color: #969696; font-family: Monospaced; font-weight: bold}
+.comment {color: #969696}
+.line-number {background-color: #e9e8e2}
+.character {color: #ce7b00}
+.keyword-directive {color: #0000e6}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">\dk\jsh\cleaningrobotsimulator\concurrent\Constants.java</td></tr></table>
+<pre>
+<span class="line-number"> 1</span> <span class="keyword-directive">package</span> dk.jsh.cleaningrobotsimulator.concurrent;
+<span class="line-number"> 2</span> 
+<span class="line-number"> 3</span> <span class="keyword-directive">import</span> java.text.SimpleDateFormat;
+<span class="line-number"> 4</span> 
+<span class="line-number"> 5</span> <span class="comment">/**</span>
+<span class="line-number"> 6</span> <span class="comment"> * </span><span class="comment">Cleaning</span> <span class="comment">robot</span> <span class="comment">simulator</span> <span class="comment">constants</span><span class="comment">.</span>
+<span class="line-number"> 7</span> <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">Jan</span> <span class="comment">S</span><span class="comment">.</span> <span class="comment">Hansen</span>
+<span class="line-number"> 8</span>  <span class="comment">*/</span>
+<span class="line-number"> 9</span> <span class="keyword-directive">public</span> <span class="keyword-directive">class</span> Constants {
+<span class="line-number">10</span> 
+<span class="line-number">11</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">final</span> <span class="keyword-directive">static</span> <span class="keyword-directive">int</span> MAX_ROWS = 10;
+<span class="line-number">12</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">final</span> <span class="keyword-directive">static</span> <span class="keyword-directive">int</span> MAX_COLUMNS = 10;
+<span class="line-number">13</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">final</span> <span class="keyword-directive">static</span> <span class="keyword-directive">int</span> MAX_DIRTY_FIELDS = 10;
+<span class="line-number">14</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">final</span> <span class="keyword-directive">static</span> <span class="keyword-directive">int</span> MAX_CLEANED_FIELDS = 5;
+<span class="line-number">15</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">final</span> <span class="keyword-directive">static</span> SimpleDateFormat timeFormat =
+<span class="line-number">16</span>             <span class="keyword-directive">new</span> SimpleDateFormat(<span class="character">&quot;</span><span class="character">HH:mm:ss</span><span class="character">&quot;</span>);
+<span class="line-number">17</span> 
+<span class="line-number">18</span>     <span class="comment">//Empty private constructor to prevent that this class can be instantiated.</span>
+<span class="line-number">19</span>     <span class="keyword-directive">private</span> Constants() {
+<span class="line-number">20</span>     }
+<span class="line-number">21</span> }
+<span class="line-number">22</span> 
+</pre></body>
+</html>

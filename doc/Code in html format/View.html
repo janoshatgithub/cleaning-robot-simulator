@@ -1,0 +1,541 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>View.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST0 {color: #969696; font-family: Monospaced; font-weight: bold}
+.comment {color: #969696}
+.line-number {background-color: #e9e8e2}
+.character {color: #ce7b00}
+.keyword-directive {color: #0000e6}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">\dk\jsh\cleaningrobotsimulator\ui\swing\View.java</td></tr></table>
+<pre>
+<span class="line-number">  1</span> <span class="keyword-directive">package</span> dk.jsh.cleaningrobotsimulator.ui.swing;
+<span class="line-number">  2</span> 
+<span class="line-number">  3</span> <span class="keyword-directive">import</span> dk.jsh.cleaningrobotsimulator.concurrent.Board;
+<span class="line-number">  4</span> <span class="keyword-directive">import</span> dk.jsh.cleaningrobotsimulator.concurrent.Constants;
+<span class="line-number">  5</span> <span class="keyword-directive">import</span> dk.jsh.cleaningrobotsimulator.concurrent.DustCreator;
+<span class="line-number">  6</span> <span class="keyword-directive">import</span> dk.jsh.cleaningrobotsimulator.concurrent.ReadOnlyField;
+<span class="line-number">  7</span> <span class="keyword-directive">import</span> dk.jsh.cleaningrobotsimulator.concurrent.Robot;
+<span class="line-number">  8</span> <span class="keyword-directive">import</span> java.awt.GridBagConstraints;
+<span class="line-number">  9</span> <span class="keyword-directive">import</span> java.awt.Insets;
+<span class="line-number"> 10</span> <span class="keyword-directive">import</span> java.awt.event.ComponentAdapter;
+<span class="line-number"> 11</span> <span class="keyword-directive">import</span> java.awt.event.ComponentEvent;
+<span class="line-number"> 12</span> <span class="keyword-directive">import</span> java.awt.event.WindowEvent;
+<span class="line-number"> 13</span> <span class="keyword-directive">import</span> java.util.concurrent.Executors;
+<span class="line-number"> 14</span> <span class="keyword-directive">import</span> java.util.concurrent.ScheduledExecutorService;
+<span class="line-number"> 15</span> <span class="keyword-directive">import</span> java.util.concurrent.TimeUnit;
+<span class="line-number"> 16</span> <span class="keyword-directive">import</span> java.util.logging.Level;
+<span class="line-number"> 17</span> <span class="keyword-directive">import</span> java.util.logging.Logger;
+<span class="line-number"> 18</span> <span class="keyword-directive">import</span> javax.swing.ImageIcon;
+<span class="line-number"> 19</span> <span class="keyword-directive">import</span> org.jdesktop.application.Action;
+<span class="line-number"> 20</span> <span class="keyword-directive">import</span> org.jdesktop.application.ResourceMap;
+<span class="line-number"> 21</span> <span class="keyword-directive">import</span> org.jdesktop.application.SingleFrameApplication;
+<span class="line-number"> 22</span> <span class="keyword-directive">import</span> org.jdesktop.application.FrameView;
+<span class="line-number"> 23</span> <span class="keyword-directive">import</span> javax.swing.JDialog;
+<span class="line-number"> 24</span> <span class="keyword-directive">import</span> javax.swing.JFrame;
+<span class="line-number"> 25</span> <span class="keyword-directive">import</span> javax.swing.JLabel;
+<span class="line-number"> 26</span> 
+<span class="line-number"> 27</span> <span class="comment">/**</span>
+<span class="line-number"> 28</span> <span class="comment"> * </span><span class="comment">The</span> <span class="comment">application</span><span class="comment">&#39;</span><span class="comment">s</span> <span class="comment">main</span> <span class="comment">frame</span><span class="comment">.</span>
+<span class="line-number"> 29</span> <span class="comment"> * </span><span class="ST0">@auth</span><span class="ST0">or</span> <span class="comment">Jan</span> <span class="comment">S</span><span class="comment">.</span> <span class="comment">Hansen</span>
+<span class="line-number"> 30</span>  <span class="comment">*/</span>
+<span class="line-number"> 31</span> <span class="keyword-directive">public</span> <span class="keyword-directive">class</span> View <span class="keyword-directive">extends</span> FrameView {
+<span class="line-number"> 32</span> 
+<span class="line-number"> 33</span>     <span class="keyword-directive">private</span> Board board;
+<span class="line-number"> 34</span>     <span class="keyword-directive">private</span> ResourceMap resourceMap;
+<span class="line-number"> 35</span>     <span class="keyword-directive">private</span> Robot bender;
+<span class="line-number"> 36</span>     <span class="keyword-directive">private</span> Robot android;
+<span class="line-number"> 37</span>     <span class="keyword-directive">private</span> Robot wallE;
+<span class="line-number"> 38</span>     <span class="keyword-directive">private</span> Logger logger;
+<span class="line-number"> 39</span> 
+<span class="line-number"> 40</span>     <span class="comment">/**</span>
+<span class="line-number"> 41</span> <span class="comment">     * </span><span class="comment">Constructor</span><span class="comment">.</span>
+<span class="line-number"> 42</span>      <span class="comment">*/</span>
+<span class="line-number"> 43</span>     <span class="keyword-directive">public</span> View(SingleFrameApplication app) {
+<span class="line-number"> 44</span>         <span class="keyword-directive">super</span>(app);
+<span class="line-number"> 45</span>         logger = Logger.getLogger(View.<span class="keyword-directive">class</span>.getName());
+<span class="line-number"> 46</span> 
+<span class="line-number"> 47</span>         resourceMap = getResourceMap();
+<span class="line-number"> 48</span> 
+<span class="line-number"> 49</span>         <span class="comment">/</span><span class="comment">/Cacth windowClosing event</span>
+<span class="line-number"> 50</span>         JFrame jFrame = <span class="keyword-directive">this</span>.getFrame();
+<span class="line-number"> 51</span>         jFrame.addWindowListener(<span class="keyword-directive">new</span> java.awt.event.WindowAdapter() {
+<span class="line-number"> 52</span> 
+<span class="line-number"> 53</span>             @Override
+<span class="line-number"> 54</span>             <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> windowClosing(WindowEvent winEvt) {
+<span class="line-number"> 55</span>                 quit();
+<span class="line-number"> 56</span>             }
+<span class="line-number"> 57</span>         });
+<span class="line-number"> 58</span> 
+<span class="line-number"> 59</span>         <span class="comment">//Set ico</span><span class="comment">n in upper left corner</span>
+<span class="line-number"> 60</span>         ImageIcon image = resourceMap.getImageIcon(<span class="character">&quot;</span><span class="character">RobotSimulator.recycle</span><span class="character">&quot;</span>);
+<span class="line-number"> 61</span>         jFrame.setIconImage(image.getImage());
+<span class="line-number"> 62</span> 
+<span class="line-number"> 63</span>         <span class="comment">//Initialize UI</span>
+<span class="line-number"> 64</span>         initComponents();
+<span class="line-number"> 65</span> 
+<span class="line-number"> 66</span>         <span class="comment">//Create board</span>
+<span class="line-number"> 67</span>         board = <span class="keyword-directive">new</span> Board(resourceMap, jTextAreaDustbin);
+<span class="line-number"> 68</span> 
+<span class="line-number"> 69</span>         <span class="comment">//Set tab i</span><span class="comment">cons</span>
+<span class="line-number"> 70</span>         jTabbedPane1.setIconAt(0, resourceMap.getIcon(<span class="character">&quot;</span><span class="character">RobotSimulator.bender</span><span class="character">&quot;</span>));
+<span class="line-number"> 71</span>         jTabbedPane1.setIconAt(1, resourceMap.getIcon(<span class="character">&quot;</span><span class="character">RobotSimulator.wall-e</span><span class="character">&quot;</span>));
+<span class="line-number"> 72</span>         jTabbedPane1.setIconAt(2, resourceMap.getIcon(<span class="character">&quot;</span><span class="character">RobotSimulator.android</span><span class="character">&quot;</span>));
+<span class="line-number"> 73</span>         jTabbedPane1.setIconAt(3, resourceMap.getIcon(<span class="character">&quot;</span><span class="character">RobotSimulator.dirt</span><span class="character">&quot;</span>));
+<span class="line-number"> 74</span>         jTabbedPane1.setIconAt(4, resourceMap.getIcon(<span class="character">&quot;</span><span class="character">RobotSimulator.dustbin</span><span class="character">&quot;</span>));
+<span class="line-number"> 75</span>         jTabbedPane1.setSelectedIndex(0);
+<span class="line-number"> 76</span> 
+<span class="line-number"> 77</span>         jButtonContinue.setEnabled(<span class="keyword-directive">false</span>);
+<span class="line-number"> 78</span> 
+<span class="line-number"> 79</span>         <span class="comment">//Set JFrame&#39;s min. hight and width.</span>
+<span class="line-number"> 80</span>         jFrame.addComponentListener(<span class="keyword-directive">new</span> ComponentAdapter() {
+<span class="line-number"> 81</span>             <span class="keyword-directive">private</span> <span class="keyword-directive">f</span><span class="keyword-directive">inal</span> <span class="keyword-directive">static</span> <span class="keyword-directive">int</span> MIN_WIDTH = 855;
+<span class="line-number"> 82</span>             <span class="keyword-directive">private</span> <span class="keyword-directive">final</span> <span class="keyword-directive">static</span> <span class="keyword-directive">int</span> MIN_HIGHT = 450;
+<span class="line-number"> 83</span>             @Override
+<span class="line-number"> 84</span>             <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> componentResized(ComponentEvent e) {
+<span class="line-number"> 85</span>                 JFrame frame = (JFrame) e.getSource();
+<span class="line-number"> 86</span>                 <span class="keyword-directive">int</span> width = frame.getWidth() &lt; MIN_WIDTH
+<span class="line-number"> 87</span>                         ? MIN_WIDTH : frame.getWidth();
+<span class="line-number"> 88</span>                 <span class="keyword-directive">int</span> hight = frame.getHeight() &lt; MIN_HIGHT
+<span class="line-number"> 89</span>                         ? MIN_HIGHT : frame.getHeight();
+<span class="line-number"> 90</span>                 frame.setSize(width, hight);
+<span class="line-number"> 91</span>             }
+<span class="line-number"> 92</span>         });
+<span class="line-number"> 93</span> 
+<span class="line-number"> 94</span>         createUIBoard();
+<span class="line-number"> 95</span> 
+<span class="line-number"> 96</span>         <span class="comment">//Start robot threads</span>
+<span class="line-number"> 97</span>         bender = <span class="keyword-directive">new</span> Robot(<span class="character">&quot;</span><span class="character">Bender</span><span class="character">&quot;</span>, board, jTextAreaBender, resourceMap,
+<span class="line-number"> 98</span>                 <span class="character">&quot;</span><span class="character">RobotSimulator.bender</span><span class="character">&quot;</span>, <span class="character">&quot;</span><span class="character">RobotSimulator.bender-full</span><span class="character">&quot;</span>, 0, 9);
+<span class="line-number"> 99</span>         bender.start();
+<span class="line-number">100</span> 
+<span class="line-number">101</span>         android = <span class="keyword-directive">new</span> Robot(<span class="character">&quot;</span><span class="character">Android</span><span class="character">&quot;</span>, board, jTextAreaAndroid, resourceMap,
+<span class="line-number">102</span>                 <span class="character">&quot;</span><span class="character">RobotSimulator.android</span><span class="character">&quot;</span>, <span class="character">&quot;</span><span class="character">RobotSimulator.android-full</span><span class="character">&quot;</span>, 9, 0);
+<span class="line-number">103</span>         android.start();
+<span class="line-number">104</span> 
+<span class="line-number">105</span>         wallE = <span class="keyword-directive">new</span> Robot(<span class="character">&quot;</span><span class="character">Wall-E</span><span class="character">&quot;</span>, board, jTextAreaWallE, resourceMap,
+<span class="line-number">106</span>                 <span class="character">&quot;</span><span class="character">RobotSimulator.wall-e</span><span class="character">&quot;</span>, <span class="character">&quot;</span><span class="character">RobotSimulator.wall-e-full</span><span class="character">&quot;</span>, 9, 9);
+<span class="line-number">107</span>         wallE.start();
+<span class="line-number">108</span> 
+<span class="line-number">109</span>         <span class="comment">//Get a scheduler</span>
+<span class="line-number">110</span>         ScheduledExecutorService scheduler =
+<span class="line-number">111</span>                 Executors.newSingleThreadScheduledExecutor();
+<span class="line-number">112</span>         <span class="comment">//Run DustCreator with a 30 secs. delay between each run.</span>
+<span class="line-number">113</span>         scheduler.scheduleWithFixedDelay(
+<span class="line-number">114</span>                 <span class="keyword-directive">new</span> DustCreator(<span class="character">&quot;</span><span class="character">DustCreator</span><span class="character">&quot;</span>, board, jTextAreaDust,
+<span class="line-number">115</span>                 resourceMap), 0, 30, TimeUnit.SECONDS);
+<span class="line-number">116</span>     }
+<span class="line-number">117</span> 
+<span class="line-number">118</span>     <span class="comment">/**</span>
+<span class="line-number">119</span> <span class="comment">     * </span><span class="comment">Adds</span> <span class="comment">fields</span> <span class="comment">from</span> <span class="comment">board</span> <span class="comment">to</span> <span class="comment">UI</span><span class="comment">.</span>
+<span class="line-number">120</span>      <span class="comment">*/</span>
+<span class="line-number">121</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">void</span> createUIBoard() {
+<span class="line-number">122</span>         GridBagConstraints gridBagConstraints = <span class="keyword-directive">new</span> java.awt.GridBagConstraints();
+<span class="line-number">123</span>         Insets insets = <span class="keyword-directive">new</span> Insets(1, 1, 1, 1);
+<span class="line-number">124</span>         <span class="keyword-directive">for</span> (<span class="keyword-directive">int</span> row = 0; row &lt; Constants.MAX_ROWS; row++) {
+<span class="line-number">125</span>             <span class="keyword-directive">for</span> (<span class="keyword-directive">in</span><span class="keyword-directive">t</span> column = 0; column &lt; Constants.MAX_COLUMNS; column++) {
+<span class="line-number">126</span>                 ReadOnlyField field = board.getReadOnlyField(column, row);
+<span class="line-number">127</span>                 JLabel jLabel = field.getLabel();
+<span class="line-number">128</span>                 gridBagConstraints.gridx = column + 1;
+<span class="line-number">129</span>                 gridBagConstraints.gridy = row + 1;
+<span class="line-number">130</span>                 gridBagConstraints.insets = insets;
+<span class="line-number">131</span>                 mainPanel.add(jLabel, gridBagConstraints);
+<span class="line-number">132</span>             }
+<span class="line-number">133</span>         }
+<span class="line-number">134</span>     }
+<span class="line-number">135</span> 
+<span class="line-number">136</span>     <span class="comment">/**</span>
+<span class="line-number">137</span> <span class="comment">     * </span><span class="comment">Show</span> <span class="comment">about</span> <span class="comment">box</span> <span class="comment">action</span><span class="comment">.</span>
+<span class="line-number">138</span>      <span class="comment">*/</span>
+<span class="line-number">139</span>     @Action
+<span class="line-number">140</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> showAboutBox() {
+<span class="line-number">141</span>         <span class="keyword-directive">if</span> (aboutBox == <span class="keyword-directive">null</span>) {
+<span class="line-number">142</span>             JFrame mainFrame = CleaningRobotSimulator.getApplication().getMainFrame();
+<span class="line-number">143</span>             aboutBox = <span class="keyword-directive">new</span> AboutBox(mainFrame);
+<span class="line-number">144</span>             aboutBox.setLocationRelativeTo(mainFrame);
+<span class="line-number">145</span>         }
+<span class="line-number">146</span>         CleaningRobotSimulator.getApplication().show(aboutBox);
+<span class="line-number">147</span>     }
+<span class="line-number">148</span> 
+<span class="line-number">149</span>     <span class="comment">/**</span>
+<span class="line-number">150</span> <span class="comment">     * </span><span class="comment">Pause</span> <span class="comment">button</span> <span class="comment">action</span><span class="comment">.</span>
+<span class="line-number">151</span>      <span class="comment">*/</span>
+<span class="line-number">152</span>     @Action
+<span class="line-number">153</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> pause() {
+<span class="line-number">154</span>         bender.requestPause();
+<span class="line-number">155</span>         android.requestPause();
+<span class="line-number">156</span>         wallE.requestPause();
+<span class="line-number">157</span>         jButtonPause.setEnabled(<span class="keyword-directive">false</span>);
+<span class="line-number">158</span>         jButtonContinue.setEnabled(<span class="keyword-directive">true</span>);
+<span class="line-number">159</span>     }
+<span class="line-number">160</span> 
+<span class="line-number">161</span>     <span class="comment">/**</span>
+<span class="line-number">162</span>  <span class="comment">    * </span><span class="comment">Continue</span> <span class="comment">button</span> <span class="comment">action</span><span class="comment">.</span>
+<span class="line-number">163</span>      <span class="comment">*/</span>
+<span class="line-number">164</span>     @Action
+<span class="line-number">165</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> cont() {
+<span class="line-number">166</span>         bender.continueAfterPause();
+<span class="line-number">167</span>         android.continueAfterPause();
+<span class="line-number">168</span>         wallE.continueAfterPause();
+<span class="line-number">169</span>         jButtonPause.setEnabled(<span class="keyword-directive">true</span>);
+<span class="line-number">170</span>         jButtonContinue.setEnabled(<span class="keyword-directive">false</span>);
+<span class="line-number">171</span>     }
+<span class="line-number">172</span> 
+<span class="line-number">173</span>     <span class="comment">/**</span>
+<span class="line-number">174</span> <span class="comment">     * </span><span class="comment">Quit</span> <span class="comment">application</span> <span class="comment">action</span><span class="comment">.</span>
+<span class="line-number">175</span>      <span class="comment">*/</span>
+<span class="line-number">176</span>     @Action
+<span class="line-number">177</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> quit() {
+<span class="line-number">178</span>         bender.requestStop();
+<span class="line-number">179</span>         android.requestStop();
+<span class="line-number">180</span>         wallE.requestStop();
+<span class="line-number">181</span>         <span class="keyword-directive">while</span> (bender.isAlive() || android.isAlive() || wallE.isAlive()) {
+<span class="line-number">182</span>             <span class="keyword-directive">try</span> {
+<span class="line-number">183</span>                 Thread.sleep(50);
+<span class="line-number">184</span>             } <span class="keyword-directive">catch</span> (InterruptedException ex) {
+<span class="line-number">185</span>                 logger.log(Level.SEVERE, <span class="character">&quot;</span><span class="character">Error waiting for robots to stop.</span><span class="character">&quot;</span>,
+<span class="line-number">186</span>                         ex);
+<span class="line-number">187</span>             }
+<span class="line-number">188</span>         }
+<span class="line-number">189</span>         logger.log(Level.INFO, <span class="character">&quot;</span><span class="character">Application stopped.</span><span class="character">&quot;</span>);
+<span class="line-number">190</span>         System.exit(0);
+<span class="line-number">191</span>     }
+<span class="line-number">192</span> 
+<span class="line-number">193</span>     <span class="comment">/**</span> <span class="comment">This</span> <span class="comment">method</span> <span class="comment">is</span> <span class="comment">called</span> <span class="comment">from</span> <span class="comment">within</span> <span class="comment">the</span> <span class="comment">constructor</span> <span class="comment">to</span>
+<span class="line-number">194</span> <span class="comment">     * </span><span class="comment">initialize</span> <span class="comment">the</span> <span class="comment">form</span><span class="comment">.</span>
+<span class="line-number">195</span> <span class="comment">     * </span><span class="comment">WARNING</span><span class="comment">: </span><span class="comment">Do</span> <span class="comment">NOT</span> <span class="comment">modify</span> <span class="comment">this</span> <span class="comment">code</span><span class="comment">.</span> <span class="comment">The</span> <span class="comment">content</span> <span class="comment">of</span> <span class="comment">this</span> <span class="comment">method</span> <span class="comment">is</span>
+<span class="line-number">196</span> <span class="comment">     * </span><span class="comment">always</span> <span class="comment">regenerated</span> <span class="comment">by</span> <span class="comment">the</span> <span class="comment">Form</span> <span class="comment">Editor</span><span class="comment">.</span>
+<span class="line-number">197</span>      <span class="comment">*/</span>
+<span class="line-number">198</span>     @SuppressWarnings(<span class="character">&quot;</span><span class="character">unchecked</span><span class="character">&quot;</span>)
+<span class="line-number">199</span>     <span class="comment">// &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code&quot;&gt;                  </span>        
+<span class="line-number">200</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">void</span> initComponents() {
+<span class="line-number">201</span>         java.awt.GridBagConstraints gridBagConstraints;
+<span class="line-number">202</span> 
+<span class="line-number">203</span>         menuBar = <span class="keyword-directive">new</span> javax.swing.JMenuBar();
+<span class="line-number">204</span>         javax.swing.JMenu fileMenu = <span class="keyword-directive">new</span> javax.swing.JMenu();
+<span class="line-number">205</span>         javax.swing.JMenuItem exitMenuItem = <span class="keyword-directive">new</span> javax.swing.JMenuItem();
+<span class="line-number">206</span>         javax.swing.JMenu helpMenu = <span class="keyword-directive">new</span> javax.swing.JMenu();
+<span class="line-number">207</span>         javax.swing.JMenuItem aboutMenuItem = <span class="keyword-directive">new</span> javax.swing.JMenuItem();
+<span class="line-number">208</span>         mainPanel = <span class="keyword-directive">new</span> javax.swing.JPanel();
+<span class="line-number">209</span>         jLabel1 = <span class="keyword-directive">new</span> javax.swing.JLabel();
+<span class="line-number">210</span>         jLabel2 = <span class="keyword-directive">new</span> javax.swing.JLabel();
+<span class="line-number">211</span>         jLabel3 = <span class="keyword-directive">new</span> javax.swing.JLabel();
+<span class="line-number">212</span>         jLabel4 = <span class="keyword-directive">new</span> javax.swing.JLabel();
+<span class="line-number">213</span>         jLabel5 = <span class="keyword-directive">new</span> javax.swing.JLabel();
+<span class="line-number">214</span>         jLabel6 = <span class="keyword-directive">new</span> javax.swing.JLabel();
+<span class="line-number">215</span>         jLabel7 = <span class="keyword-directive">new</span> javax.swing.JLabel();
+<span class="line-number">216</span>         jLabel8 = <span class="keyword-directive">new</span> javax.swing.JLabel();
+<span class="line-number">217</span>         jLabel9 = <span class="keyword-directive">new</span> javax.swing.JLabel();
+<span class="line-number">218</span>         jLabel10 = <span class="keyword-directive">new</span> javax.swing.JLabel();
+<span class="line-number">219</span>         jLabel11 = <span class="keyword-directive">new</span> javax.swing.JLabel();
+<span class="line-number">220</span>         jLabel12 = <span class="keyword-directive">new</span> javax.swing.JLabel();
+<span class="line-number">221</span>         jLabel13 = <span class="keyword-directive">new</span> javax.swing.JLabel();
+<span class="line-number">222</span>         jLabel14 = <span class="keyword-directive">new</span> javax.swing.JLabel();
+<span class="line-number">223</span>         jLabel15 = <span class="keyword-directive">new</span> javax.swing.JLabel();
+<span class="line-number">224</span>         jLabel16 = <span class="keyword-directive">new</span> javax.swing.JLabel();
+<span class="line-number">225</span>         jLabel17 = <span class="keyword-directive">new</span> javax.swing.JLabel();
+<span class="line-number">226</span>         jLabel18 = <span class="keyword-directive">new</span> javax.swing.JLabel();
+<span class="line-number">227</span>         jLabel19 = <span class="keyword-directive">new</span> javax.swing.JLabel();
+<span class="line-number">228</span>         jLabel20 = <span class="keyword-directive">new</span> javax.swing.JLabel();
+<span class="line-number">229</span>         jLabel21 = <span class="keyword-directive">new</span> javax.swing.JLabel();
+<span class="line-number">230</span>         jTabbedPane1 = <span class="keyword-directive">new</span> javax.swing.JTabbedPane();
+<span class="line-number">231</span>         jScrollPane1 = <span class="keyword-directive">new</span> javax.swing.JScrollPane();
+<span class="line-number">232</span>         jTextAreaBender = <span class="keyword-directive">new</span> javax.swing.JTextArea();
+<span class="line-number">233</span>         jScrollPane2 = <span class="keyword-directive">new</span> javax.swing.JScrollPane();
+<span class="line-number">234</span>         jTextAreaWallE = <span class="keyword-directive">new</span> javax.swing.JTextArea();
+<span class="line-number">235</span>         jScrollPane3 = <span class="keyword-directive">new</span> javax.swing.JScrollPane();
+<span class="line-number">236</span>         jTextAreaAndroid = <span class="keyword-directive">new</span> javax.swing.JTextArea();
+<span class="line-number">237</span>         jScrollPane4 = <span class="keyword-directive">new</span> javax.swing.JScrollPane();
+<span class="line-number">238</span>         jTextAreaDust = <span class="keyword-directive">new</span> javax.swing.JTextArea();
+<span class="line-number">239</span>         jScrollPane5 = <span class="keyword-directive">new</span> javax.swing.JScrollPane();
+<span class="line-number">240</span>         jTextAreaDustbin = <span class="keyword-directive">new</span> javax.swing.JTextArea();
+<span class="line-number">241</span>         jButtonPause = <span class="keyword-directive">new</span> javax.swing.JButton();
+<span class="line-number">242</span>         jButtonContinue = <span class="keyword-directive">new</span> javax.swing.JButton();
+<span class="line-number">243</span> 
+<span class="line-number">244</span>         menuBar.setName(<span class="character">&quot;</span><span class="character">menuBar</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">245</span> 
+<span class="line-number">246</span>         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(dk.jsh.cleaningrobotsimulator.ui.swing.CleaningRobotSimulator.<span class="keyword-directive">class</span>).getContext().getResourceMap(View.<span class="keyword-directive">class</span>);
+<span class="line-number">247</span>         fileMenu.setText(resourceMap.getString(<span class="character">&quot;</span><span class="character">fileMenu.text</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number">248</span>         fileMenu.setName(<span class="character">&quot;</span><span class="character">fileMenu</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">249</span> 
+<span class="line-number">250</span>         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(dk.jsh.cleaningrobotsimulator.ui.swing.CleaningRobotSimulator.<span class="keyword-directive">class</span>).getContext().getActionMap(View.<span class="keyword-directive">class</span>, <span class="keyword-directive">this</span>);
+<span class="line-number">251</span>         exitMenuItem.setAction(actionMap.get(<span class="character">&quot;</span><span class="character">quit</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number">252</span>         exitMenuItem.setIcon(resourceMap.getIcon(<span class="character">&quot;</span><span class="character">exitMenuItem.</span><span class="character">icon</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number">253</span>         exitMenuItem.setName(<span class="character">&quot;</span><span class="character">exitMenuItem</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">254</span>         fileMenu.add(exitMenuItem);
+<span class="line-number">255</span> 
+<span class="line-number">256</span>         menuBar.add(fileMenu);
+<span class="line-number">257</span> 
+<span class="line-number">258</span>         helpMenu.setText(resourceMap.getString(<span class="character">&quot;</span><span class="character">helpMenu.text</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number">259</span>         helpMenu.setName(<span class="character">&quot;</span><span class="character">helpMenu</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">260</span> 
+<span class="line-number">261</span>         aboutMenuItem.setAction(actionMap.get(<span class="character">&quot;</span><span class="character">showAboutBox</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number">262</span>         aboutMenuItem.setIcon(resourceMap.getIcon(<span class="character">&quot;</span><span class="character">aboutMenuItem.icon</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number">263</span>         aboutMenuItem.setDisabledIcon(resourceMap.getIcon(<span class="character">&quot;</span><span class="character">aboutMenuItem.disabledIcon</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number">264</span>         aboutMenuItem.setName(<span class="character">&quot;</span><span class="character">aboutMenuItem</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">265</span>         helpMenu.add(aboutMenuItem);
+<span class="line-number">266</span> 
+<span class="line-number">267</span>         menuBar.add(helpMenu);
+<span class="line-number">268</span> 
+<span class="line-number">269</span>         mainPanel.setMinimumSize(<span class="keyword-directive">new</span> java.awt.Dimension(313, 240));
+<span class="line-number">270</span>         mainPanel.setName(<span class="character">&quot;</span><span class="character">mainPanel</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">271</span>         mainPanel.setLayout(<span class="keyword-directive">new</span> java.awt.GridBagLayout());
+<span class="line-number">272</span> 
+<span class="line-number">273</span>         jLabel1.setText(resourceMap.getString(<span class="character">&quot;</span><span class="character">jLabel1.text</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number">274</span>         jLabel1.setName(<span class="character">&quot;</span><span class="character">jLabel1</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">275</span>         gridBagConstraints = <span class="keyword-directive">new</span> java.awt.GridBagConstraints();
+<span class="line-number">276</span>         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+<span class="line-number">277</span>         mainPanel.add(jLabel1, gridBagConstraints);
+<span class="line-number">278</span> 
+<span class="line-number">279</span>         jLabel2.setText(resourceMap.getString(<span class="character">&quot;</span><span class="character">jLabel2.text</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number">280</span>         jLabel2.setName(<span class="character">&quot;</span><span class="character">jLabel2</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">281</span>         mainPanel.add(jLabel2, <span class="keyword-directive">new</span> java.awt.GridBagConstraints());
+<span class="line-number">282</span> 
+<span class="line-number">283</span>         jLabel3.setText(resourceMap.getString(<span class="character">&quot;</span><span class="character">jLabel3.text</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number">284</span>         jLabel3.setName(<span class="character">&quot;</span><span class="character">jLabel3</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">285</span>         mainPanel.add(jLabel3, <span class="keyword-directive">new</span> java.awt.GridBagConstraints());
+<span class="line-number">286</span> 
+<span class="line-number">287</span>         jLabel4.setText(resourceMap.getString(<span class="character">&quot;</span><span class="character">jLabel4.text</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number">288</span>         jLabel4.setName(<span class="character">&quot;</span><span class="character">jLabel4</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">289</span>         mainPanel.add(jLabel4, <span class="keyword-directive">new</span> java.awt.GridBagConstraints());
+<span class="line-number">290</span> 
+<span class="line-number">291</span>         jLabel5.setText(resourceMap.getString(<span class="character">&quot;</span><span class="character">jLabel5.text</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number">292</span>         jLabel5.setName(<span class="character">&quot;</span><span class="character">jLabel5</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">293</span>         mainPanel.add(jLabel5, <span class="keyword-directive">new</span> java.awt.GridBagConstraints());
+<span class="line-number">294</span> 
+<span class="line-number">295</span>         jLabel6.setText(resourceMap.getString(<span class="character">&quot;</span><span class="character">jLabel6.text</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number">296</span>         jLabel6.setName(<span class="character">&quot;</span><span class="character">jLabel6</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">297</span>         mainPanel.add(jLabel6, <span class="keyword-directive">new</span> java.awt.GridBagConstraints());
+<span class="line-number">298</span> 
+<span class="line-number">299</span>         jLabel7.setText(resourceMap.getString(<span class="character">&quot;</span><span class="character">jLabel7.text</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number">300</span>         jLabel7.setName(<span class="character">&quot;</span><span class="character">jLabel7</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">301</span>         mainPanel.add(jLabel7, <span class="keyword-directive">new</span> java.awt.GridBagConstraints());
+<span class="line-number">302</span> 
+<span class="line-number">303</span>         jLabel8.setText(resourceMap.getString(<span class="character">&quot;</span><span class="character">jLabel8.text</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number">304</span>         jLabel8.setName(<span class="character">&quot;</span><span class="character">jLabel8</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">305</span>         mainPanel.add(jLabel8, <span class="keyword-directive">new</span> java.awt.GridBagConstraints());
+<span class="line-number">306</span> 
+<span class="line-number">307</span>         jLabel9.setText(resourceMap.getString(<span class="character">&quot;</span><span class="character">jLabel9.text</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number">308</span>         jLabel9.setName(<span class="character">&quot;</span><span class="character">jLabel9</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">309</span>         mainPanel.add(jLabel9, <span class="keyword-directive">new</span> java.awt.GridBagConstraints());
+<span class="line-number">310</span> 
+<span class="line-number">311</span>         jLabel10.setText(resourceMap.getString(<span class="character">&quot;</span><span class="character">jLabel10.text</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number">312</span>         jLabel10.setName(<span class="character">&quot;</span><span class="character">jLabel10</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">313</span>         mainPanel.add(jLabel10, <span class="keyword-directive">new</span> java.awt.GridBagConstraints());
+<span class="line-number">314</span> 
+<span class="line-number">315</span>         jLabel11.setText(resourceMap.getString(<span class="character">&quot;</span><span class="character">jLabel11.text</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number">316</span>         jLabel11.setName(<span class="character">&quot;</span><span class="character">jLabel11</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">317</span>         mainPanel.add(jLabel11, <span class="keyword-directive">new</span> java.awt.GridBagConstraints());
+<span class="line-number">318</span> 
+<span class="line-number">319</span>         jLabel12.setText(resourceMap.getString(<span class="character">&quot;</span><span class="character">jLabel12.text</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number">320</span>         jLabel12.setName(<span class="character">&quot;</span><span class="character">jLabel12</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">321</span>         gridBagConstraints = <span class="keyword-directive">new</span> java.awt.GridBagConstraints();
+<span class="line-number">322</span>         gridBagConstraints.gridx = 0;
+<span class="line-number">323</span>         gridBagConstraints.gridy = 1;
+<span class="line-number">324</span>         mainPanel.add(jLabel12, gridBagConstraints);
+<span class="line-number">325</span> 
+<span class="line-number">326</span>         jLabel13.setText(resourceMap.getString(<span class="character">&quot;</span><span class="character">jLabel13.text</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number">327</span>         jLabel13.setName(<span class="character">&quot;</span><span class="character">jLabel13</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">328</span>         gridBagConstraints = <span class="keyword-directive">new</span> java.awt.GridBagConstraints();
+<span class="line-number">329</span>         gridBagConstraints.gridx = 0;
+<span class="line-number">330</span>         gridBagConstraints.gridy = 2;
+<span class="line-number">331</span>         mainPanel.add(jLabel13, gridBagConstraints);
+<span class="line-number">332</span> 
+<span class="line-number">333</span>         jLabel14.setText(resourceMap.getString(<span class="character">&quot;</span><span class="character">jLabel14.text</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number">334</span>         jLabel14.setName(<span class="character">&quot;</span><span class="character">jLabel14</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">335</span>         gridBagConstraints = <span class="keyword-directive">new</span> java.awt.GridBagConstraints();
+<span class="line-number">336</span>         gridBagConstraints.gridx = 0;
+<span class="line-number">337</span>         gridBagConstraints.gridy = 3;
+<span class="line-number">338</span>         mainPanel.add(jLabel14, gridBagConstraints);
+<span class="line-number">339</span> 
+<span class="line-number">340</span>         jLabel15.setText(resourceMap.getString(<span class="character">&quot;</span><span class="character">jLabel15.text</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number">341</span>         jLabel15.setName(<span class="character">&quot;</span><span class="character">jLabel15</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">342</span>         gridBagConstraints = <span class="keyword-directive">new</span> java.awt.GridBagConstraints();
+<span class="line-number">343</span>         gridBagConstraints.gridx = 0;
+<span class="line-number">344</span>         gridBagConstraints.gridy = 4;
+<span class="line-number">345</span>         mainPanel.add(jLabel15, gridBagConstraints);
+<span class="line-number">346</span> 
+<span class="line-number">347</span>         jLabel16.setText(resourceMap.getString(<span class="character">&quot;</span><span class="character">jLabel16.text</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number">348</span>         jLabel16.setName(<span class="character">&quot;</span><span class="character">jLabel16</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">349</span>         gridBagConstraints = <span class="keyword-directive">new</span> java.awt.GridBagConstraints();
+<span class="line-number">350</span>         gridBagConstraints.gridx = 0;
+<span class="line-number">351</span>         gridBagConstraints.gridy = 5;
+<span class="line-number">352</span>         mainPanel.add(jLabel16, gridBagConstraints);
+<span class="line-number">353</span> 
+<span class="line-number">354</span>         jLabel17.setText(resourceMap.getString(<span class="character">&quot;</span><span class="character">jLabel17.text</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number">355</span>         jLabel17.setName(<span class="character">&quot;</span><span class="character">jLabel17</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">356</span>         gridBagConstraints = <span class="keyword-directive">new</span> java.awt.GridBagConstraints();
+<span class="line-number">357</span>         gridBagConstraints.gridx = 0;
+<span class="line-number">358</span>         gridBagConstraints.gridy = 6;
+<span class="line-number">359</span>         mainPanel.add(jLabel17, gridBagConstraints);
+<span class="line-number">360</span> 
+<span class="line-number">361</span>         jLabel18.setText(resourceMap.getString(<span class="character">&quot;</span><span class="character">jLabel18.text</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number">362</span>         jLabel18.setName(<span class="character">&quot;</span><span class="character">jLabel18</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">363</span>         gridBagConstraints = <span class="keyword-directive">new</span> java.awt.GridBagConstraints();
+<span class="line-number">364</span>         gridBagConstraints.gridx = 0;
+<span class="line-number">365</span>         gridBagConstraints.gridy = 7;
+<span class="line-number">366</span>         mainPanel.add(jLabel18, gridBagConstraints);
+<span class="line-number">367</span> 
+<span class="line-number">368</span>         jLabel19.setText(resourceMap.getString(<span class="character">&quot;</span><span class="character">jLabel19.text</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number">369</span>         jLabel19.setName(<span class="character">&quot;</span><span class="character">jLabel19</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">370</span>         gridBagConstraints = <span class="keyword-directive">new</span> java.awt.GridBagConstraints();
+<span class="line-number">371</span>         gridBagConstraints.gridx = 0;
+<span class="line-number">372</span>         gridBagConstraints.gridy = 8;
+<span class="line-number">373</span>         mainPanel.add(jLabel19, gridBagConstraints);
+<span class="line-number">374</span> 
+<span class="line-number">375</span>         jLabel20.setText(resourceMap.getString(<span class="character">&quot;</span><span class="character">jLabel20.text</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number">376</span>         jLabel20.setName(<span class="character">&quot;</span><span class="character">jLabel20</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">377</span>         gridBagConstraints = <span class="keyword-directive">new</span> java.awt.GridBagConstraints();
+<span class="line-number">378</span>         gridBagConstraints.gridx = 0;
+<span class="line-number">379</span>         gridBagConstraints.gridy = 9;
+<span class="line-number">380</span>         mainPanel.add(jLabel20, gridBagConstraints);
+<span class="line-number">381</span> 
+<span class="line-number">382</span>         jLabel21.setText(resourceMap.getString(<span class="character">&quot;</span><span class="character">jLabel21.text</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number">383</span>         jLabel21.setName(<span class="character">&quot;</span><span class="character">jLabel21</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">384</span>         gridBagConstraints = <span class="keyword-directive">new</span> java.awt.GridBagConstraints();
+<span class="line-number">385</span>         gridBagConstraints.gridx = 0;
+<span class="line-number">386</span>         gridBagConstraints.gridy = 10;
+<span class="line-number">387</span>         mainPanel.add(jLabel21, gridBagConstraints);
+<span class="line-number">388</span> 
+<span class="line-number">389</span>         jTabbedPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+<span class="line-number">390</span>         jTabbedPane1.setName(<span class="character">&quot;</span><span class="character">jTabbedPane1</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">391</span> 
+<span class="line-number">392</span>         jScrollPane1.setName(<span class="character">&quot;</span><span class="character">jScrollPane1</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">393</span> 
+<span class="line-number">394</span>         jTextAreaBender.setColumns(20);
+<span class="line-number">395</span>         jTextAreaBender.setEditable(<span class="keyword-directive">false</span>);
+<span class="line-number">396</span>         jTextAreaBender.setRows(5);
+<span class="line-number">397</span>         jTextAreaBender.setName(<span class="character">&quot;</span><span class="character">jTextAreaBender</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">398</span>         jScrollPane1.setViewportView(jTextAreaBender);
+<span class="line-number">399</span> 
+<span class="line-number">400</span>         jTabbedPane1.addTab(resourceMap.getString(<span class="character">&quot;</span><span class="character">jScrollPane1.TabConst</span><span class="character">raints.tabTitle</span><span class="character">&quot;</span>), jScrollPane1); <span class="comment">// NOI18N</span>
+<span class="line-number">401</span> 
+<span class="line-number">402</span>         jScrollPane2.setName(<span class="character">&quot;</span><span class="character">jScrollPane2</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">403</span> 
+<span class="line-number">404</span>         jTextAreaWallE.setColumns(20);
+<span class="line-number">405</span>         jTextAreaWallE.setEditable(<span class="keyword-directive">false</span>);
+<span class="line-number">406</span>         jTextAreaWallE.setRows(5);
+<span class="line-number">407</span>         jTextAreaWallE.setName(<span class="character">&quot;</span><span class="character">jTextAreaWallE</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">408</span>         jScrollPane2.setViewportView(jTextAreaWallE);
+<span class="line-number">409</span> 
+<span class="line-number">410</span>         jTabbedPane1.addTab(resourceMap.getString(<span class="character">&quot;</span><span class="character">jScrollPane2.TabConstraints.tabTitle</span><span class="character">&quot;</span>), jScrollPane2); <span class="comment">// NOI18N</span>
+<span class="line-number">411</span> 
+<span class="line-number">412</span>         jScrollPane3.setName(<span class="character">&quot;</span><span class="character">jScrollPane3</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">413</span> 
+<span class="line-number">414</span>         jTextAreaAndroid.setColumns(20);
+<span class="line-number">415</span>         jTextAreaAndroid.setEditable(<span class="keyword-directive">false</span>);
+<span class="line-number">416</span>         jTextAreaAndroid.setRows(5);
+<span class="line-number">417</span>         jTextAreaAndroid.setName(<span class="character">&quot;</span><span class="character">jTextAreaAndroid</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">418</span>         jScrollPane3.setViewportView(jTextAreaAndroid);
+<span class="line-number">419</span> 
+<span class="line-number">420</span>         jTabbedPane1.addTab(resourceMap.getString(<span class="character">&quot;</span><span class="character">jScrollPane3.TabCons</span><span class="character">traints.tabTitle</span><span class="character">&quot;</span>), jScrollPane3); <span class="comment">// NOI18N</span>
+<span class="line-number">421</span> 
+<span class="line-number">422</span>         jScrollPane4.setName(<span class="character">&quot;</span><span class="character">jScrollPane4</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">423</span> 
+<span class="line-number">424</span>         jTextAreaDust.setColumns(20);
+<span class="line-number">425</span>         jTextAreaDust.setEditable(<span class="keyword-directive">false</span>);
+<span class="line-number">426</span>         jTextAreaDust.setRows(5);
+<span class="line-number">427</span>         jTextAreaDust.setName(<span class="character">&quot;</span><span class="character">jTextAreaDust</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">428</span>         jScrollPane4.setViewportView(jTextAreaDust);
+<span class="line-number">429</span> 
+<span class="line-number">430</span>         jTabbedPane1.addTab(resourceMap.getString(<span class="character">&quot;</span><span class="character">jScrollPane4.TabConstraints.tabTitle</span><span class="character">&quot;</span>), jScrollPane4); <span class="comment">// NOI18N</span>
+<span class="line-number">431</span> 
+<span class="line-number">432</span>         jScrollPane5.setName(<span class="character">&quot;</span><span class="character">jScrollPane5</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">433</span> 
+<span class="line-number">434</span>         jTextAreaDustbin.setColumns(20);
+<span class="line-number">435</span>         jTextAreaDustbin.setEditable(<span class="keyword-directive">false</span>);
+<span class="line-number">436</span>         jTextAreaDustbin.setRows(5);
+<span class="line-number">437</span>         jTextAreaDustbin.setName(<span class="character">&quot;</span><span class="character">jTextAreaDustbin</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">438</span>         jScrollPane5.setViewportView(jTextAreaDustbin);
+<span class="line-number">439</span> 
+<span class="line-number">440</span>         jTabbedPane1.addTab(resourceMap.getString(<span class="character">&quot;</span><span class="character">jScrollPane5.TabCons</span><span class="character">traints.tabTitle</span><span class="character">&quot;</span>), jScrollPane5); <span class="comment">// NOI18N</span>
+<span class="line-number">441</span> 
+<span class="line-number">442</span>         gridBagConstraints = <span class="keyword-directive">new</span> java.awt.GridBagConstraints();
+<span class="line-number">443</span>         gridBagConstraints.gridwidth = 15;
+<span class="line-number">444</span>         gridBagConstraints.gridheight = 12;
+<span class="line-number">445</span>         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+<span class="line-number">446</span>         gridBagConstraints.weightx = 1.0;
+<span class="line-number">447</span>         gridBagConstraints.weighty = 1.0;
+<span class="line-number">448</span>         gridBagConstraints.insets = <span class="keyword-directive">new</span> java.awt.Insets(5, 5, 5, 5);
+<span class="line-number">449</span>         mainPanel.add(jTabbedPane1, gridBagConstraints);
+<span class="line-number">450</span> 
+<span class="line-number">451</span>         jButtonPause.setAction(actionMap.get(<span class="character">&quot;</span><span class="character">pause</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number">452</span>         jButtonPause.setText(resourceMap.getString(<span class="character">&quot;</span><span class="character">jButtonPause.text</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number">453</span>         jButtonPause.setName(<span class="character">&quot;</span><span class="character">jButtonPause</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">454</span>         gridBagConstraints = <span class="keyword-directive">new</span> java.awt.GridBagConstraints();
+<span class="line-number">455</span>         gridBagConstraints.gridx = 0;
+<span class="line-number">456</span>         gridBagConstraints.gridy = 11;
+<span class="line-number">457</span>         gridBagConstraints.gridwidth = 4;
+<span class="line-number">458</span>         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+<span class="line-number">459</span>         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
+<span class="line-number">460</span>         gridBagConstraints.insets = <span class="keyword-directive">new</span> java.awt.Insets(5, 5, 5, 5);
+<span class="line-number">461</span>         mainPanel.add(jButtonPause, gridBagConstraints);
+<span class="line-number">462</span> 
+<span class="line-number">463</span>         jButtonContinue.setAction(actionMap.get(<span class="character">&quot;</span><span class="character">cont</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number">464</span>         jButtonContinue.setText(resourceMap.getString(<span class="character">&quot;</span><span class="character">jButtonContinue.text</span><span class="character">&quot;</span>)); <span class="comment">// NOI18N</span>
+<span class="line-number">465</span>         jButtonContinue.setName(<span class="character">&quot;</span><span class="character">jButt</span><span class="character">onContinue</span><span class="character">&quot;</span>); <span class="comment">// NOI18N</span>
+<span class="line-number">466</span>         gridBagConstraints = <span class="keyword-directive">new</span> java.awt.GridBagConstraints();
+<span class="line-number">467</span>         gridBagConstraints.gridx = 7;
+<span class="line-number">468</span>         gridBagConstraints.gridy = 11;
+<span class="line-number">469</span>         gridBagConstraints.gridwidth = 4;
+<span class="line-number">470</span>         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+<span class="line-number">471</span>         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
+<span class="line-number">472</span>         gridBagConstraints.insets = <span class="keyword-directive">new</span> java.awt.Insets(5, 5, 5, 0);
+<span class="line-number">473</span>         mainPanel.add(jButtonContinue, gridBagConstraints);
+<span class="line-number">474</span> 
+<span class="line-number">475</span>         setComponent(mainPanel);
+<span class="line-number">476</span>         setMenuBar(menuBar);
+<span class="line-number">477</span>     }<span class="comment">// &lt;/editor-fold&gt;                        </span>
+<span class="line-number">478</span>     <span class="comment">// Variables d</span><span class="comment">eclaration - do not modify                     </span>
+<span class="line-number">479</span>     <span class="keyword-directive">private</span> javax.swing.JButton jButtonContinue;
+<span class="line-number">480</span>     <span class="keyword-directive">private</span> javax.swing.JButton jButtonPause;
+<span class="line-number">481</span>     <span class="keyword-directive">private</span> javax.swing.JLabel jLabel1;
+<span class="line-number">482</span>     <span class="keyword-directive">private</span> javax.swing.JLabel jLabel10;
+<span class="line-number">483</span>     <span class="keyword-directive">private</span> javax.swing.JLabel jLabel11;
+<span class="line-number">484</span>     <span class="keyword-directive">private</span> javax.swing.JLabel jLabel12;
+<span class="line-number">485</span>     <span class="keyword-directive">p</span><span class="keyword-directive">rivate</span> javax.swing.JLabel jLabel13;
+<span class="line-number">486</span>     <span class="keyword-directive">private</span> javax.swing.JLabel jLabel14;
+<span class="line-number">487</span>     <span class="keyword-directive">private</span> javax.swing.JLabel jLabel15;
+<span class="line-number">488</span>     <span class="keyword-directive">private</span> javax.swing.JLabel jLabel16;
+<span class="line-number">489</span>     <span class="keyword-directive">p</span><span class="keyword-directive">rivate</span> javax.swing.JLabel jLabel17;
+<span class="line-number">490</span>     <span class="keyword-directive">private</span> javax.swing.JLabel jLabel18;
+<span class="line-number">491</span>     <span class="keyword-directive">private</span> javax.swing.JLabel jLabel19;
+<span class="line-number">492</span>     <span class="keyword-directive">private</span> javax.swing.JLabel jLabel2;
+<span class="line-number">493</span>     <span class="keyword-directive">pr</span><span class="keyword-directive">ivate</span> javax.swing.JLabel jLabel20;
+<span class="line-number">494</span>     <span class="keyword-directive">private</span> javax.swing.JLabel jLabel21;
+<span class="line-number">495</span>     <span class="keyword-directive">private</span> javax.swing.JLabel jLabel3;
+<span class="line-number">496</span>     <span class="keyword-directive">private</span> javax.swing.JLabel jLabel4;
+<span class="line-number">497</span>     <span class="keyword-directive">pri</span><span class="keyword-directive">vate</span> javax.swing.JLabel jLabel5;
+<span class="line-number">498</span>     <span class="keyword-directive">private</span> javax.swing.JLabel jLabel6;
+<span class="line-number">499</span>     <span class="keyword-directive">private</span> javax.swing.JLabel jLabel7;
+<span class="line-number">500</span>     <span class="keyword-directive">private</span> javax.swing.JLabel jLabel8;
+<span class="line-number">501</span>     <span class="keyword-directive">priv</span><span class="keyword-directive">ate</span> javax.swing.JLabel jLabel9;
+<span class="line-number">502</span>     <span class="keyword-directive">private</span> javax.swing.JScrollPane jScrollPane1;
+<span class="line-number">503</span>     <span class="keyword-directive">private</span> javax.swing.JScrollPane jScrollPane2;
+<span class="line-number">504</span>     <span class="keyword-directive">private</span> javax.swing.JScrollPane jScrollPane3;
+<span class="line-number">505</span>     <span class="keyword-directive">private</span> javax.swing.JScrollPane jScrollPane4;
+<span class="line-number">506</span>     <span class="keyword-directive">private</span> javax.swing.JScrollPane jScrollPane5;
+<span class="line-number">507</span>     <span class="keyword-directive">private</span> javax.swing.JTabbedPane jTabbedPane1;
+<span class="line-number">508</span>     <span class="keyword-directive">private</span> javax.swing.JTextArea jTextAreaAndroid;
+<span class="line-number">509</span>     <span class="keyword-directive">private</span> javax.swing.JTextArea jTextAreaBender;
+<span class="line-number">510</span>     <span class="keyword-directive">private</span> javax.swing.JTextArea jTextAreaDust;
+<span class="line-number">511</span>     <span class="keyword-directive">private</span> javax.swing.JTextArea jTextAreaDustbin;
+<span class="line-number">512</span>     <span class="keyword-directive">private</span> javax.swing.JTextArea jTextAreaWallE;
+<span class="line-number">513</span>     <span class="keyword-directive">private</span> javax.swing.JPanel mainPanel;
+<span class="line-number">514</span>     <span class="keyword-directive">private</span> javax.swing.JMenuBar menuBar;
+<span class="line-number">515</span>     <span class="comment">// End of variables declaration                   </span>
+<span class="line-number">516</span>     <span class="keyword-directive">private</span> JDialog aboutBox;
+<span class="line-number">517</span> }
+<span class="line-number">518</span> 
+</pre></body>
+</html>
